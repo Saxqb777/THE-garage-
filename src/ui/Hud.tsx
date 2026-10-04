@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { useProgress } from '@react-three/drei';
+import { CREDITS } from '@/data/credits';
 import contract from '@/data/parts.m1.json';
 import { PLACEHOLDER_URL, useGarage } from '@/scene/store';
 import styles from './Hud.module.css';
@@ -71,6 +72,17 @@ export default function Hud() {
 
       <p className={styles.hint}>Drag to orbit · scroll to zoom · H toggles doors</p>
       {url === PLACEHOLDER_URL && <p className={styles.badge}>placeholder blockout</p>}
+
+      <details className={styles.credits}>
+        <summary>Credits</summary>
+        <ul>
+          {CREDITS.map((c) => (
+            <li key={c.what}>
+              {c.what}: {c.who} ({c.license})
+            </li>
+          ))}
+        </ul>
+      </details>
     </aside>
   );
 }

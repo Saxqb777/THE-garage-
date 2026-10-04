@@ -40,7 +40,6 @@ export default function CarModel({ url }: { url: string }) {
   useEffect(() => () => closeHinges(rigs), [rigs]);
 
   useEffect(() => {
-    (window as unknown as { __rigs: unknown }).__rigs = rigs;
     if (!rigs.length) return;
     const tween = gsap.to(rigs, {
       t: hingesOpen ? 1 : 0,
@@ -48,7 +47,7 @@ export default function CarModel({ url }: { url: string }) {
       ease: 'power2.inOut',
       stagger: { each: 0.08, from: hingesOpen ? 'start' : 'end' },
       overwrite: true,
-      onUpdate: () => { (window as unknown as { __upd: number }).__upd = ((window as unknown as { __upd: number }).__upd ?? 0) + 1; poseHinges(rigs); },
+      onUpdate: () => poseHinges(rigs),
     });
     return () => {
       tween.kill();

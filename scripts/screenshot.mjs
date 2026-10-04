@@ -37,7 +37,7 @@ try {
   await page.waitForTimeout(settleMs);
   // software GL can take seconds per frame: let two more frames land so the capture shows the settled state
   await page.evaluate(() => new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(done))));
-  await page.screenshot({ path: out });
+  await page.screenshot({ path: out, timeout: 300_000 });
   console.log(JSON.stringify(await page.evaluate(() => window.__garage), null, 2));
   console.error(`saved ${out}`);
 } finally {

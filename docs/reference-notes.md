@@ -12,8 +12,9 @@ What the reference material says, measured, and where the real car differs from 
 | reference/photos/listing_collage_9.webp | All 9 listing photos, small tiles | Interior and engine bay tiles are too small to model from |
 | reference/blueprint/lc100_blueprint_sheet.jpg | 3 tops, 3 sides, 3 fronts, 1024 px | Drawn from a VX: flares, roof rails, side steps. No rear view |
 | reference/manual/manual_page_dash_overview_view_b.pdf | One manual page, 2 pages total | Dash overview, navigation version (US market, VX level) |
+| reference/manual/LC100_2005_owners_manual.md | Full owner's manual as text, 351 pages | US market 2UZ-FE; grep it for names, positions, fuses, specs |
 
-Still wanted: full size originals of all 9 photos, the VIN or chassis code, the full owner's manual, a larger blueprint with a rear view.
+Still wanted: full size originals of all 9 photos, the VIN or chassis code, a larger blueprint with a rear view. The owner's manual text is now in reference/manual/LC100_2005_owners_manual.md.
 
 ## Where the real car differs from the brief
 
@@ -24,10 +25,10 @@ Still wanted: full size originals of all 9 photos, the VIN or chassis code, the 
 | Grey side steps | None visible | None |
 | Roof rails | None | None |
 | "4500 EFI" fender badge | Badge sits on the rear quarter panel, behind the rear door, under a louvred vent | Badge on the rear quarter |
-| GXR trim | Rear door carries a "G" badge | Open question for Saaqib |
-| Battery right side | Engine bay photo looks like the car's left side | Open question for Saaqib |
+| GXR trim | Rear door carries a "G" badge | Confirmed GXR, the G badge is normal on GCC GXR |
+| Battery right side | Engine bay photo looks like the car's left side | Confirmed: vehicle left, per the photo |
 
-Open question: FZJ100 (independent front suspension) or FZJ105 (solid front axle). Barn doors, no flares and a manual box exist on both; the chassis code on the registration card settles it and changes the suspension part list.
+Chassis: assume FZJ100 (independent front suspension) until Saaqib confirms the chassis code. FZJ105 would be a solid front axle. Barn doors, no flares and a manual box exist on both; the chassis code on the registration card settles it and changes the suspension part list.
 
 ## Key dimensions (metres)
 
