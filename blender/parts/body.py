@@ -163,32 +163,35 @@ class Slicer:
 
 
 def face_filter(kind, side="L"):
-    """Vectorised predicate on (centroids, normals) arrays in Blender space."""
+    """Vectorised predicate on (centroids, normals) arrays in Blender space, for choosing which faces a cut touches.
+
+    Deliberately loose: an extra cut only adds edges, but a missed cut leaves a big triangle
+    straddling an outline, which then shows up as a jagged sliver after classification.
+    """
     sgn = 1.0 if side == "L" else -1.0
 
     def f(c, n):
         u, x, z = c[:, 1] + HALF_WB, c[:, 0], c[:, 2]
-        nx, nu, nz = n[:, 0], n[:, 1], n[:, 2]
         if kind == "side":
-            return (x * sgn > 0.5) & (nx * sgn > 0.3)
+            return x * sgn > 0.3
         if kind == "top":
-            return (nz > 0.3) & (z > 1.0) & (x * sgn > -0.02)
+            return (z > 0.95) & (x * sgn > -0.05)
         if kind == "top_any":
-            return (nz > 0.3) & (z > 1.0)
+            return z > 0.95
         if kind == "front":
-            return nu < -0.3
+            return u < -0.3
         if kind == "rear":
-            return (nu > 0.25) & (u > 3.4) & (x * sgn > -0.02)
+            return (u > 3.3) & (x * sgn > -0.05)
         if kind == "rear_any":
-            return (nu > 0.25) & (u > 3.4)
+            return u > 3.3
         if kind == "ws":
-            return (nu < -0.3) & (nz > 0.4) & (z > 1.2)
+            return (z > 1.15) & (u < 1.7)
         if kind == "lamp_front":
-            return (x * sgn > 0.3) & (u < -0.4) & (np.abs(nz) < 0.75)
+            return (x * sgn > 0.25) & (u < -0.3)
         if kind == "lamp_rear":
-            return (x * sgn > 0.6) & (u > 3.6) & (np.abs(nz) < 0.8)
+            return (x * sgn > 0.5) & (u > 3.5)
         if kind == "hood_side":
-            return (u < 0.52) & (z > 1.04) & ((nz > 0.3) | (nu < -0.3)) & (x * sgn > 0)
+            return (u < 0.6) & (z > 0.98) & (x * sgn > 0)
         raise ValueError(kind)
 
     return f
