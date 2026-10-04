@@ -1,0 +1,76 @@
+'use client';
+
+import { useEffect } from 'react';
+import { useProgress } from '@react-three/drei';
+import contract from '@/data/parts.m1.json';
+import { PLACEHOLDER_URL, useGarage } from '@/scene/store';
+import styles from './Hud.module.css';
+
+const num = new Intl.NumberFormat('en-US');
+
+export default function Hud() {
+  const { progress } = useProgress();
+  const url = useGarage((s) => s.modelUrl);
+  const model = useGarage((s) => s.model);
+  const error = useGarage((s) => s.modelError);
+  const triangles = useGarage((s) => s.triangles);
+  const drawCalls = useGarage((s) => s.drawCalls);
+  const hingesOpen = useGarage((s) => s.hingesOpen);
+  const setHingesOpen = useGarage((s) => s.setHingesOpen);
+  const toggleHinges = useGarage((s) => s.toggleHinges);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.repeat || e.metaKey || e.ctrlKey || e.altKey) return;
+      if (e.key === 'h' || e.key === 'H') toggleHinges();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [toggleHinges]);
+
+  return (
+    <aside className={styles.hud}>
+      <h1 className={styles.title}>The Garage</h1>
+      <p className={styles.vehicle}>{contract.vehicle.name}</p>
+      <p className={styles.file}>{url.split('/').pop()}</p>
+
+      {!model && !error && (
+        <div className={styles.progress} aria-label="Loading model">
+          <div className={styles.track}>
+            <div className={styles.bar} style={{ transform: `scaleX(${progress / 100})` }} />
+          </div>
+          <span>{progress.toFixed(0)}%</span>
+        </div>
+      )}
+      {error && (
+        <div className={styles.error}>
+          <p>{error}</p>
+          <p>
+            Add the GLB to public/models, or <a href="?model=placeholder">open the placeholder</a>.
+          </p>
+        </div>
+      )}
+
+      <dl className={styles.stats}>
+        <dt>Parts</dt>
+        <dd>{model ? num.format(model.partKeys.length) : '...'}</dd>
+        <dt>Triangles</dt>
+        <dd>{num.format(triangles)}</dd>
+        <dt>Draw calls</dt>
+        <dd>{num.format(drawCalls)}</dd>
+      </dl>
+
+      <div className={styles.actions}>
+        <button type="button" onClick={() => setHingesOpen(true)} disabled={!model || hingesOpen}>
+          Open all
+        </button>
+        <button type="button" onClick={() => setHingesOpen(false)} disabled={!model || !hingesOpen}>
+          Close all
+        </button>
+      </div>
+
+      <p className={styles.hint}>Drag to orbit · scroll to zoom · H toggles doors</p>
+      {url === PLACEHOLDER_URL && <p className={styles.badge}>placeholder blockout</p>}
+    </aside>
+  );
+}

@@ -1,0 +1,261 @@
+"""Mesh helpers shared by part builders: SDF to mesh, plane cuts, custom normals, thickening.
+
+Body coordinates (u, x, z) are used by the SDF modules; Blender coordinates are
+X = x, Y = u minus WHEELBASE / 2, Z = z.
+"""
+import bmesh
+import bpy
+import numpy as np
+from skimage.measure import marching_cubes
+
+from blender.lib import conventions as C
+
+HALF_WB = C.WHEELBASE / 2.0
+
+
+def to_blender(u, x, z):
+    return np.stack([x, u - HALF_WB, z], axis=-1)
+
+
+def to_body(co):
+    co = np.asarray(co)
+    return co[..., 1] + HALF_WB, co[..., 0], co[..., 2]
+
+
+def sample_volume(fn, bounds, h):
+    (u0, u1), (x0, x1), (z0, z1) = bounds
+    us = np.arange(u0, u1 + h * 0.5, h)
+    xs = np.arange(x0, x1 + h * 0.5, h)
+    zs = np.arange(z0, z1 + h * 0.5, h)
+    X, Z = np.meshgrid(xs, zs, indexing="ij")
+    vol = np.empty((len(us), len(xs), len(zs)), np.float32)
+    for i, u in enumerate(us):
+        vol[i] = fn(np.full_like(X, u), X, Z)
+    return vol, (us[0], xs[0], zs[0])
+
+
+def sdf_to_bmesh(fn, bounds, h):
+    """Marching cubes of fn's zero level set; returns a bmesh in Blender space."""
+    vol, origin = sample_volume(fn, bounds, h)
+    verts, faces, _, _ = marching_cubes(vol, 0.0, spacing=(h, h, h))
+    verts = verts + np.array(origin)
+    co = to_blender(verts[:, 0], verts[:, 1], verts[:, 2])
+    bm = bmesh.new()
+    bverts = [bm.verts.new(v) for v in co]
+    for f in faces:
+        try:
+            bm.faces.new((bverts[f[0]], bverts[f[1]], bverts[f[2]]))
+        except ValueError:
+            pass  # duplicate face
+    bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=h * 0.05)
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+    return bm
+
+
+def bmesh_to_object(bm, name):
+    me = bpy.data.meshes.new(name)
+    bm.to_mesh(me)
+    obj = bpy.data.objects.new(name, me)
+    bpy.context.scene.collection.objects.link(obj)
+    return obj
+
+
+def decimate(obj, ratio, symmetric=True):
+    mod = obj.modifiers.new("decimate", "DECIMATE")
+    mod.decimate_type = "COLLAPSE"
+    mod.ratio = ratio
+    mod.use_symmetry = symmetric
+    mod.symmetry_axis = "X"
+    mod.use_collapse_triangulate = True
+    depsgraph = bpy.context.evaluated_depsgraph_get()
+    eval_obj = obj.evaluated_get(depsgraph)
+    me = bpy.data.meshes.new_from_object(eval_obj)
+    old = obj.data
+    obj.modifiers.clear()
+    obj.data = me
+    bpy.data.meshes.remove(old)
+
+
+def face_arrays(bm):
+    """Centroids (Blender space) and face list for a bmesh."""
+    bm.faces.ensure_lookup_table()
+    faces = list(bm.faces)
+    cents = np.array([f.calc_center_median() for f in faces]) if faces else np.zeros((0, 3))
+    return faces, cents
+
+
+def face_bounds(faces):
+    lo = np.array([[min(v.co[i] for v in f.verts) for i in range(3)] for f in faces]) if faces else np.zeros((0, 3))
+    hi = np.array([[max(v.co[i] for v in f.verts) for i in range(3)] for f in faces]) if faces else np.zeros((0, 3))
+    return lo, hi
+
+
+class Cutter:
+    """Bisects only the faces near each cut, keeping centroid and normal caches up to date.
+
+    normal_fn maps (N, 3) Blender space points to (N, 3) unit normals (usually the SDF gradient),
+    which is far more stable than triangle normals of a marching cubes mesh.
+    """
+
+    def __init__(self, bm, normal_fn):
+        self.bm = bm
+        self.normal_fn = normal_fn
+        self.faces, self.cents = face_arrays(bm)
+        self.fmin, self.fmax = face_bounds(self.faces)
+        self.nrms = normal_fn(self.cents)
+        self.alive = np.ones(len(self.faces), bool)
+        self.index = {f: i for i, f in enumerate(self.faces)}
+
+    def cut(self, plane_co, plane_no, lo, hi, mask_fn=None):
+        m = self.alive & np.all(self.fmax >= lo, axis=1) & np.all(self.fmin <= hi, axis=1)
+        idx = np.nonzero(m)[0]
+        if len(idx) and mask_fn is not None:
+            idx = idx[mask_fn(self.cents[idx], self.nrms[idx])]
+        faces = []
+        for i in idx:
+            f = self.faces[i]
+            if f.is_valid:
+                faces.append(f)
+            else:
+                self.alive[i] = False
+        if not faces:
+            return 0
+        edges = {e for f in faces for e in f.edges}
+        verts = {v for f in faces for v in f.verts}
+        res = bmesh.ops.bisect_plane(self.bm, geom=list(verts) + list(edges) + faces, dist=1e-7,
+                                     plane_co=plane_co, plane_no=plane_no)
+        touched = {g for g in res["geom"] if isinstance(g, bmesh.types.BMFace) and g.is_valid}
+        touched.update(f for f in faces if f.is_valid)
+        touched = list(touched)
+        if not touched:
+            return len(faces)
+        cents = np.array([f.calc_center_median() for f in touched])
+        fmin, fmax = face_bounds(touched)
+        nrms = self.normal_fn(cents)
+        new_rows = []
+        for k, f in enumerate(touched):
+            i = self.index.get(f)
+            if i is None:
+                self.index[f] = len(self.faces)
+                self.faces.append(f)
+                new_rows.append(k)
+            else:
+                self.cents[i] = cents[k]
+                self.nrms[i] = nrms[k]
+                self.fmin[i] = fmin[k]
+                self.fmax[i] = fmax[k]
+        if new_rows:
+            self.fmin = np.vstack([self.fmin, fmin[new_rows]])
+            self.fmax = np.vstack([self.fmax, fmax[new_rows]])
+            self.cents = np.vstack([self.cents, cents[new_rows]])
+            self.nrms = np.vstack([self.nrms, nrms[new_rows]])
+            self.alive = np.concatenate([self.alive, np.ones(len(new_rows), bool)])
+        return len(faces)
+
+
+def segment_planes(view, pts):
+    """Yield (plane_co, plane_no, a, b) in Blender space for each polyline segment.
+
+    view: 'side' (pts are (u, z)), 'top' ((u, x)), 'front' ((x, z), extruded along u).
+    """
+    for (a0, b0), (a1, b1) in zip(pts[:-1], pts[1:]):
+        if view == "side":
+            co = (0.0, a0 - HALF_WB, b0)
+            no = (0.0, -(b1 - b0), a1 - a0)
+        elif view == "top":
+            co = (b0, a0 - HALF_WB, 0.0)
+            no = (a1 - a0, -(b1 - b0), 0.0)
+        elif view == "front":
+            co = (a0, 0.0, b0)
+            no = (-(b1 - b0), 0.0, a1 - a0)
+        else:
+            raise ValueError(view)
+        n = np.array(no, float)
+        n /= np.linalg.norm(n)
+        yield co, tuple(n), (a0, b0), (a1, b1)
+
+
+def view_coords(view, u, x, z):
+    if view == "side":
+        return u, z
+    if view == "top":
+        return u, x
+    if view == "front":
+        return x, z
+    raise ValueError(view)
+
+
+def offset_polyline(pts, d):
+    """Offset a 2D polyline sideways by d (left normal of travel direction)."""
+    pts = np.asarray(pts, float)
+    out = []
+    for i in range(len(pts)):
+        if i == 0:
+            t = pts[1] - pts[0]
+        elif i == len(pts) - 1:
+            t = pts[-1] - pts[-2]
+        else:
+            t1 = pts[i] - pts[i - 1]
+            t2 = pts[i + 1] - pts[i]
+            t = t1 / np.linalg.norm(t1) + t2 / np.linalg.norm(t2)
+        t = t / np.linalg.norm(t)
+        nrm = np.array([-t[1], t[0]])
+        out.append(pts[i] + nrm * d)
+    return out
+
+
+def dist_to_polyline(pa, pb, pts):
+    """Distance of points (pa, pb arrays) to a 2D polyline, plus the along parameter validity."""
+    best = np.full(pa.shape, np.inf)
+    for (a0, b0), (a1, b1) in zip(pts[:-1], pts[1:]):
+        da, db = a1 - a0, b1 - b0
+        L2 = da * da + db * db
+        t = np.clip(((pa - a0) * da + (pb - b0) * db) / L2, 0.0, 1.0)
+        d = np.hypot(pa - (a0 + t * da), pb - (b0 + t * db))
+        best = np.minimum(best, d)
+    return best
+
+
+def in_polygon(pa, pb, poly):
+    """Vectorised even odd rule point in polygon test."""
+    poly = np.asarray(poly, float)
+    inside = np.zeros(pa.shape, bool)
+    n = len(poly)
+    for i in range(n):
+        a0, b0 = poly[i]
+        a1, b1 = poly[(i + 1) % n]
+        cond = (b0 > pb) != (b1 > pb)
+        with np.errstate(divide="ignore", invalid="ignore"):
+            cross = (a1 - a0) * (pb - b0) / (b1 - b0) + a0
+        inside ^= cond & (pa < cross)
+    return inside
+
+
+def mesh_from_faces(name, verts_co, polys, mat_indices, materials_list):
+    """Build a mesh object from numpy vertex coordinates and polygon index lists."""
+    me = bpy.data.meshes.new(name)
+    me.from_pydata([tuple(v) for v in verts_co], [], polys)
+    for m in materials_list:
+        me.materials.append(m)
+    if mat_indices is not None and len(polys):
+        me.polygons.foreach_set("material_index", np.asarray(mat_indices, np.int32))
+    me.update()
+    obj = bpy.data.objects.new(name, me)
+    bpy.context.scene.collection.objects.link(obj)
+    return obj
+
+
+def set_custom_normals(obj, loop_normals):
+    me = obj.data
+    me.normals_split_custom_set([tuple(n) for n in loop_normals])
+
+
+def sdf_vertex_normals(fn, co):
+    """Outward unit normals of the field fn at Blender space points co."""
+    u, x, z = to_body(co)
+    eps = 1.5e-3
+    gu = fn(u + eps, x, z) - fn(u - eps, x, z)
+    gx = fn(u, x + eps, z) - fn(u, x - eps, z)
+    gz = fn(u, x, z + eps) - fn(u, x, z - eps)
+    g = np.stack([gx, gu, gz], axis=-1)  # Blender order X, Y, Z
+    return g / np.maximum(np.linalg.norm(g, axis=-1, keepdims=True), 1e-12)
