@@ -167,6 +167,9 @@ def face_filter(kind, side="L"):
 
     Deliberately loose: an extra cut only adds edges, but a missed cut leaves a big triangle
     straddling an outline, which then shows up as a jagged sliver after classification.
+    Only side view cuts need the side test (their bounding box spans the full width); every
+    other view is already limited in x by its bounding box, and a centroid side test there
+    skips wide triangles that cross the centre line.
     """
     sgn = 1.0 if side == "L" else -1.0
 
@@ -175,23 +178,23 @@ def face_filter(kind, side="L"):
         if kind == "side":
             return x * sgn > 0.3
         if kind == "top":
-            return (z > 0.95) & (x * sgn > -0.05)
+            return z > 0.95
         if kind == "top_any":
             return z > 0.95
         if kind == "front":
             return u < -0.3
         if kind == "rear":
-            return (u > 3.3) & (x * sgn > -0.05)
+            return u > 3.3
         if kind == "rear_any":
             return u > 3.3
         if kind == "ws":
             return (z > 1.15) & (u < 1.7)
         if kind == "lamp_front":
-            return (x * sgn > 0.25) & (u < -0.3)
+            return u < -0.3
         if kind == "lamp_rear":
-            return (x * sgn > 0.5) & (u > 3.5)
+            return u > 3.5
         if kind == "hood_side":
-            return (u < 0.6) & (z > 0.98) & (x * sgn > 0)
+            return (u < 0.6) & (z > 0.98)
         raise ValueError(kind)
 
     return f

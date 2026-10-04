@@ -126,21 +126,23 @@ def place_all(objs, skin_x):
         for c in arm.children:
             out[c.name] = c
 
-    # rear wipers on each back door glass, angled up and outwards
+    # rear wipers on each back door glass: pivot low by the centre split, arm up and outwards.
+    # details.py already builds the L arm along local +X and the R arm along local -X, so both
+    # share one frame: local X across the glass tilted 16 degrees, local Z the glass normal.
     for side, sgn in (("L", 1.0), ("R", -1.0)):
         arm = D.build_wiper("rear", side)
         x, z = sgn * 0.09, 1.345
         u = skin_u_rear(abs(x), z) - 0.008
         co = blender_co(u, x, z)
-        n = normal_at(co)
-        zv = n.normalized()
-        xv = Vector((sgn, 0.0, 0.0))
-        down = zv.cross(xv) if sgn > 0 else xv.cross(zv)
+        zv = normal_at(co).normalized()
+        up = Vector((0.0, 0.0, 1.0))
+        up_g = (up - up.dot(zv) * zv).normalized()
+        across = Vector((1.0, 0.0, 0.0))
+        across = (across - across.dot(zv) * zv).normalized()
         tilt = np.radians(16.0)
-        xv = (xv * np.cos(tilt) - down * np.sin(tilt) * 1.0).normalized()
+        xv = (across * np.cos(tilt) + up_g * (sgn * np.sin(tilt))).normalized()
         yv = zv.cross(xv)
-        rot = Matrix((xv, yv, zv)).transposed().to_4x4()
-        place(arm, co, rot)
+        place(arm, co, Matrix((xv, yv, zv)).transposed().to_4x4())
         out[arm.name] = arm
         for c in arm.children:
             out[c.name] = c
