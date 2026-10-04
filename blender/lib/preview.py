@@ -19,8 +19,8 @@ def studio(floor=True, world_strength=0.9):
     nt.links.new(sky.outputs["Color"], bg.inputs["Color"])
     bg.inputs["Strength"].default_value = world_strength * 0.25
     sc.world = world
-    for name, loc, size, energy in (("key", (4.5, -5.0, 5.0), 4.0, 1800), ("fill", (-5.5, -2.0, 3.0), 5.0, 700),
-                                    ("top", (0.0, 0.5, 6.5), 6.0, 1500), ("rim", (1.0, 7.0, 3.5), 4.0, 900)):
+    for name, loc, size, energy in (("key", (4.5, -5.0, 5.0), 4.0, 1100), ("fill", (-5.5, -2.0, 3.0), 5.0, 420),
+                                    ("top", (0.0, 0.5, 6.5), 6.0, 900), ("rim", (1.0, 7.0, 3.5), 4.0, 600)):
         light = bpy.data.lights.new(f"preview_{name}", "AREA")
         light.size = size
         light.energy = energy
@@ -71,6 +71,10 @@ def render(path, width=1200, height=700, samples=48):
     sc.render.resolution_y = height
     sc.render.film_transparent = False
     sc.view_settings.view_transform = "AgX"
+    try:
+        sc.view_settings.look = "AgX - Medium High Contrast"
+    except TypeError:
+        pass
     sc.render.filepath = path
     bpy.ops.render.render(write_still=True)
 

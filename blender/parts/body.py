@@ -376,7 +376,6 @@ THICKNESS = {
     "BODY_5301_front_fender": (0.008, "underbody_black"),
     "BODY_0000_fuel_filler_lid": (0.006, "paint_white"),
     "BODY_0000_body_shell": (0.012, "interior_plastic_grey"),
-    "LIGHT_8101_headlamp": (0.07, "lamp_housing"),
     "LIGHT_8105_rear_combination_lamp": (0.05, "lamp_reflector"),
 }
 
@@ -542,11 +541,46 @@ def thicken(obj, nrm, t, inner_key, rim_key=None):
 # ---------------------------------------------------------------------------
 
 
+def headlamp_cavity_field(u, x, z):
+    """Air pocket behind a left headlamp lens: 2 mm to 70 mm under the skin, inside the lamp outline."""
+    b = S.body(u, x, z)
+    d = np.maximum(b + 0.002, -(b + 0.07))
+    u_side = np.interp(z, [p[1] for p in HEADLAMP_SIDE], [p[0] for p in HEADLAMP_SIDE])
+    d = np.maximum(d, (HEADLAMP["x_in"] + 0.003) - x)
+    d = np.maximum(d, (HEADLAMP["z0"] + 0.003) - z)
+    d = np.maximum(d, z - (HEADLAMP["z1"] - 0.003))
+    return np.maximum(d, u - (u_side - 0.003))
+
+
+_CAVITY = {}
+
+
+def headlamp_cavity(side):
+    """Open bucket (back and side walls, facing into the lamp) as (co, polys) in Blender space."""
+    if "L" not in _CAVITY:
+        bm = M.sdf_to_bmesh(headlamp_cavity_field, ((-0.84, -0.55), (0.40, 1.0), (0.87, 1.11)), 0.004)
+        bm.verts.ensure_lookup_table()
+        co = np.array([v.co[:] for v in bm.verts])
+        polys = [[v.index for v in f.verts] for f in bm.faces]
+        bm.free()
+        cents = np.array([co[p].mean(axis=0) for p in polys])
+        u, x, z = M.to_body(cents)
+        keep = S.body(u, x, z) < -0.0045  # drop the face that sits right behind the lens
+        polys = [p[::-1] for p, k in zip(polys, keep) if k]  # flip so walls face into the pocket
+        _CAVITY["L"] = (co, polys)
+    co, polys = _CAVITY["L"]
+    if side == "L":
+        return co, polys
+    co = co.copy()
+    co[:, 0] *= -1.0
+    return co, [p[::-1] for p in polys]
+
+
 def headlamp_internals(obj, side):
-    """Chrome reflector bowls and bulbs inside a headlamp (main beam plus the clear corner lamp)."""
+    """Housing pocket, chrome reflector bowls and bulbs inside a headlamp (main beam plus the clear corner lamp)."""
     sgn = 1.0 if side == "L" else -1.0
     y_face = S.U_FRONT - HALF_WB
-    pieces = []
+    pieces = [(*headlamp_cavity(side), "lamp_housing")]
     main_c = (sgn * 0.60, y_face + 0.018, 0.99)
     co, pl = M.bowl_arrays(main_c, (0.0, -1.0, 0.0), 0.078, 0.040)
     pieces.append((co, pl, "lamp_reflector"))
