@@ -354,3 +354,28 @@ def append_geometry(obj, pieces):
     obj.data = new_me
     bpy.data.meshes.remove(me)
     set_custom_normals(obj, loops)
+
+
+def orient_polys(co, polys, ref_normals_fn):
+    """Reverse any polygon whose geometric normal opposes the reference field normal at its centre.
+
+    Decimation can fold a few triangles; on glass or double sided materials they render as dark
+    shards, so winding must always agree with the smooth custom normals.
+    """
+    co = np.asarray(co)
+    cents = np.array([co[p].mean(axis=0) for p in polys])
+    ref = ref_normals_fn(cents)
+    out = []
+    flipped = 0
+    for p, r in zip(polys, ref):
+        pts = co[p]
+        n = np.zeros(3)
+        for i in range(len(p)):  # Newell's method, robust for n-gons
+            a, b = pts[i], pts[(i + 1) % len(p)]
+            n += np.array([(a[1] - b[1]) * (a[2] + b[2]), (a[2] - b[2]) * (a[0] + b[0]), (a[0] - b[0]) * (a[1] + b[1])])
+        if np.dot(n, r) < 0:
+            out.append(list(p)[::-1])
+            flipped += 1
+        else:
+            out.append(list(p))
+    return out, flipped

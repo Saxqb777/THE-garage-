@@ -460,6 +460,7 @@ def make_part(key, items, vidx, vco):
     elif seal_verts:
         sv = np.array(sorted(seal_verts))
         co[sv] -= nrm[sv] * INSET["seal"]
+    polys, _ = M.orient_polys(co, polys, lambda c: M.sdf_vertex_normals(S.body, c))
     thick = thickness_for(key)
     obj = M.mesh_from_faces(key, co, polys, mats, [MAT.get(k) for k in mat_keys])
     if thick is not None:
@@ -669,6 +670,12 @@ def build_bumpers(h=0.007, ratio=0.07, log=lambda *a: print(*a, flush=True)):
         co = np.empty(len(me.vertices) * 3)
         me.vertices.foreach_get("co", co)
         co = co.reshape(-1, 3)
+        polys, flipped = M.orient_polys(co, [list(p.vertices) for p in me.polygons], lambda c, f=fn: M.sdf_vertex_normals(f, c))
+        obj.data = M.mesh_from_faces("_tmp", co, polys, None, []).data
+        bpy.data.objects.remove(bpy.data.objects["_tmp"])
+        bpy.data.meshes.remove(me)
+        me = obj.data
+        me.name = key
         nrm = M.sdf_vertex_normals(fn, co)
         me.materials.append(MAT.get("plastic_trim_grey"))
         loops = []
