@@ -629,21 +629,13 @@ def bumper_inserts(obj, key):
     M.append_geometry(obj, pieces)
 
 
-def build(h=0.008, ratio=0.12, log=lambda *a: print(*a, flush=True)):
+def build(h=0.008, target_faces=130000, log=lambda *a: print(*a, flush=True)):
     """Build every body part. Returns {part key: object}."""
     import time
     t0 = time.time()
-    bm = M.sdf_to_bmesh(S.body, ((-0.86, 4.0), (-1.0, 1.0), (0.40, 1.89)), h)
-    log(f"body skin: marching cubes {len(bm.faces)} faces in {time.time() - t0:.1f}s")
-    skin = M.bmesh_to_object(bm, "_skin")
-    bm.free()
-    M.decimate(skin, ratio)
-    bm = bmesh.new()
-    bm.from_mesh(skin.data)
-    me = skin.data
-    bpy.data.objects.remove(skin)
-    bpy.data.meshes.remove(me)
-    log(f"body skin: decimated to {len(bm.faces)} faces ({time.time() - t0:.1f}s)")
+    bm = M.sdf_to_bmesh(S.body, ((-0.86, 4.0), (-1.0, 1.0), (0.40, 1.89)), h, target_faces=target_faces)
+    log(f"body skin: marching cubes and decimation to {len(bm.faces)} faces in {time.time() - t0:.1f}s")
+    M.untangle(bm, S.body, log=log)
     sl = Slicer(bm)
     apply_cuts(sl)
     log(f"body skin: cuts done, {len(bm.faces)} faces ({time.time() - t0:.1f}s)")
@@ -658,17 +650,16 @@ def build(h=0.008, ratio=0.12, log=lambda *a: print(*a, flush=True)):
     return objs
 
 
-def build_bumpers(h=0.007, ratio=0.07, log=lambda *a: print(*a, flush=True)):
+def build_bumpers(h=0.007, target_faces=24000, log=lambda *a: print(*a, flush=True)):
     out = {}
     specs = {
         "BODY_5201_front_bumper": (S.front_bumper, ((-0.93, -0.30), (-1.0, 1.0), (0.40, 0.90))),
         "BODY_5202_rear_bumper": (S.rear_bumper, ((3.25, 4.01), (-1.0, 1.0), (0.45, 0.82))),
     }
     for key, (fn, bounds) in specs.items():
-        bm = M.sdf_to_bmesh(fn, bounds, h)
+        bm = M.sdf_to_bmesh(fn, bounds, h, target_faces=target_faces)
         obj = M.bmesh_to_object(bm, key)
         bm.free()
-        M.decimate(obj, ratio)
         me = obj.data
         co = np.empty(len(me.vertices) * 3)
         me.vertices.foreach_get("co", co)

@@ -22,7 +22,10 @@ Read this first in every session. Keep it current: when a decision is made, log 
 
 * Cloud container, wiped between sessions. Commit and push everything worth keeping to branch `claude/loving-brown-8dzpi5`.
 * Network: npm and PyPI work. Blender's site, Poly Haven, Partsouq, Amayama, Megazip, Sketchfab and usermanuals.au are blocked by the environment network policy (Saaqib can allow domains in the environment settings).
-* Blender: installed as a Python module, `pip install --break-system-packages bpy==4.5.14` (plus numpy, scipy, scikit-image, pillow). Run Blender scripts with `python3 blender/<script>.py`. Cycles CPU renders work headless; EEVEE does not.
+* Blender: installed as a Python module, `pip install --break-system-packages bpy==4.5.14 pillow numpy scipy scikit-image pymeshlab` and `apt-get install -y libopengl0` (pymeshlab's filters need it). Run Blender scripts with `python3 blender/<script>.py`. Cycles CPU renders work headless; EEVEE does not.
+* Build the car: `python3 blender/build_lc100.py` writes public/models/lc100.glb and lc100.report.json (about 5 minutes). Photo comparisons: `python3 blender/compare_photos.py <blend> <out dir>`.
+* Decimation goes through MeshLab (quadric, normals preserved). Blender's own collapse decimation folds triangles in flat areas, which shows as shards through glass.
+* Sending a message while a long command runs cancels that command; long builds run in the background.
 * Chromium for screenshots lives in /opt/pw-browsers.
 
 ## Conventions (the backbone)

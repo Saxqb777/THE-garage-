@@ -34,12 +34,31 @@ def sample_volume(fn, bounds, h):
     return vol, (us[0], xs[0], zs[0])
 
 
-def sdf_to_bmesh(fn, bounds, h):
-    """Marching cubes of fn's zero level set; returns a bmesh in Blender space."""
+def decimate_arrays(co, faces, target_faces):
+    """Quadric edge collapse in MeshLab with normal preservation, so no face ever flips.
+
+    Blender's collapse decimation folds triangles in flat areas; through glass those folds
+    show as shards. pymeshlab needs libopengl0 on Linux (apt) for its filter plugins.
+    """
+    import pymeshlab
+    ms = pymeshlab.MeshSet()
+    ms.add_mesh(pymeshlab.Mesh(vertex_matrix=np.asarray(co, np.float64), face_matrix=np.asarray(faces, np.int32)))
+    ms.meshing_decimation_quadric_edge_collapse(
+        targetfacenum=int(target_faces), qualitythr=0.4, preserveboundary=True, boundaryweight=2.0,
+        preservenormal=True, preservetopology=True, optimalplacement=True, planarquadric=True,
+        planarweight=0.001, autoclean=True)
+    m = ms.current_mesh()
+    return m.vertex_matrix(), m.face_matrix()
+
+
+def sdf_to_bmesh(fn, bounds, h, target_faces=None):
+    """Marching cubes of fn's zero level set (optionally decimated); returns a bmesh in Blender space."""
     vol, origin = sample_volume(fn, bounds, h)
     verts, faces, _, _ = marching_cubes(vol, 0.0, spacing=(h, h, h))
     verts = verts + np.array(origin)
     co = to_blender(verts[:, 0], verts[:, 1], verts[:, 2])
+    if target_faces:
+        co, faces = decimate_arrays(co, faces, target_faces)
     bm = bmesh.new()
     bverts = [bm.verts.new(v) for v in co]
     for f in faces:
@@ -379,3 +398,49 @@ def orient_polys(co, polys, ref_normals_fn):
         else:
             out.append(list(p))
     return out, flipped
+
+
+def untangle(bm, fn, threshold=0.5, iters=12, log=None):
+    """Relax vertices around folded or badly tilted faces and snap them back onto fn's surface.
+
+    Collapse decimation can fold triangles over their neighbours in flat areas, which shows as
+    shards through glass. A face is bad when its geometric normal and the field normal at its
+    centre disagree (dot below threshold). Its vertices and their neighbours get damped
+    Laplacian steps, each followed by Newton projection onto the zero level set.
+    """
+    def bad_faces():
+        bm.normal_update()
+        faces = list(bm.faces)
+        cents = np.array([f.calc_center_median() for f in faces])
+        ref = sdf_vertex_normals(fn, cents)
+        geo = np.array([f.normal[:] for f in faces])
+        dots = (geo * ref).sum(axis=1)
+        return [f for f, d in zip(faces, dots) if d < threshold]
+
+    def project(points):
+        for _ in range(3):
+            u, x, z = to_body(points)
+            d = fn(u, x, z)
+            n = sdf_vertex_normals(fn, points)
+            points = points - n * d[:, None]
+        return points
+
+    first = None
+    for it in range(iters):
+        bad = bad_faces()
+        if first is None:
+            first = len(bad)
+        if not bad:
+            break
+        verts = {v for f in bad for v in f.verts}
+        ring = {n for v in verts for e in v.link_edges for n in e.verts}
+        verts = list(verts | ring)
+        co = np.array([v.co[:] for v in verts])
+        avg = np.array([np.mean([e.other_vert(v).co[:] for e in v.link_edges], axis=0) for v in verts])
+        new = project(0.5 * co + 0.5 * avg)
+        for v, c in zip(verts, new):
+            v.co = c
+    remaining = len(bad_faces())
+    if log:
+        log(f"untangle: {first} bad faces before, {remaining} after")
+    return remaining
