@@ -15,8 +15,8 @@ LENGTH = FRONT_OVERHANG + WHEELBASE + REAR_OVERHANG  # 4.89
 BODY_HALF_WIDTH = 0.94  # door skin, widest point (no wheel arch flares on this car)
 ROOF_HEIGHT = 1.835  # no roof rails on this car
 
-TRACK_FRONT = 1.62
-TRACK_REAR = 1.60
+TRACK_FRONT = 1.62  # owner's manual p.324
+TRACK_REAR = 1.615  # owner's manual p.324
 TIRE_OUTER_RADIUS = 0.3955  # 275/70R16
 TIRE_LOADED_RADIUS = 0.385
 WHEEL_CENTER_Z = TIRE_LOADED_RADIUS

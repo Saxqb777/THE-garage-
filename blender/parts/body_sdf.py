@@ -189,7 +189,7 @@ def front_bumper(u, x, z):
     # outer vents and centre intake recessed 35 mm
     for x0, x1, z0, z1 in ((0.47, 0.79, 0.555, 0.668), (-0.79, -0.47, 0.555, 0.668), (-0.40, 0.40, 0.57, 0.655)):
         bx = np.maximum(np.abs(x - 0.5 * (x0 + x1)) - 0.5 * (x1 - x0), np.abs(z - 0.5 * (z0 + z1)) - 0.5 * (z1 - z0))
-        recess = smax(bx + 0.006, (C.U_FRONT_END + 0.035) - u, 0.0)
+        recess = smax(bx, u - (C.U_FRONT_END + 0.035), 0.0)
         d = smax(d, -recess, 0.006)
     d = smax(d, -wheel_wells(u, ax, z) - 0.008, 0.01)
     return smax(d, -(d + 0.03), 0.0)  # 30 mm shell
@@ -200,7 +200,7 @@ def rear_bumper(u, x, z):
     front_u = 3.30
     half_len = 0.5 * (C.U_REAR_END - front_u)
     centre = 0.5 * (C.U_REAR_END + front_u)
-    rc = 0.22
+    rc = 0.17  # tight enough to wrap the body's rear corner with a 1 cm margin
     qx = np.abs(u - centre) - (half_len - rc)
     qy = ax - (0.972 - rc)
     plan = np.sqrt(np.maximum(qx, 0) ** 2 + np.maximum(qy, 0) ** 2) + np.minimum(np.maximum(qx, qy), 0) - rc

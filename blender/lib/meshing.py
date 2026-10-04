@@ -259,3 +259,98 @@ def sdf_vertex_normals(fn, co):
     gz = fn(u, x, z + eps) - fn(u, x, z - eps)
     g = np.stack([gx, gu, gz], axis=-1)  # Blender order X, Y, Z
     return g / np.maximum(np.linalg.norm(g, axis=-1, keepdims=True), 1e-12)
+
+
+def box_arrays(center, size, bevel=0.0, segments=2):
+    """Vertices (Blender space) and polygons of an axis aligned, optionally bevelled box."""
+    bm = bmesh.new()
+    bmesh.ops.create_cube(bm, size=1.0)
+    for v in bm.verts:
+        v.co.x = center[0] + v.co.x * size[0]
+        v.co.y = center[1] + v.co.y * size[1]
+        v.co.z = center[2] + v.co.z * size[2]
+    if bevel > 0:
+        bmesh.ops.bevel(bm, geom=list(bm.edges), offset=bevel, segments=segments, affect="EDGES", profile=0.5)
+    bm.verts.ensure_lookup_table()
+    co = np.array([v.co[:] for v in bm.verts])
+    polys = [[v.index for v in f.verts] for f in bm.faces]
+    bm.free()
+    return co, polys
+
+
+def bowl_arrays(center, axis, radius, depth, rings=8, segments=32):
+    """Parabolic reflector bowl opening along `axis` (unit vector), rim centred at `center`."""
+    axis = np.asarray(axis, float)
+    axis /= np.linalg.norm(axis)
+    helper = np.array([0.0, 0.0, 1.0]) if abs(axis[2]) < 0.9 else np.array([1.0, 0.0, 0.0])
+    e1 = np.cross(axis, helper)
+    e1 /= np.linalg.norm(e1)
+    e2 = np.cross(axis, e1)
+    co = []
+    for i in range(rings + 1):
+        r = radius * max(i / rings, 0.12)
+        back = depth * (1.0 - (r / radius) ** 2)
+        for j in range(segments):
+            a = 2 * np.pi * j / segments
+            co.append(np.asarray(center) + e1 * r * np.cos(a) + e2 * r * np.sin(a) - axis * back)
+    polys = []
+    for i in range(rings):
+        for j in range(segments):
+            a = i * segments + j
+            b = i * segments + (j + 1) % segments
+            polys.append([a, b, b + segments, a + segments])
+    polys.append(list(range(segments))[::-1])
+    return np.array(co), polys
+
+
+def sphere_arrays(center, radius, rings=8, segments=12):
+    bm = bmesh.new()
+    bmesh.ops.create_uvsphere(bm, u_segments=segments, v_segments=rings, radius=radius)
+    bm.verts.ensure_lookup_table()
+    co = np.array([v.co[:] for v in bm.verts]) + np.asarray(center)
+    polys = [[v.index for v in f.verts] for f in bm.faces]
+    bm.free()
+    return co, polys
+
+
+def append_geometry(obj, pieces):
+    """Append (co, polys, material_key) pieces to a mesh object, keeping its custom normals.
+
+    Existing loops keep their custom normals; new faces get flat face normals.
+    """
+    me = obj.data
+    old_loop_normals = [tuple(cn.vector) for cn in me.corner_normals]
+    co = np.empty(len(me.vertices) * 3)
+    me.vertices.foreach_get("co", co)
+    co = co.reshape(-1, 3)
+    polys = [list(p.vertices) for p in me.polygons]
+    mats = [p.material_index for p in me.polygons]
+    mat_keys = [m.name for m in me.materials]
+    n_old_polys = len(polys)
+    for pco, ppolys, key in pieces:
+        if key not in mat_keys:
+            mat_keys.append(key)
+        mi = mat_keys.index(key)
+        base = len(co)
+        co = np.vstack([co, pco])
+        polys.extend([[base + i for i in p] for p in ppolys])
+        mats.extend([mi] * len(ppolys))
+    from blender.lib import materials as MAT
+    new_me = bpy.data.meshes.new(me.name)
+    new_me.from_pydata([tuple(v) for v in co], [], polys)
+    for k in mat_keys:
+        new_me.materials.append(MAT.get(k))
+    new_me.polygons.foreach_set("material_index", np.asarray(mats, np.int32))
+    new_me.update()
+    loops = []
+    li = 0
+    for pi, p in enumerate(new_me.polygons):
+        for _ in p.loop_indices:
+            if pi < n_old_polys:
+                loops.append(old_loop_normals[li])
+                li += 1
+            else:
+                loops.append(tuple(p.normal))
+    obj.data = new_me
+    bpy.data.meshes.remove(me)
+    set_custom_normals(obj, loops)

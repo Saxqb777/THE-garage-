@@ -373,8 +373,8 @@ THICKNESS = {
     "BODY_5301_front_fender": (0.008, "underbody_black"),
     "BODY_0000_fuel_filler_lid": (0.006, "paint_white"),
     "BODY_0000_body_shell": (0.012, "interior_plastic_grey"),
-    "LIGHT_8101_headlamp": (0.09, "lamp_reflector"),
-    "LIGHT_8105_rear_combination_lamp": (0.06, "lamp_reflector"),
+    "LIGHT_8101_headlamp": (0.07, "lamp_housing"),
+    "LIGHT_8105_rear_combination_lamp": (0.05, "lamp_reflector"),
 }
 
 INSET = {"glass": 0.008, "seal": 0.003, "lamp": 0.002}
@@ -488,10 +488,10 @@ def thicken(obj, nrm, t, inner_key, rim_key=None):
             k = (min(a, b), max(a, b))
             edge_count[k] = edge_count.get(k, 0) + 1
     boundary = []
-    for p in polys:
+    for p, m in zip(polys, mats):
         for a, b in zip(p, p[1:] + p[:1]):
             if edge_count[(min(a, b), max(a, b))] == 1:
-                boundary.append((a, b))
+                boundary.append((a, b, m))
     inner_co = co - nrm * t
     all_co = np.vstack([co, inner_co])
     new_polys = list(polys)
@@ -507,9 +507,10 @@ def thicken(obj, nrm, t, inner_key, rim_key=None):
     for p in polys:
         new_polys.append([i + nv for i in reversed(p)])
         new_mats.append(inner_idx)
-    for a, b in boundary:
+    seal_idx = mat_list.index("rubber_seal") if "rubber_seal" in mat_list else None
+    for a, b, m in boundary:
         new_polys.append([b, a, a + nv, b + nv])
-        new_mats.append(rim_idx)
+        new_mats.append(seal_idx if (seal_idx is not None and m == seal_idx) else rim_idx)
     name = obj.name
     old_me = obj.data
     new_me = bpy.data.meshes.new(name)
@@ -538,6 +539,55 @@ def thicken(obj, nrm, t, inner_key, rim_key=None):
 # ---------------------------------------------------------------------------
 
 
+def headlamp_internals(obj, side):
+    """Chrome reflector bowls and bulbs inside a headlamp (main beam plus the clear corner lamp)."""
+    sgn = 1.0 if side == "L" else -1.0
+    y_face = S.U_FRONT - HALF_WB
+    pieces = []
+    main_c = (sgn * 0.60, y_face + 0.018, 0.99)
+    co, pl = M.bowl_arrays(main_c, (0.0, -1.0, 0.0), 0.078, 0.040)
+    pieces.append((co, pl, "lamp_reflector"))
+    co, pl = M.sphere_arrays((sgn * 0.60, y_face + 0.030, 0.99), 0.011)
+    pieces.append((co, pl, "lamp_lens_clear"))
+    ring_c = (sgn * 0.495, y_face + 0.016, 0.99)
+    co, pl = M.bowl_arrays(ring_c, (0.0, -1.0, 0.0), 0.038, 0.022)
+    pieces.append((co, pl, "lamp_reflector"))
+    corner_axis = (sgn * 0.75, -0.66, 0.0)
+    corner_c = (sgn * 0.835, -0.715 - HALF_WB, 0.99)
+    co, pl = M.bowl_arrays(corner_c, corner_axis, 0.050, 0.030)
+    pieces.append((co, pl, "lamp_reflector"))
+    co, pl = M.sphere_arrays((sgn * 0.828, -0.708 - HALF_WB, 0.99), 0.009)
+    pieces.append((co, pl, "lamp_lens_amber"))
+    M.append_geometry(obj, pieces)
+
+
+def bumper_inserts(obj, key):
+    pieces = []
+    if key.endswith("front_bumper"):
+        face = C.U_FRONT_END - HALF_WB
+        for x0, x1, z0, z1 in ((0.47, 0.79, 0.555, 0.668), (-0.79, -0.47, 0.555, 0.668), (-0.40, 0.40, 0.57, 0.655)):
+            cx, cz, w, h = 0.5 * (x0 + x1), 0.5 * (z0 + z1), x1 - x0, z1 - z0
+            co, pl = M.box_arrays((cx, face + 0.034, cz), (w, 0.006, h))
+            pieces.append((co, pl, "plastic_black_matte"))
+            for t in (1 / 3, 2 / 3):
+                co, pl = M.box_arrays((cx, face + 0.020, z0 + t * h), (w - 0.004, 0.022, 0.009), bevel=0.002)
+                pieces.append((co, pl, "plastic_black_matte"))
+    else:
+        face = C.U_REAR_END - HALF_WB
+        for sgn in (1, -1):
+            co, pl = M.box_arrays((sgn * 0.78, face - 0.001, 0.622), (0.16, 0.008, 0.038), bevel=0.003)
+            pieces.append((co, pl, "lamp_lens_red"))
+        co, pl = M.box_arrays((0.0, face + 0.02, 0.475), (0.075, 0.20, 0.07), bevel=0.006)
+        pieces.append((co, pl, "underbody_black"))
+        co, pl = M.box_arrays((0.0, face + 0.13, 0.49), (0.05, 0.10, 0.03), bevel=0.004)
+        pieces.append((co, pl, "underbody_black"))
+        co, pl = M.box_arrays((0.0, face + 0.165, 0.515), (0.022, 0.022, 0.03))
+        pieces.append((co, pl, "chrome"))
+        co, pl = M.sphere_arrays((0.0, face + 0.165, 0.548), 0.024, rings=10, segments=16)
+        pieces.append((co, pl, "chrome"))
+    M.append_geometry(obj, pieces)
+
+
 def build(h=0.008, ratio=0.12, log=lambda *a: print(*a, flush=True)):
     """Build every body part. Returns {part key: object}."""
     import time
@@ -559,6 +609,10 @@ def build(h=0.008, ratio=0.12, log=lambda *a: print(*a, flush=True)):
     faces, region = classify(bm)
     objs = build_objects(bm, faces, region)
     bm.free()
+    for side in ("L", "R"):
+        key = f"LIGHT_8101_headlamp_{side}"
+        if key in objs:
+            headlamp_internals(objs[key], side)
     log(f"body parts: {len(objs)} objects ({time.time() - t0:.1f}s)")
     return objs
 
@@ -579,29 +633,14 @@ def build_bumpers(h=0.007, ratio=0.07, log=lambda *a: print(*a, flush=True)):
         me.vertices.foreach_get("co", co)
         co = co.reshape(-1, 3)
         nrm = M.sdf_vertex_normals(fn, co)
-        mats = ["plastic_trim_grey", "plastic_black_matte", "lamp_lens_red"]
-        for m in mats:
-            me.materials.append(MAT.get(m))
-        idx = []
-        for p in me.polygons:
-            c = np.array(p.center)
-            u, x, z = c[1] + HALF_WB, c[0], c[2]
-            m = 0
-            if key.endswith("front_bumper"):
-                for x0, x1, z0, z1 in ((0.47, 0.79, 0.555, 0.668), (-0.79, -0.47, 0.555, 0.668), (-0.40, 0.40, 0.57, 0.655)):
-                    if x0 - 0.002 < x < x1 + 0.002 and z0 - 0.002 < z < z1 + 0.002 and u > C.U_FRONT_END + 0.008:
-                        m = 1
-            else:
-                if 0.66 < abs(x) < 0.86 and 0.60 < z < 0.645 and u > 3.95:
-                    m = 2
-            idx.append(m)
-        me.polygons.foreach_set("material_index", np.asarray(idx, np.int32))
+        me.materials.append(MAT.get("plastic_trim_grey"))
         loops = []
         for p in me.polygons:
             for li in p.loop_indices:
                 loops.append(nrm[me.loops[li].vertex_index])
         M.set_custom_normals(obj, loops)
+        bumper_inserts(obj, key)
         obj["partKey"] = key
         out[key] = obj
-        log(f"{key}: {len(me.polygons)} faces")
+        log(f"{key}: {len(obj.data.polygons)} faces")
     return out
