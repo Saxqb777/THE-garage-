@@ -1,6 +1,6 @@
 'use client';
 
-import { Component, Suspense, useEffect, type ReactNode } from 'react';
+import { Component, Suspense, useEffect, useMemo, type ReactNode } from 'react';
 import { Canvas, addAfterEffect, addEffect, useThree } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { Bloom, EffectComposer, SMAA, ToneMapping, Vignette } from '@react-three/postprocessing';
@@ -8,8 +8,10 @@ import { ToneMappingMode } from 'postprocessing';
 import { NoToneMapping, SRGBColorSpace } from 'three';
 import CarModel from './car/CarModel';
 import Ground from './Ground';
-import Lighting from './Lighting';
+import Lighting, { SceneSwap } from './Lighting';
+import { SCENES, timeOfDayLook } from './scenes';
 import { useGarage } from './store';
+import { WarmthEffect } from './Warmth';
 
 // Hero 3/4 front view from the front left (the car faces +Z, its left side is +X).
 // ?cam=x,y,z&look=x,y,z&fov=35 override it, which the photo comparison shots use.
@@ -32,6 +34,7 @@ export default function Experience() {
       gl={{ antialias: false, toneMapping: NoToneMapping, outputColorSpace: SRGBColorSpace }}
     >
       <Lighting />
+      <SceneSwap />
       <Ground />
       <ModelBoundary url={url}>
         <Suspense fallback={null}>
@@ -50,15 +53,27 @@ export default function Experience() {
       />
       <PostFX />
       <RenderStats />
+      {query.has('debug') && <DevHandle />}
     </Canvas>
   );
 }
 
 /** ACES in the composer (the canvas renders linear), a whisper of bloom on the highlights, SMAA, soft vignette. */
 function PostFX() {
+  const key = useGarage((s) => s.scene);
+  const scene = SCENES[key];
+  const warmth = useMemo(
+    () =>
+      new WarmthEffect(() => {
+        const s = useGarage.getState();
+        return timeOfDayLook(SCENES[s.scene], s.timeOfDay).warmth;
+      }),
+    [],
+  );
   return (
     <EffectComposer multisampling={0}>
-      <Bloom mipmapBlur intensity={0.35} luminanceThreshold={1.0} luminanceSmoothing={0.2} />
+      <Bloom mipmapBlur intensity={scene.bloom.intensity} luminanceThreshold={scene.bloom.threshold} luminanceSmoothing={0.2} />
+      <primitive object={warmth} />
       <ToneMapping mode={ToneMappingMode.ACES_FILMIC} />
       <Vignette eskil={false} offset={0.25} darkness={0.55} />
       <SMAA />
@@ -70,6 +85,7 @@ function PostFX() {
 function RenderStats() {
   const gl = useThree((s) => s.gl);
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/immutability -- renderer stats flag, not React state
     gl.info.autoReset = false;
     const stop = addEffect(() => gl.info.reset());
     return () => {
@@ -89,6 +105,15 @@ function RenderStats() {
       }),
     [gl],
   );
+  return null;
+}
+
+/** ?debug exposes the R3F state as window.__r3f for scripted inspection. */
+function DevHandle() {
+  const state = useThree();
+  useEffect(() => {
+    (window as unknown as { __r3f?: unknown }).__r3f = state;
+  }, [state]);
   return null;
 }
 

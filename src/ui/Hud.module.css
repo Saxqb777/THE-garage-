@@ -159,3 +159,78 @@
   margin-top: 6px;
   list-style: none;
 }
+
+.scenes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.scenes button {
+  padding: 7px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--muted);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.scenes button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--fg);
+}
+
+.scenes button[aria-busy='true'] {
+  animation: loading 1s ease-in-out infinite alternate;
+}
+
+@keyframes loading {
+  to {
+    opacity: 0.5;
+  }
+}
+
+.scenes .sceneOn {
+  border-color: var(--accent);
+  background: rgba(242, 195, 107, 0.14);
+  color: var(--fg);
+}
+
+.controls {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.slider {
+  display: grid;
+  gap: 4px;
+}
+
+.slider[aria-disabled='true'] {
+  opacity: 0.4;
+}
+
+.slider input {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.toggle input {
+  accent-color: var(--accent);
+}

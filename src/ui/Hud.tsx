@@ -1,9 +1,10 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useProgress } from '@react-three/drei';
+import { useEnvironment, useProgress } from '@react-three/drei';
 import { CREDITS } from '@/data/credits';
 import contract from '@/data/parts.m1.json';
+import { SCENES, SCENE_ORDER, hdriUrl } from '@/scene/scenes';
 import { PLACEHOLDER_URL, useGarage } from '@/scene/store';
 import styles from './Hud.module.css';
 
@@ -19,15 +20,26 @@ export default function Hud() {
   const hingesOpen = useGarage((s) => s.hingesOpen);
   const setHingesOpen = useGarage((s) => s.setHingesOpen);
   const toggleHinges = useGarage((s) => s.toggleHinges);
+  const sceneKey = useGarage((s) => s.targetScene);
+  const shownKey = useGarage((s) => s.scene);
+  const setScene = useGarage((s) => s.setScene);
+  const timeOfDay = useGarage((s) => s.timeOfDay);
+  const setTimeOfDay = useGarage((s) => s.setTimeOfDay);
+  const lightsOn = useGarage((s) => s.lightsOn);
+  const setLightsOn = useGarage((s) => s.setLightsOn);
+  const scene = SCENES[sceneKey];
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.repeat || e.metaKey || e.ctrlKey || e.altKey) return;
       if (e.key === 'h' || e.key === 'H') toggleHinges();
+      if (e.key === 'l' || e.key === 'L') setLightsOn(!useGarage.getState().lightsOn);
+      const n = Number(e.key);
+      if (n >= 1 && n <= SCENE_ORDER.length) setScene(SCENE_ORDER[n - 1]);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [toggleHinges]);
+  }, [toggleHinges, setLightsOn, setScene]);
 
   return (
     <aside className={styles.hud}>
@@ -70,7 +82,45 @@ export default function Hud() {
         </button>
       </div>
 
-      <p className={styles.hint}>Drag to orbit · scroll to zoom · H toggles doors</p>
+      <div className={styles.scenes} role="radiogroup" aria-label="Scene">
+        {SCENE_ORDER.map((k, i) => (
+          <button
+            key={k}
+            type="button"
+            role="radio"
+            aria-checked={k === sceneKey}
+            aria-busy={k === sceneKey && k !== shownKey}
+            className={k === sceneKey ? styles.sceneOn : undefined}
+            title={`${SCENES[k].hint} (${i + 1})`}
+            onPointerEnter={() => useEnvironment.preload({ files: hdriUrl(SCENES[k]) })}
+            onFocus={() => useEnvironment.preload({ files: hdriUrl(SCENES[k]) })}
+            onClick={() => setScene(k)}
+          >
+            {SCENES[k].label}
+          </button>
+        ))}
+      </div>
+
+      <div className={styles.controls}>
+        <label className={styles.slider} aria-disabled={!scene.timeOfDay}>
+          <span>Time of day</span>
+          <input
+            type="range"
+            min={0}
+            max={1}
+            step={0.01}
+            value={timeOfDay}
+            disabled={!scene.timeOfDay}
+            onChange={(e) => setTimeOfDay(Number(e.target.value))}
+          />
+        </label>
+        <label className={styles.toggle}>
+          <input type="checkbox" checked={lightsOn} onChange={(e) => setLightsOn(e.target.checked)} />
+          <span>Lights</span>
+        </label>
+      </div>
+
+      <p className={styles.hint}>Drag to orbit · scroll to zoom · H doors · L lights · 1 to 5 scenes</p>
       {url === PLACEHOLDER_URL && <p className={styles.badge}>placeholder blockout</p>}
 
       <details className={styles.credits}>

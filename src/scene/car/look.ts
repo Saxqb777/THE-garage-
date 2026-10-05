@@ -193,3 +193,122 @@ export function applyLook(root: Object3D) {
     mesh.material = Array.isArray(mesh.material) ? next : next[0];
   });
 }
+
+/**
+ * Night mode: lamps and the dash glow, decided per part, because front and rear lamps share
+ * material names (a reflector is a reflector). Headlamps glow warm white, the rear combination
+ * lamps glow red as tail lights (no stop or reverse lamps: the car is parked), the cluster
+ * lights up; everything else stays dark. Glowing meshes get a cloned material, so switching off
+ * just puts the day material back. Textured lamps use their colour map as the emissive map,
+ * which lights the lens pattern instead of a flat slab.
+ */
+type Glow = {
+  emissive: string;
+  intensity: number;
+  /** Light the colour map's pattern instead of a flat colour. */
+  useMap?: boolean;
+  /** Only the red parts of the map glow (tail lamp red, not the clear reverse lamp). */
+  redOnly?: boolean;
+};
+
+const NIGHT_BY_PART: { part: RegExp; glow: Record<string, Glow> }[] = [
+  {
+    part: /^LIGHT_8101_headlamp_/,
+    glow: {
+      lamp_reflector: { emissive: '#fff3dc', intensity: 6 },
+      lamp_lens_clear: { emissive: '#fff6e4', intensity: 1.6 },
+      tex_lamp_front: { emissive: '#fff4e0', intensity: 3.5, useMap: true },
+    },
+  },
+  {
+    // the red is painted in the lamp texture under a clear lens
+    part: /^LIGHT_8105_rear_combination_lamp_/,
+    glow: {
+      tex_lamp_rear: { emissive: '#ff2a1c', intensity: 9, useMap: true, redOnly: true },
+      lamp_lens_red: { emissive: '#ff1a10', intensity: 7 },
+    },
+  },
+  { part: /.*/, glow: { tex_cluster: { emissive: '#ffd8a6', intensity: 1.4, useMap: true } } },
+];
+
+// SYSTEM_GROUPCODE_part_name_side, e.g. LIGHT_8105_rear_combination_lamp_L
+const PART_NAME = /^[A-Z]+_\d{4}_[A-Za-z0-9_]+$/;
+
+function partKeyOf(o: Object3D): string {
+  for (let p: Object3D | null = o; p; p = p.parent) {
+    const name = p.userData.name;
+    if (typeof name === 'string' && PART_NAME.test(name)) return name;
+  }
+  return '';
+}
+
+function glowFor(part: string): Record<string, Glow> {
+  const out: Record<string, Glow> = {};
+  // first matching rule wins per material
+  for (const rule of NIGHT_BY_PART) {
+    if (!rule.part.test(part)) continue;
+    for (const [name, g] of Object.entries(rule.glow)) out[name] ??= g;
+  }
+  return out;
+}
+
+/** Masks the emissive map to its red areas: redness = r minus the larger of g and b. */
+function redOnly(m: MeshPhysicalMaterial) {
+  m.onBeforeCompile = (shader) => {
+    shader.fragmentShader = shader.fragmentShader.replace(
+      '#include <emissivemap_fragment>',
+      /* glsl */ `
+      #ifdef USE_EMISSIVEMAP
+        vec4 emissiveColor = texture2D(emissiveMap, vEmissiveMapUv);
+        float redness = clamp((emissiveColor.r - max(emissiveColor.g, emissiveColor.b)) * 3.0, 0.0, 1.0);
+        totalEmissiveRadiance *= redness * (0.4 + 0.6 * emissiveColor.r);
+      #endif`,
+    );
+  };
+  m.customProgramCacheKey = () => 'redOnlyEmissive';
+}
+
+const nightMade = new WeakMap<Object3D, Map<string, Material>>();
+
+export function setLights(root: Object3D, on: boolean) {
+  let made = nightMade.get(root);
+  if (!made) {
+    made = new Map();
+    nightMade.set(root, made);
+  }
+  root.traverse((o) => {
+    const mesh = o as Mesh;
+    if (!mesh.isMesh) return;
+    const day = (mesh.userData.dayMaterial ?? mesh.material) as Material | Material[];
+    if (!on) {
+      if (mesh.userData.dayMaterial) {
+        mesh.material = day;
+        delete mesh.userData.dayMaterial;
+      }
+      return;
+    }
+    const glow = glowFor(partKeyOf(mesh));
+    let changed = false;
+    const next = ([] as Material[]).concat(day).map((m) => {
+      const g = glow[m.name];
+      if (!g) return m;
+      changed = true;
+      const id = `${m.name}|${g.emissive}|${g.intensity}`;
+      let n = made.get(id);
+      if (!n) {
+        const lit = (m as MeshPhysicalMaterial).clone();
+        lit.emissive.set(g.emissive);
+        lit.emissiveIntensity = g.intensity;
+        if (g.useMap && lit.map) lit.emissiveMap = lit.map;
+        if (g.redOnly && lit.emissiveMap) redOnly(lit);
+        made.set(id, lit);
+        n = lit;
+      }
+      return n;
+    });
+    if (changed) {
+      mesh.userData.dayMaterial = day;
+      mesh.material = Array.isArray(day) ? next : next[0];
+    }
+  });
+}
