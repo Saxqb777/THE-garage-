@@ -12,8 +12,15 @@ import Lighting from './Lighting';
 import { useGarage } from './store';
 
 // Hero 3/4 front view from the front left (the car faces +Z, its left side is +X).
-const CAMERA_POSITION: [number, number, number] = [5.5, 1.6, 6.0];
-const CAMERA_TARGET: [number, number, number] = [0, 0.8, 0.2];
+// ?cam=x,y,z&look=x,y,z&fov=35 override it, which the photo comparison shots use.
+const query = new URLSearchParams(typeof window === 'undefined' ? '' : window.location.search);
+const vec3 = (key: string, fallback: [number, number, number]): [number, number, number] => {
+  const v = query.get(key)?.split(',').map(Number);
+  return v && v.length === 3 && v.every(Number.isFinite) ? [v[0], v[1], v[2]] : fallback;
+};
+const CAMERA_POSITION = vec3('cam', [5.5, 1.6, 6.0]);
+const CAMERA_TARGET = vec3('look', [0, 0.8, 0.2]);
+const CAMERA_FOV = Number(query.get('fov')) || 35;
 
 export default function Experience() {
   const url = useGarage((s) => s.modelUrl);
@@ -21,7 +28,7 @@ export default function Experience() {
     <Canvas
       shadows
       dpr={[1, 2]}
-      camera={{ fov: 35, near: 0.1, far: 100, position: CAMERA_POSITION }}
+      camera={{ fov: CAMERA_FOV, near: 0.1, far: 100, position: CAMERA_POSITION }}
       gl={{ antialias: false, toneMapping: NoToneMapping, outputColorSpace: SRGBColorSpace }}
     >
       <Lighting />

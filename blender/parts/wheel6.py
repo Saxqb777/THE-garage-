@@ -73,16 +73,16 @@ T_SPOKE = 0.024                                 # plate thickness
 # position s, so every edge is a straight line in the wheel plane.
 S_HUB = R_HUB                                   # where the linear widths are anchored
 S_RIM = R_LIP_IN
-W_SPOKE_HUB = 0.0245                            # spoke half width at S_HUB
+W_SPOKE_HUB = 0.0275                            # spoke half width at S_HUB
 W_SPOKE_RIM = 0.0335                            # spoke half width at S_RIM
 T_SLOT_HUB = 0.0105                             # slot width
 T_SLOT_RIM = 0.0125
-T_RIB_HUB = 0.0135                              # rib between slot and window
+T_RIB_HUB = 0.0150                              # rib between slot and window
 T_RIB_RIM = 0.0175
 
 RHO_WIN_IN = 0.0985                             # window inner arc
 RHO_WIN_OUT = 0.1865                            # window outer arc
-R_WIN_FILLET = 0.0125                           # window corner radius
+R_WIN_FILLET = 0.0120                           # window corner radius
 RHO_SLOT_IN = 0.1035
 RHO_SLOT_OUT = 0.1795
 

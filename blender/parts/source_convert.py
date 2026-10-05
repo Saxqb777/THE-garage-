@@ -188,7 +188,7 @@ def classify(src, smat, c, n):
     if src == "gnh":
         return "BODY_0000_body_shell", "tex_paint_white"  # rear lip spoiler, as on the set 2 reference car
     if src == PAINT and 0.28 < z < 0.52 and ax > 0.80 and -1.0 < y < 0.98:
-        return f"BODY_0000_side_step_{s}", "tex_paint_white"  # painted step board under the doors
+        return None  # thick painted board under the doors; the slimmer step from the cladding object stays
     if src == GREY and ax > 0.95 and 0.64 < z < 0.74 and -1.0 < y < 1.3:
         return None  # VXR lower door mouldings
     if src == CHROME and inbox(c, R.REAR_GARNISH):
