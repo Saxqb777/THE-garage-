@@ -297,60 +297,6 @@
       "kind": "mesh"
     },
     {
-      "key": "GLASS_6751_front_door_glass_L",
-      "system": "GLASS",
-      "groupCode": "6751",
-      "groupStatus": "verified",
-      "nameEn": "Front door glass, left",
-      "parent": "DOOR_6751_front_door_L",
-      "kind": "mesh"
-    },
-    {
-      "key": "GLASS_6751_front_door_glass_R",
-      "system": "GLASS",
-      "groupCode": "6751",
-      "groupStatus": "verified",
-      "nameEn": "Front door glass, right",
-      "parent": "DOOR_6751_front_door_R",
-      "kind": "mesh"
-    },
-    {
-      "key": "GLASS_6755_rear_door_glass_L",
-      "system": "GLASS",
-      "groupCode": "6755",
-      "groupStatus": "verified",
-      "nameEn": "Rear door glass, left",
-      "parent": "DOOR_6755_rear_door_L",
-      "kind": "mesh"
-    },
-    {
-      "key": "GLASS_6755_rear_door_glass_R",
-      "system": "GLASS",
-      "groupCode": "6755",
-      "groupStatus": "verified",
-      "nameEn": "Rear door glass, right",
-      "parent": "DOOR_6755_rear_door_R",
-      "kind": "mesh"
-    },
-    {
-      "key": "GLASS_6755_rear_door_quarter_glass_L",
-      "system": "GLASS",
-      "groupCode": "6755",
-      "groupStatus": "verified",
-      "nameEn": "Rear door quarter glass (fixed), left",
-      "parent": "DOOR_6755_rear_door_L",
-      "kind": "mesh"
-    },
-    {
-      "key": "GLASS_6755_rear_door_quarter_glass_R",
-      "system": "GLASS",
-      "groupCode": "6755",
-      "groupStatus": "verified",
-      "nameEn": "Rear door quarter glass (fixed), right",
-      "parent": "DOOR_6755_rear_door_R",
-      "kind": "mesh"
-    },
-    {
       "key": "GLASS_6152_quarter_window_glass_L",
       "system": "GLASS",
       "groupCode": "6152",

@@ -14,7 +14,6 @@ import Explode from './explode/Explode';
 import Ground from './Ground';
 import Hotspots from './Hotspots';
 import Lift from './Lift';
-import PartHotspots from './PartHotspots';
 import Lighting, { SceneSwap } from './Lighting';
 import { SCENES, timeOfDayLook } from './scenes';
 import { useGarage } from './store';
@@ -63,7 +62,6 @@ export default function Experience() {
       <Explode />
       <Lift />
       <Hotspots />
-      <PartHotspots />
       <PostFX />
       <RenderStats />
       {query.has('debug') && <DevHandle />}

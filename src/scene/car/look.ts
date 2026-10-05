@@ -10,6 +10,7 @@ import {
   type Object3D,
   type Texture,
   type WebGLProgramParametersWithUniforms,
+  AdditiveBlending,
 } from 'three';
 import { partKeyOf } from './parts';
 
@@ -67,6 +68,7 @@ const TUNES: Record<string, Tune> = {
   underbody_black: { color: '#121212', roughness: 0.85, metalness: 0.1, dust: 1 },
   body_cavity: { color: '#0a0a0a', roughness: 0.9, metalness: 0 },
   interior_plastic_grey: { color: '#4a4c4f', roughness: 0.62, metalness: 0, sheen: 0.2, sheenRoughness: 0.9, sheenColor: '#888' },
+  door_card_grey: { color: '#7d8083', roughness: 0.8, metalness: 0, sheen: 0.3, sheenRoughness: 0.9, sheenColor: '#999' },
   interior_cloth_grey: { color: '#5c5e5f', roughness: 0.95, metalness: 0, sheen: 0.6, sheenRoughness: 0.8, sheenColor: '#9a9a9a' },
   interior_carpet: { color: '#2a2a2c', roughness: 1, metalness: 0 },
   tex_seat_cloth: { roughness: 0.95, metalness: 0, keepMap: true, sheen: 0.6, sheenRoughness: 0.8, sheenColor: '#9a9a9a' },
@@ -286,10 +288,11 @@ function ghost() {
       varying vec3 vView;
       void main() {
         float f = pow(1.0 - abs(dot(normalize(vNormal), normalize(vView))), 2.5);
-        gl_FragColor = vec4(color * (0.25 + 1.2 * f), 0.04 + 0.55 * f);
+        gl_FragColor = vec4(color * (0.08 + 0.9 * f), 1.0);
       }`,
     transparent: true,
     depthWrite: false,
+    blending: AdditiveBlending,
     side: DoubleSide,
   });
   return ghostMaterial;

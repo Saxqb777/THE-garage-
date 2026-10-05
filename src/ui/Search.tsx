@@ -98,7 +98,7 @@ export default function Search() {
                 <span className={styles.meta}>
                   {SYSTEM_NAMES[p.system] ?? p.system}
                   {' · '}
-                  {p.meshPresent ? 'on the car' : 'location marked'}
+                  {p.meshPresent ? 'on the car' : 'not on the car yet'}
                   {p.oemNumber ? ` · ${p.oemNumber}` : ''}
                   {!p.fitsGxr && ' · not on the GXR'}
                 </span>

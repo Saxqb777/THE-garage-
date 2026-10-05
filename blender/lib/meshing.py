@@ -332,33 +332,45 @@ def sphere_arrays(center, radius, rings=8, segments=12):
     return co, polys
 
 
-def append_geometry(obj, pieces):
-    """Append (co, polys, material_key) pieces to a mesh object, keeping its custom normals.
+def append_geometry(obj, pieces, keep=None):
+    """Append (co, polys, material_key[, vertex_normals]) pieces to a mesh object, keeping its custom normals.
 
-    Existing loops keep their custom normals; new faces get flat face normals.
+    Existing loops keep their custom normals; new faces get flat face normals unless the piece
+    brings per vertex normals. keep: optional bool mask over the existing polygons.
     """
     me = obj.data
     old_loop_normals = [tuple(cn.vector) for cn in me.corner_normals]
     co = np.empty(len(me.vertices) * 3)
     me.vertices.foreach_get("co", co)
     co = co.reshape(-1, 3)
-    polys = [list(p.vertices) for p in me.polygons]
-    mats = [p.material_index for p in me.polygons]
+    if keep is None:
+        keep = np.ones(len(me.polygons), bool)
+    kept = [p for p, k in zip(me.polygons, keep) if k]
+    polys = [list(p.vertices) for p in kept]
+    mats = [p.material_index for p in kept]
+    old_loop_normals = [old_loop_normals[li] for p in kept for li in p.loop_indices]
     mat_keys = [m.name for m in me.materials]
     n_old_polys = len(polys)
-    for pco, ppolys, key in pieces:
+    new_vn = {}  # new vertex index -> smooth normal, for pieces that bring their own
+    for piece in pieces:
+        pco, ppolys, key = piece[:3]
+        vn = piece[3] if len(piece) > 3 else None
         if key not in mat_keys:
             mat_keys.append(key)
         mi = mat_keys.index(key)
         base = len(co)
         co = np.vstack([co, pco])
-        polys.extend([[base + i for i in p] for p in ppolys])
+        polys.extend([[base + int(i) for i in p] for p in ppolys])
         mats.extend([mi] * len(ppolys))
+        if vn is not None:
+            for i, n in enumerate(vn):
+                new_vn[base + i] = tuple(n)
     from blender.lib import materials as MAT
+    existing = {m.name: m for m in me.materials if m is not None}
     new_me = bpy.data.meshes.new(me.name)
     new_me.from_pydata([tuple(v) for v in co], [], polys)
     for k in mat_keys:
-        new_me.materials.append(MAT.get(k))
+        new_me.materials.append(existing.get(k) or MAT.get(k))
     new_me.polygons.foreach_set("material_index", np.asarray(mats, np.int32))
     new_me.update()
     loops = []
@@ -369,7 +381,13 @@ def append_geometry(obj, pieces):
                 loops.append(old_loop_normals[li])
                 li += 1
             else:
-                loops.append(tuple(p.normal))
+                loops.append(None)
+    vi = 0
+    for pi, p in enumerate(new_me.polygons):
+        for l in p.loop_indices:
+            if loops[l] is None:
+                v = new_me.loops[l].vertex_index
+                loops[l] = new_vn.get(v, tuple(p.normal))
     obj.data = new_me
     bpy.data.meshes.remove(me)
     set_custom_normals(obj, loops)

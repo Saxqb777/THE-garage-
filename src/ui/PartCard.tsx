@@ -114,7 +114,7 @@ export default function PartCard() {
         {row && !row.meshPresent ? (
           <>
             <dt>On the car</dt>
-            <dd className={styles.muted}>location marked, the part itself is not modelled yet</dd>
+            <dd className={styles.muted}>not shown on the car yet</dd>
           </>
         ) : (
           <>

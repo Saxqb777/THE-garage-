@@ -164,6 +164,8 @@ def step_parts(objs):
         objs.update(placement.place_all(objs, skin_x))
     else:
         objs.update(place_on_source(objs))
+        from blender.parts import panels
+        panels.thicken(objs, log)
     return objs
 
 
