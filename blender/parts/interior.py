@@ -66,17 +66,17 @@ def _seat(name, x_c, half_w, u_front, u_back, cushion_z, back_top):
 
 def build():
     objs = {}
-    carpet = _box("INT_0000_floor_carpet", 0.62, 3.88, -0.84, 0.84, FLOOR_Z - 0.03, FLOOR_Z, "interior_carpet", 0.01, segments=1)
+    carpet = _box("INT_5854_floor_carpet", 0.62, 3.88, -0.84, 0.84, FLOOR_Z - 0.03, FLOOR_Z, "interior_carpet", 0.01, segments=1)
     tunnel = _box("_tunnel", 0.70, 1.75, -0.13, 0.13, FLOOR_Z, FLOOR_Z + 0.16, "interior_carpet", 0.04)
-    objs["INT_0000_floor_carpet"] = _join("INT_0000_floor_carpet", [carpet, tunnel])
-    dash = _box("INT_0000_instrument_panel", 0.62, 0.98, -0.83, 0.83, 0.86, 1.24, "interior_plastic_grey", 0.06)
+    objs["INT_5854_floor_carpet"] = _join("INT_5854_floor_carpet", [carpet, tunnel])
+    dash = _box("INT_5551_instrument_panel", 0.62, 0.98, -0.83, 0.83, 0.86, 1.24, "interior_plastic_grey", 0.06)
     hood = _box("_binnacle", 0.86, 1.02, 0.18, 0.56, 1.18, 1.30, "interior_plastic_grey", 0.04)
     stack = _box("_stack", 0.80, 1.00, -0.13, 0.13, FLOOR_Z + 0.12, 1.12, "interior_plastic_grey", 0.03)
-    objs["INT_0000_instrument_panel"] = _join("INT_0000_instrument_panel", [dash, hood, stack])
+    objs["INT_5551_instrument_panel"] = _join("INT_5551_instrument_panel", [dash, hood, stack])
     # steering wheel: a torus on the driver side (LHD, vehicle left is +X), tilted towards the driver
     bpy.ops.mesh.primitive_torus_add(major_radius=0.19, minor_radius=0.017, major_segments=48, minor_segments=12)
     wheel = bpy.context.active_object
-    wheel.name = "INT_0000_steering_wheel"
+    wheel.name = "INT_4504_steering_wheel"
     wheel.data.name = wheel.name
     wheel.rotation_euler = (math.radians(90 - 26), 0.0, 0.0)
     wheel.location = (0.37, 1.10 - HALF_WB, 1.12)
@@ -84,7 +84,7 @@ def build():
     bpy.ops.object.shade_smooth()
     wheel["partKey"] = wheel.name
     objs[wheel.name] = wheel
-    objs["INT_0000_front_seat_L"] = _seat("INT_0000_front_seat_L", 0.37, 0.25, 1.30, 1.82, 1.03, 1.62)
-    objs["INT_0000_front_seat_R"] = _seat("INT_0000_front_seat_R", -0.37, 0.25, 1.30, 1.82, 1.03, 1.62)
-    objs["INT_0000_rear_seat"] = _seat("INT_0000_rear_seat", 0.0, 0.74, 2.30, 2.82, 1.02, 1.56)
+    objs["INT_7151_front_seat_L"] = _seat("INT_7151_front_seat_L", 0.37, 0.25, 1.30, 1.82, 1.03, 1.62)
+    objs["INT_7151_front_seat_R"] = _seat("INT_7151_front_seat_R", -0.37, 0.25, 1.30, 1.82, 1.03, 1.62)
+    objs["INT_7151_rear_seat"] = _seat("INT_7151_rear_seat", 0.0, 0.74, 2.30, 2.82, 1.02, 1.56)
     return objs

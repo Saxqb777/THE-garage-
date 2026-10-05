@@ -165,7 +165,7 @@ function onClick(e: ThreeEvent<MouseEvent>) {
     return;
   }
   // the driver's seat is the way in
-  if (key === 'INT_0000_front_seat_L' && s.view === 'exterior' && !s.camBusy) {
+  if (key === 'INT_7151_front_seat_L' && s.view === 'exterior' && !s.camBusy) {
     s.requestCam({ action: 'getIn', seat: 'driver' });
     return;
   }

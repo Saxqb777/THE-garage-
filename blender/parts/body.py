@@ -312,7 +312,7 @@ def classify(bm):
     # windshield
     ws_out, ws_in = windshield_outlines()
     wsf = (nu < -0.3) & (nz > 0.4) & (z > 1.2)
-    put(wsf & M.in_polygon(x, z, ws_in), "GLASS_5601_windshield_glass")
+    put(wsf & M.in_polygon(x, z, ws_in), "GLASS_5553_windshield_glass")
     put(wsf & M.in_polygon(x, z, ws_out), "seal:BODY_0000_body_shell")
 
     for side in ("L", "R"):
@@ -320,18 +320,18 @@ def classify(bm):
         on_side = (x * sgn > 0.5) & (nx * sgn > 0.3)
         upper = on_side & (z > 1.15)
         w = window_outlines()
-        put(upper & M.in_polygon(u, z, w["fd"][1]), f"GLASS_6701_front_door_glass_{side}")
-        put(upper & M.in_polygon(u, z, w["rd"][1]), f"GLASS_6702_rear_door_glass_{side}")
-        put(upper & M.in_polygon(u, z, w["rq"][1]), f"GLASS_6702_rear_door_quarter_glass_{side}")
-        put(upper & M.in_polygon(u, z, w["qw"][1]), f"GLASS_0000_quarter_window_glass_{side}")
-        put(upper & M.in_polygon(u, z, w["fd"][0]), f"seal:DOOR_6701_front_door_{side}")
-        put(upper & M.in_polygon(u, z, w["rd"][0]), f"seal:DOOR_6702_rear_door_{side}")
-        put(upper & M.in_polygon(u, z, w["rq"][0]), f"seal:DOOR_6702_rear_door_{side}")
+        put(upper & M.in_polygon(u, z, w["fd"][1]), f"GLASS_6751_front_door_glass_{side}")
+        put(upper & M.in_polygon(u, z, w["rd"][1]), f"GLASS_6755_rear_door_glass_{side}")
+        put(upper & M.in_polygon(u, z, w["rq"][1]), f"GLASS_6755_rear_door_quarter_glass_{side}")
+        put(upper & M.in_polygon(u, z, w["qw"][1]), f"GLASS_6152_quarter_window_glass_{side}")
+        put(upper & M.in_polygon(u, z, w["fd"][0]), f"seal:DOOR_6751_front_door_{side}")
+        put(upper & M.in_polygon(u, z, w["rd"][0]), f"seal:DOOR_6755_rear_door_{side}")
+        put(upper & M.in_polygon(u, z, w["rq"][0]), f"seal:DOOR_6755_rear_door_{side}")
         put(upper & M.in_polygon(u, z, w["qw"][0]), "seal:BODY_0000_body_shell")
         door_outer, g_out, g_in = back_outlines()
         rear = (nu > 0.25) & (u > 3.4) & (x * sgn > 0)
-        put(rear & M.in_polygon(ax, z, g_in), f"GLASS_6703_back_door_glass_{side}")
-        put(rear & M.in_polygon(ax, z, g_out), f"seal:DOOR_6703_back_door_{side}")
+        put(rear & M.in_polygon(ax, z, g_in), f"GLASS_6761_back_door_glass_{side}")
+        put(rear & M.in_polygon(ax, z, g_out), f"seal:DOOR_6761_back_door_{side}")
         # lamps
         lamp = (x * sgn > 0.3) & (u < -0.4) & (np.abs(nz) < 0.75)
         u_side = np.interp(z, [p[1] for p in HEADLAMP_SIDE], [p[0] for p in HEADLAMP_SIDE])
@@ -339,13 +339,13 @@ def classify(bm):
             f"LIGHT_8101_headlamp_{side}")
         rl = (x * sgn > 0.6) & (u > 3.6) & (np.abs(nz) < 0.8)
         put(rl & (z > TAILLAMP["z0"]) & (z < TAILLAMP["z1"]) & (ax > TAILLAMP["x_in"]) & (u > TAILLAMP["u_side"]),
-            f"LIGHT_8105_rear_combination_lamp_{side}")
+            f"LIGHT_8111_rear_combination_lamp_{side}")
         if side == "L":
             put(on_side & M.in_polygon(u, z, FUEL_LID), "BODY_0000_fuel_filler_lid")
 
     # hood
     hood = (ax < HOOD["x"]) & (((nz > 0.3) & (u < HOOD["u_rear"]) & (z > 1.0)) | ((nu < -0.3) & (z > HOOD["z_front"]) & (u < -0.4)))
-    put(hood, "BODY_5301_hood")
+    put(hood, "BODY_5353_hood")
 
     # doors and back doors
     for side in ("L", "R"):
@@ -355,16 +355,16 @@ def classify(bm):
         rd_poly = [(1.692, DOOR_BOTTOM), (2.42, DOOR_BOTTOM), (2.68, 0.86), (2.68, 1.08), (2.66, 1.16), (C_CUT(1.255), 1.255),
                    (C_CUT(DOOR_TOP), DOOR_TOP), (1.692, DOOR_TOP)]
         not_arch = np.hypot(u - C.U_REAR_AXLE, z - S.ARCH_Z) > REAR_ARCH_R
-        put(outer & M.in_polygon(u, z, fd_poly), f"DOOR_6701_front_door_{side}")
-        put(outer & not_arch & M.in_polygon(u, z, rd_poly), f"DOOR_6702_rear_door_{side}")
+        put(outer & M.in_polygon(u, z, fd_poly), f"DOOR_6751_front_door_{side}")
+        put(outer & not_arch & M.in_polygon(u, z, rd_poly), f"DOOR_6755_rear_door_{side}")
         bd_poly = [(0.0, 0.80), (0.785, 0.80), (0.785, 1.30), (0.66, 1.795), (0.0, 1.795)]
         rear = (nu > 0.25) & (u > 3.4) & (x * sgn > 0)
-        put(rear & M.in_polygon(ax, z, bd_poly), f"DOOR_6703_back_door_{side}")
+        put(rear & M.in_polygon(ax, z, bd_poly), f"DOOR_6761_back_door_{side}")
         # fenders
         fender = (x * sgn > 0) & (u < 0.632) & (z > 0.47) & (((nx * sgn > 0.3) & (ax > 0.6)) | ((nz > 0.3) & (ax > HOOD["x"]) & (u < 0.50)) |
                                                           ((nu < -0.3) & (ax > HEADLAMP["x_in"]) & (u < -0.4)))
         fender &= ~((u > 0.45) & (z < DOOR_BOTTOM))
-        put(fender, f"BODY_5301_front_fender_{side}")
+        put(fender, f"BODY_5353_front_fender_{side}")
     return faces, region
 
 
@@ -372,14 +372,14 @@ def classify(bm):
 # Object building
 
 THICKNESS = {
-    "BODY_5301_hood": (0.03, "paint_white"),
-    "DOOR_6701_front_door": (0.07, "interior_plastic_grey"),
-    "DOOR_6702_rear_door": (0.07, "interior_plastic_grey"),
-    "DOOR_6703_back_door": (0.07, "interior_plastic_grey"),
-    "BODY_5301_front_fender": (0.008, "underbody_black"),
+    "BODY_5353_hood": (0.03, "paint_white"),
+    "DOOR_6751_front_door": (0.07, "interior_plastic_grey"),
+    "DOOR_6755_rear_door": (0.07, "interior_plastic_grey"),
+    "DOOR_6761_back_door": (0.07, "interior_plastic_grey"),
+    "BODY_5353_front_fender": (0.008, "underbody_black"),
     "BODY_0000_fuel_filler_lid": (0.006, "paint_white"),
     "BODY_0000_body_shell": (0.012, "interior_plastic_grey"),
-    "LIGHT_8105_rear_combination_lamp": (0.05, "lamp_reflector"),
+    "LIGHT_8111_rear_combination_lamp": (0.05, "lamp_reflector"),
 }
 
 INSET = {"glass": 0.008, "seal": 0.003, "lamp": 0.002}
@@ -412,13 +412,13 @@ def build_objects(bm, faces, region):
 
 def material_plan(key):
     """Outer material for a part key and whether it is glass or lamp."""
-    if key.startswith("GLASS_5601") or key.startswith("GLASS_6701"):
+    if key.startswith("GLASS_5553") or key.startswith("GLASS_6751"):
         return "glass_clear", "glass"
     if key.startswith("GLASS_"):
         return "glass_privacy", "glass"
     if key.startswith("LIGHT_8101"):
         return "lamp_lens_clear", "lamp"
-    if key.startswith("LIGHT_8105"):
+    if key.startswith("LIGHT_8111"):
         return "lamp_lens_red", "lamp"
     return "paint_white", "panel"
 
@@ -442,7 +442,7 @@ def make_part(key, items, vidx, vco):
     # per face material refinements
     cents = np.array([co[p].mean(axis=0) for p in polys])
     u, x, z = M.to_body(cents)
-    if key.startswith("LIGHT_8105"):
+    if key.startswith("LIGHT_8111"):
         mat_keys.append("lamp_lens_clear")
         clear = (z > TAILLAMP["clear"][0]) & (z < TAILLAMP["clear"][1])
         mats = [2 if c else m for m, c in zip(mats, clear)]
@@ -653,8 +653,8 @@ def build(h=0.008, target_faces=130000, log=lambda *a: print(*a, flush=True)):
 def build_bumpers(h=0.007, target_faces=24000, log=lambda *a: print(*a, flush=True)):
     out = {}
     specs = {
-        "BODY_5201_front_bumper": (S.front_bumper, ((-0.93, -0.30), (-1.0, 1.0), (0.40, 0.90))),
-        "BODY_5202_rear_bumper": (S.rear_bumper, ((3.25, 4.01), (-1.0, 1.0), (0.45, 0.82))),
+        "BODY_5252_front_bumper": (S.front_bumper, ((-0.93, -0.30), (-1.0, 1.0), (0.40, 0.90))),
+        "BODY_5253_rear_bumper": (S.rear_bumper, ((3.25, 4.01), (-1.0, 1.0), (0.45, 0.82))),
     }
     for key, (fn, bounds) in specs.items():
         bm = M.sdf_to_bmesh(fn, bounds, h, target_faces=target_faces)

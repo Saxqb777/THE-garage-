@@ -9,7 +9,7 @@ position is one of 'front_L', 'front_R', 'rear_L', 'rear_R'. The call creates, i
 current scene, an Empty named WHEEL_0000_wheel_assembly_<position> at the wheel centre
 (no rotation, unit scale) with two mesh children whose origins sit at the wheel centre:
 
-    WHEEL_0000_disc_wheel_<position>   alloy wheel, centre cap, six lug nuts
+    WHEEL_4103_disc_wheel_<position>   alloy wheel, centre cap, six lug nuts
     WHEEL_0000_tire_<position>         tire with geometric tread
 
 Local frame of every object: the spin axis is local X. The outer face of a left wheel
@@ -484,7 +484,7 @@ def build_wheel_assembly(position):
     mirror = position.endswith("_R")
     names = {
         "assembly": f"WHEEL_0000_wheel_assembly_{position}",
-        "disc": f"WHEEL_0000_disc_wheel_{position}",
+        "disc": f"WHEEL_4103_disc_wheel_{position}",
         "tire": f"WHEEL_0000_tire_{position}",
     }
     for n in names.values():

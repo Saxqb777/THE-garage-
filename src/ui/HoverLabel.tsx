@@ -27,6 +27,7 @@ export default function HoverLabel() {
   }, []);
 
   const part = hovered ? CONTRACT_PARTS.get(hovered) : undefined;
+  const row = useGarage((s) => (hovered ? s.catalog?.get(hovered) : undefined));
   let hint: string | null = null;
   if (hovered && x.level > 0) {
     const system = hovered.split('_')[0];
@@ -36,7 +37,12 @@ export default function HoverLabel() {
   } else if (part?.hinge) hint = `click to ${open ? 'close' : 'open'}`;
   return (
     <div ref={ref} className={styles.label} hidden={!hovered} aria-hidden>
-      <span className={styles.name}>{part?.nameEn ?? hovered}</span>
+      <span className={styles.name}>{row?.nameEn ?? part?.nameEn ?? hovered}</span>
+      {row?.nameAr && (
+        <span className={styles.ar} dir="rtl" lang="ar">
+          {row.nameAr}
+        </span>
+      )}
       {hint && <span className={styles.action}>{hint}</span>}
     </div>
   );

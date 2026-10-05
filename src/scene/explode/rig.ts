@@ -128,7 +128,7 @@ export function buildRig(): Rig {
     const parentSystem = parent?.key.split('_')[0];
     const sameSystem = parentSystem === system;
     const isShell = r.key === 'BODY_0000_body_shell';
-    const d1 = isShell ? 0 : parent ? (sameSystem ? 0 : D1_CHILD) : (D1[system] ?? 0.7) * (r.key === 'BODY_5301_hood' || /bumper/.test(r.key) ? 1.15 : 1);
+    const d1 = isShell ? 0 : parent ? (sameSystem ? 0 : D1_CHILD) : (D1[system] ?? 0.7) * (r.key === 'BODY_5353_hood' || /bumper/.test(r.key) ? 1.15 : 1);
     return {
       key: r.key,
       system,

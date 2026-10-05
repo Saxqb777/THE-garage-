@@ -95,7 +95,7 @@ async function run(r: CamRequest, camera: PerspectiveCamera, controls: Controls)
     } else {
       if (s.view === 'cabin') await leaveCabin(camera, controls, false);
       const g = useGarage.getState();
-      if (r.preset === 'engine') g.setPartOpen('BODY_5301_hood', true);
+      if (r.preset === 'engine') g.setPartOpen('BODY_5353_hood', true);
       if (r.preset === 'underside') {
         if (g.scene === 'garage') {
           g.setLift(true);

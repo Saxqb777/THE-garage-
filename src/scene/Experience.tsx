@@ -8,11 +8,13 @@ import { ToneMappingMode } from 'postprocessing';
 import { NoToneMapping, SRGBColorSpace } from 'three';
 import CarModel from './car/CarModel';
 import { meshesOf } from './car/parts';
+import { dueAt } from '@/data/catalog';
 import CameraRig from './camera/CameraRig';
 import Explode from './explode/Explode';
 import Ground from './Ground';
 import Hotspots from './Hotspots';
 import Lift from './Lift';
+import PartHotspots from './PartHotspots';
 import Lighting, { SceneSwap } from './Lighting';
 import { SCENES, timeOfDayLook } from './scenes';
 import { useGarage } from './store';
@@ -61,6 +63,7 @@ export default function Experience() {
       <Explode />
       <Lift />
       <Hotspots />
+      <PartHotspots />
       <PostFX />
       <RenderStats />
       {query.has('debug') && <DevHandle />}
@@ -97,10 +100,14 @@ function PartOutline() {
   const hovered = useGarage((s) => s.hovered);
   const selected = useGarage((s) => s.selected);
   const loaded = useGarage((s) => s.model !== null);
-  const selection = useMemo(
-    () => (loaded ? [...new Set([hovered, selected])].filter((k): k is string => !!k).flatMap(meshesOf) : []),
-    [hovered, selected, loaded],
-  );
+  const service = useGarage((s) => s.service);
+  const catalog = useGarage((s) => s.catalog);
+  const selection = useMemo(() => {
+    if (!loaded) return [];
+    const keys = new Set([hovered, selected].filter((k): k is string => !!k));
+    if (service && catalog) for (const p of dueAt([...catalog.values()], service)) if (p.meshPresent) keys.add(p.key);
+    return [...keys].flatMap(meshesOf);
+  }, [hovered, selected, loaded, service, catalog]);
   return (
     <Outline
       selection={selection}

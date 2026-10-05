@@ -1,0 +1,2802 @@
+{
+ "vehicle": "Toyota Land Cruiser 100, FZJ100, 1FZ-FE, GX, 5 speed manual floor shift, LHD, GCC, EFI, Jan 1998 to Aug 2007",
+ "source": "Toyota EPC illustration groups for this variant, as listed on megazip.net (one index fetch, 2026-10-05). Codes and names only; no diagrams or part numbers were copied.",
+ "groups": [
+  {
+   "code": "0901",
+   "name": "Standard Tool",
+   "chapter": "Tool, Engine, Fuel",
+   "variants": [
+    {
+     "uid": "1344447_0",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "1101",
+   "name": "Partial Engine Assembly",
+   "chapter": "Tool, Engine, Fuel",
+   "variants": [
+    {
+     "uid": "1211206_1",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "1102",
+   "name": "Short Block Assembly",
+   "chapter": "Tool, Engine, Fuel",
+   "variants": [
+    {
+     "uid": "1468215_2",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "1103",
+   "name": "Engine Overhaul Gasket Kit",
+   "chapter": "Tool, Engine, Fuel",
+   "variants": [
+    {
+     "uid": "1815800_3",
+     "description": "(9801- )1FZFE",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1815800_4",
+     "description": "(9801- )1FZFE",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "1104",
+   "name": "Cylinder Head",
+   "chapter": "Tool, Engine, Fuel",
+   "variants": [
+    {
+     "uid": "1651050_5",
+     "description": "(9801- )1FZFE",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "1105",
+   "name": "Cylinder Block",
+   "chapter": "Tool, Engine, Fuel",
+   "variants": [
+    {
+     "uid": "1666780_6",
+     "description": "(9801- )1FZFE",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "1106",
+   "name": "Timing Gear Cover & Rear End Plate",
+   "chapter": "Tool, Engine, Fuel",
+   "variants": [
+    {
+     "uid": "1090395_7",
+     "description": "(9801- )1FZFE",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "1107",
+   "name": "Mounting",
+   "chapter": "Tool, Engine, Fuel",
+   "variants": [
+    {
+     "uid": "1329997_8",
+     "description": "(9801- )1FZFE",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "1201",
+   "name": "Ventilation Hose",
+   "chapter": "Tool, Engine, Fuel",
+   "variants": [
+    {
+     "uid": "1611524_9",
+     "description": "(9801- )1FZFE",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "1301",
+   "name": "Crankshaft & Piston",
+   "chapter": "Tool, Engine, Fuel",
+   "variants": [
+    {
+     "uid": "2026868_10",
+     "description": "(9801- )1FZFE",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "1302",
+   "name": "Camshaft & Valve",
+   "chapter": "Tool, Engine, Fuel",
+   "variants": [
+    {
+     "uid": "1462686_11",
+     "description": "(9801- )1FZFE",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "1501",
+   "name": "Engine Oil Pump",
+   "chapter": "Tool, Engine, Fuel",
+   "variants": [
+    {
+     "uid": "1136833_12",
+     "description": "(9801- )1FZFE",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "1502",
+   "name": "Oil Filter",
+   "chapter": "Tool, Engine, Fuel",
+   "variants": [
+    {
+     "uid": "1346036_13",
+     "description": "(9801- )1FZFE",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "1503",
+   "name": "Engine Oil Cooler",
+   "chapter": "Tool, Engine, Fuel",
+   "variants": [
+    {
+     "uid": "1292283_14",
+     "description": "(9801- )1FZFE",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "1601",
+   "name": "Water Pump",
+   "chapter": "Tool, Engine, Fuel",
+   "variants": [
+    {
+     "uid": "1375396_15",
+     "description": "(9801- )1FZFE",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "1603",
+   "name": "Radiator & Water Outlet",
+   "chapter": "Tool, Engine, Fuel",
+   "variants": [
+    {
+     "uid": "1652204_16",
+     "description": "(9801- )1FZFE",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1696454_17",
+     "description": "(9801- )1FZFE",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "1605",
+   "name": "V-Belt",
+   "chapter": "Tool, Engine, Fuel",
+   "variants": [
+    {
+     "uid": "2003640_18",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "1701",
+   "name": "Manifold",
+   "chapter": "Tool, Engine, Fuel",
+   "variants": [
+    {
+     "uid": "2052308_19",
+     "description": "(9801- )1FZFE",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "1702",
+   "name": "Exhaust Pipe",
+   "chapter": "Tool, Engine, Fuel",
+   "variants": [
+    {
+     "uid": "1247101_20",
+     "description": "TYPE A, TYPE B (9801- )1FZFE..FZJ100..GCC",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1388412_21",
+     "description": "TYPE C (0208- )1FZFE..FZJ100..GCC",
+     "dateRange": "[08.2002-]"
+    }
+   ]
+  },
+  {
+   "code": "1703",
+   "name": "Air Cleaner",
+   "chapter": "Tool, Engine, Fuel",
+   "variants": [
+    {
+     "uid": "2077047_22",
+     "description": "(9801-0501)1FZFE..FZJ100..5F..CHI ; (9801- )1FZFE..ARL,GCC,GEN ; (9801- )1FZFE..FZJ100..4FC..CHI",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "1708",
+   "name": "Vacuum Piping",
+   "chapter": "Tool, Engine, Fuel",
+   "variants": [
+    {
+     "uid": "2095761_23",
+     "description": "(9801- )1FZFE",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1100250_24",
+     "description": "(9801- )1FZFE",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "1709",
+   "name": "Caution Plate & Name Plate (Engine)",
+   "chapter": "Tool, Engine, Fuel",
+   "variants": [
+    {
+     "uid": "1413691_25",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "1901",
+   "name": "Ignition Coil & Spark Plug / Glow Plug",
+   "chapter": "Tool, Engine, Fuel",
+   "variants": [
+    {
+     "uid": "1674018_26",
+     "description": "(9801- )1FZFE",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "1903",
+   "name": "Alternator",
+   "chapter": "Tool, Engine, Fuel",
+   "variants": [
+    {
+     "uid": "2081963_27",
+     "description": "12V 80A,100A (9801-0208)1FZFE",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1327083_28",
+     "description": "12V 80A,100A (0208- )1FZFE",
+     "dateRange": "[08.2002-]"
+    }
+   ]
+  },
+  {
+   "code": "1904",
+   "name": "Starter",
+   "chapter": "Tool, Engine, Fuel",
+   "variants": [
+    {
+     "uid": "1937361_29",
+     "description": "12V 1.4KW (9801-0208)1FZFE",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1303151_30",
+     "description": "12V 1.4KW (0208- )1FZFE..GCC,GEN",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1303151_31",
+     "description": "12V 2.0KW (0208- )1FZFE",
+     "dateRange": "[08.2002-]"
+    }
+   ]
+  },
+  {
+   "code": "2211",
+   "name": "Fuel Injection System",
+   "chapter": "Tool, Engine, Fuel",
+   "variants": [
+    {
+     "uid": "1749982_32",
+     "description": "(9801- )1FZFE",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1733262_33",
+     "description": "(9801- )1FZFE",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "3101",
+   "name": "Clutch & Release Fork",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "1952289_34",
+     "description": "(9801- )5F",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "3102",
+   "name": "Clutch Pedal & Flexible Hose",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "1283360_35",
+     "description": "(9801- )FZJ10#,UZJ100..5F",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1844084_36",
+     "description": "(9801- )FZJ100..5F",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "3103",
+   "name": "Clutch Master Cylinder",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "2206987_88",
+     "description": "(9801- )FZJ10#,HZJ105,UZJ100..5F",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "3105",
+   "name": "Clutch Release Cylinder",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "2121633_89",
+     "description": "(9801- )FZJ100,HDJ100..5F",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "3301",
+   "name": "Transaxle Or Transmission Assy & Gasket Kit (Mtm)",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "1714841_37",
+     "description": "H151 (9801- )FZJ10#,HDJ100,UZJ100..5F",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "3302",
+   "name": "Clutch Housing & Transmission Case (Mtm)",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "1240804_38",
+     "description": "H151 (9801- )FZJ10#..5F",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "3304",
+   "name": "Speedometer Driven Gear (Mtm)",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "2139608_92",
+     "description": "H151,R151F (9801- )5F",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "3305",
+   "name": "Transmission Gear (Mtm)",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "1989391_39",
+     "description": "H151 (9801- )FZJ10#,HDJ100,UZJ100..5F",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "3307",
+   "name": "Gear Shift Fork & Lever Shaft (Mtm)",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "1443873_40",
+     "description": "H151,BENCH SEAT TYPE (9801- )FZJ100..5F..GCC ; (9801- )FZJ105..LHD..LUB ; (9801- )FZJ105,HDJ100..SOB",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1457849_41",
+     "description": "H151,SEPARATE SEAT TYPE (9801-0101)HDJ100..LUB..5F ; (9801-0101)FZJ10#,UZJ100..5F",
+     "dateRange": "[01.1998-01.2001]"
+    },
+    {
+     "uid": "1457849_42",
+     "description": "H151,SEPARATE SEAT TYPE (0101- )HDJ100..LUB..5F ; (0101- )FZJ10#,UZJ100..5F",
+     "dateRange": "[01.2001-]"
+    }
+   ]
+  },
+  {
+   "code": "3308",
+   "name": "Oil Pump, Oil Cooler & Pipe (Mtm)",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "1207386_114",
+     "description": "H151 (9801- )FZJ10#,HDJ100,UZJ100..5F",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "3312",
+   "name": "Shift Lever & Retainer",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "2142694_43",
+     "description": "SEPARATE SEAT TYPE (9801- )HDJ100..LUB..5F ; (9801- )FZJ10#,UZJ100..5F",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1706899_44",
+     "description": "BENCH SEAT TYPE (9801- )HDJ100..SOB ; (9801- )FZJ10#,UZJ100..5F..ARL,GCC,GEN",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "3608",
+   "name": "Transfer Assembly & Gasket Kit",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "1263653_104",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "3609",
+   "name": "Transfer Case & Extension Housing",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "2154570_105",
+     "description": "PART TIME 4WD & W/O(2-4 SELECTOR) (9801- )HZJ105..SOB ; (9801- )FZJ105..STD..ARL ; (9801- )HZJ105..LUB..GEN ; (9801- )FZJ10#..5F..GCC,GEN",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "2274524_106",
+     "description": "PART TIME 4WD & W(2-4 SELECTOR) (9801- )HZJ105..LHD..GX ; (9801- )HZJ105..RHD..GEN ; (9801- )FZJ10#..5F..GX..GCC,GEN",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "2161457_107",
+     "description": "FULL TIME 4WD (9801- )GX,VX ; (9801- )HZJ105..LHD..STD ; (0505- )FZJ100..STD",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "3610",
+   "name": "Transfer Gear",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "2384595_108",
+     "description": "PART TIME 4WD (9801- )HZJ105..SOB ; (9801- )FZJ105..STD..ARL ; (9801- )HZJ105..LUB..GEN ; (9801- )FZJ10#..5F..GCC,GEN",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1890924_109",
+     "description": "FULL TIME 4WD (9801- )5F..GX,VX ; (9801- )HZJ105..LHD..STD ; (0505- )FZJ100..STD",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "3611",
+   "name": "Transfer Lever & Shift Rod",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "1098159_110",
+     "description": "W(2-4 SELECT LEVER & SEPARATE SEAT) (9801- )HZJ105..SOB ; (9801- )FZJ105..STD..ARL ; (9801- )HZJ105..LUB..GEN ; (9801- )FZJ10#..5F..GCC,GEN",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1568686_111",
+     "description": "W(2-4 SELECT LEVER & SEPARATE SEAT) (9801- )FZJ105..SOB ; (9801- )FZJ100..5F..GCC ; (9801- )FZJ105..LHD..LUB",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "2055643_112",
+     "description": "SEPARATE SEAT TYPE (9801- )HDJ100..LUB..5F ; (9801- )HZJ105..GCC,GEN ; (9801- )HZJ105..5F..GX..ARL ; (9801- )FZJ10#,UZJ100..5F..GX,VX",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1237964_113",
+     "description": "BENCH SEAT TYPE (9801- )HDJ100..SOB ; (9801- )FZJ10#..LHD..5F..GX..GCC,GEN ; (0505- )FZJ100..STD",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "3701",
+   "name": "Propeller Shaft & Universal Joint",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "2000587_93",
+     "description": "FRONT (9801- )FZJ100,HDJ100,UZJ100..5F",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1590417_94",
+     "description": "REAR (9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "3802",
+   "name": "Winch",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "1652379_115",
+     "description": "ELECTRICAL WINCH (9801-0505)FZJ100,UZJ100..LHD ; (9801-0505)HDJ100..4FC,5F..GEN ; (0505-0506)CHI",
+     "dateRange": "[01.1998-05.2005]"
+    },
+    {
+     "uid": "2361132_116",
+     "description": "ELECTRICAL WINCH (0505- )HDJ100..5F..GEN ; (0505- )FZJ100,UZJ100..GCC,GEN ; (0506- )CHI",
+     "dateRange": "[05.2005-]"
+    },
+    {
+     "uid": "1103422_117",
+     "description": "ELECTRICAL WINCH (9801- )HDJ100..4FC,5F..GEN ; (9801- )FZJ10#,HZJ105,UZJ100..CHI,GCC,GEN",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1886838_118",
+     "description": "ELECTRICAL WINCH (9801-0505)HDJ100..4FC,5F..GEN ; (9801-0505)FZJ10#,HZJ105,UZJ100..CHI,GCC,GEN ; (0505-0506)CHI",
+     "dateRange": "[01.1998-05.2005]"
+    }
+   ]
+  },
+  {
+   "code": "4101",
+   "name": "Rear Axle Housing & Differential",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "1548111_95",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1160287_96",
+     "description": "LIMITED SLIP DIFFERENTIAL (9801- )ARL,GCC,GEN",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "2150437_97",
+     "description": "REAR DIFFERENTIAL LOCK (9801- )FZJ100,HDJ100,UZJ100..GX,VX..ARL,GCC,GEN",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1682581_98",
+     "description": "(9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1682581_99",
+     "description": "(0208- )",
+     "dateRange": "[08.2002-]"
+    }
+   ]
+  },
+  {
+   "code": "4102",
+   "name": "Rear Axle Shaft & Hub",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "1495384_45",
+     "description": "(9801- )FZJ100,HDJ100,UZJ100",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "4103",
+   "name": "Disc Wheel & Wheel Cap",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "1858254_46",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1183928_47",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1411628_48",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1743968_49",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "4301",
+   "name": "Front Axle Housing & Differential",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "2203899_50",
+     "description": "(9801-9908)FZJ100,HDJ100,UZJ100",
+     "dateRange": "[01.1998-08.1999]"
+    },
+    {
+     "uid": "1440243_51",
+     "description": "(9908- )FZJ100,HDJ100,UZJ100",
+     "dateRange": "[08.1999-]"
+    },
+    {
+     "uid": "1391154_52",
+     "description": "(9801- )FZJ100,HDJ100,UZJ100",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "4302",
+   "name": "Front Drive Shaft",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "1571259_53",
+     "description": "(9801- )FZJ100,HDJ100,UZJ100",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "4303",
+   "name": "Front Axle Hub",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "1289509_54",
+     "description": "(9801- )FZJ100,HDJ100,UZJ100",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "4501",
+   "name": "Steering Column & Shaft",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "1381374_55",
+     "description": "MANUAL TILT STEERING (9801- )5FC..GX..CHI ; (9801- )FZJ100,HDJ100 ; (9801- )UZJ100..4FC,5F ; (9801- )UZJ100..5FC..ARL,GCC,GEN",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1743396_56",
+     "description": "POWER TILT STEERING (9801- )VX..CHI ; (9801- )FZJ100,HDJ100,UZJ100..ARL,GCC,GEN",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "4502",
+   "name": "Vane Pump & Reservoir (Power Steering)",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "1666423_100",
+     "description": "(9801-0208)FZJ100",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1946148_101",
+     "description": "(0208- )FZJ100",
+     "dateRange": "[08.2002-]"
+    }
+   ]
+  },
+  {
+   "code": "4503",
+   "name": "Power Steering Tube",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "1740060_102",
+     "description": "(9801-0208)FZJ100",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1472250_103",
+     "description": "(0208- )FZJ100",
+     "dateRange": "[08.2002-]"
+    }
+   ]
+  },
+  {
+   "code": "4504",
+   "name": "Steering Wheel",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "1390980_57",
+     "description": "4-SPOKE,W(*80 & *CRC) (9801-0208)HDJ100..4FC ; (9801-0208)HDJ100..5F..GEN ; (9801-0208)FZJ10#,HZJ105,UZJ100",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1390980_58",
+     "description": "4-SPOKE,W(*80) (9801-0208)DSL2,EFI,TD2 ; (0008-0208)HDJ100..GX",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "2233957_59",
+     "description": "3-SPOKE (9801-0208)FZJ10#,HZJ105 ; (0208- )FZJ10#,HZJ105..GCC,GEN",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "2233957_60",
+     "description": "3-SPOKE (9801-0208)FZJ10#,HZJ105 ; (0208- )FZJ10#,HZJ105..GCC,GEN",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1551424_61",
+     "description": "4-SPOKE (0208- )",
+     "dateRange": "[08.2002-]"
+    }
+   ]
+  },
+  {
+   "code": "4505",
+   "name": "Front Steering Gear & Link",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "1752636_62",
+     "description": "(9801-0208)FZJ100,HDJ100,UZJ100..LHD",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "2273937_63",
+     "description": "(9801-0208)FZJ100,HDJ100,UZJ100..LHD",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1215689_64",
+     "description": "(0208- )FZJ100,HDJ100,UZJ100..LHD",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "2132006_65",
+     "description": "(0208- )FZJ100,HDJ100,UZJ100",
+     "dateRange": "[08.2002-]"
+    }
+   ]
+  },
+  {
+   "code": "4601",
+   "name": "Parking Brake & Cable",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "2081312_66",
+     "description": "(9801-9903)LHD ; (9903- )FZJ105,HZJ105..LHD",
+     "dateRange": "[01.1998-03.1999]"
+    },
+    {
+     "uid": "1298955_67",
+     "description": "(9903- )FZJ100,HDJ100,UZJ100..LHD",
+     "dateRange": "[03.1999-]"
+    },
+    {
+     "uid": "1346496_68",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "4701",
+   "name": "Brake Pedal & Bracket",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "1625133_69",
+     "description": "(9801- )LHD",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "4702",
+   "name": "Brake Master Cylinder",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "1117526_70",
+     "description": "(9801-9907) ; (9907- )HDJ100,UZJ100..GCC,GEN ; (9907- )FZJ10#,HZJ105..ARL,GCC,GEN",
+     "dateRange": "[01.1998-07.1999]"
+    },
+    {
+     "uid": "1117526_71",
+     "description": "(9801-9907) ; (9907- )HDJ100,UZJ100..GCC,GEN ; (9907- )FZJ10#,HZJ105..ARL,GCC,GEN",
+     "dateRange": "[07.1999-]"
+    },
+    {
+     "uid": "1639361_72",
+     "description": "W(ABS) (9801- )LUB..ARL ; (0208- )FZJ100..LUB..5F..GCC ; (0501- )UZJ100..GX..CHI",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1366880_73",
+     "description": "W(ABS) (9801- )HZJ105..LHD..STD ; (9801- )FZJ100,HDJ100..CHI,GCC,GEN ; (9801- )FZJ105,HZJ105,UZJ100..GX,VX..GCC,GEN",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "2343827_74",
+     "description": "W(ABS) OR W(VSC) (9801- )UZJ100..ARL,GCC,GEN ; (9801- )FZJ10#,HDJ100,HZJ105 ; (0309- )UZJ100..CHI",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "4703",
+   "name": "Brake Booster & Vacuum Tube",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "1612350_75",
+     "description": "(9801- )FZJ10#..LHD..GCC,GEN",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1609594_76",
+     "description": "W(ABS) (9801- )FZJ100,HDJ100 ; (9801- )HZJ105..LHD..STD ; (9801- )FZJ105,HZJ105..GX ; (0501- )UZJ100..GX..CHI",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "4705",
+   "name": "Front Disc Brake Caliper & Dust Cover",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "2230560_77",
+     "description": "(9801- )FZJ100,HDJ100,UZJ100",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "4706",
+   "name": "Rear Drum Brake Wheel Cylinder & Backing Plate",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "1287513_78",
+     "description": "(9801-0505)HZJ105..SOB ; (9801-0505)FZJ105..STD..ARL ; (9801-0505)HZJ105..LUB..GEN ; (9801-0505)FZJ10#,HDJ100,UZJ100..GCC,GEN",
+     "dateRange": "[01.1998-05.2005]"
+    }
+   ]
+  },
+  {
+   "code": "4707",
+   "name": "Rear Disc Brake Caliper & Dust Cover",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "1120574_90",
+     "description": "(9801-9904)FZJ100,HDJ100,UZJ100",
+     "dateRange": "[01.1998-04.1999]"
+    },
+    {
+     "uid": "1589657_91",
+     "description": "(9904- )FZJ100,HDJ100,UZJ100",
+     "dateRange": "[04.1999-]"
+    }
+   ]
+  },
+  {
+   "code": "4708",
+   "name": "Brake Tube & Clamp",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "2262237_79",
+     "description": "(9801- )FZJ100,HDJ100,UZJ100..LHD..GCC,GEN",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1868642_80",
+     "description": "(9801-9907) ; (9907- )HDJ100,UZJ100..GCC,GEN ; (9907- )FZJ10#,HZJ105..ARL,GCC,GEN",
+     "dateRange": "[01.1998-07.1999]"
+    },
+    {
+     "uid": "1868642_81",
+     "description": "(9801-9907) ; (9907- )HDJ100,UZJ100..GCC,GEN ; (9907- )FZJ10#,HZJ105..ARL,GCC,GEN",
+     "dateRange": "[07.1999-]"
+    },
+    {
+     "uid": "2060395_82",
+     "description": "W(ABS) (9801- )UZJ100..GCC,GEN ; (9801- )FZJ100,HDJ100..LHD ; (0501- )UZJ100..GX..CHI",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "4802",
+   "name": "Front Axle Arm & Steering Knuckle",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "1092375_83",
+     "description": "(9801- )FZJ100,HDJ100,UZJ100",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "4803",
+   "name": "Front Spring & Shock Absorber",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "2240123_84",
+     "description": "(9801- )FZJ100,HDJ100,UZJ100..ARL,GCC,GEN ; (0309-0506)CHI",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1792250_85",
+     "description": "W(ACTIVE HEIGHT CONTROL) (9801- )FZJ100,HDJ100,UZJ100..ARL,GCC,GEN ; (0309-0506)CHI",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "4804",
+   "name": "Rear Spring & Shock Absorber",
+   "chapter": "Power Train, Chassis",
+   "variants": [
+    {
+     "uid": "1735659_86",
+     "description": "(9801- )FZJ100,HDJ100,UZJ100..ARL,GCC,GEN ; (0309-0506)GX..CHI",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "2387000_87",
+     "description": "W(ACTIVE HEIGHT CONTROL) (9801- )FZJ100,HDJ100,UZJ100..ARL,GCC,GEN ; (0309-0506)CHI",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "5151",
+   "name": "Frame",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1217828_119",
+     "description": "(9801- )FZJ100,HDJ100,UZJ100",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "5152",
+   "name": "Suspension Crossmember & Under Cover",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1065683_120",
+     "description": "(9801- )FZJ100,HDJ100,UZJ100",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "5153",
+   "name": "Spare Wheel Carrier",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "2301015_121",
+     "description": "(9801- )FZJ100,HDJ100,UZJ100",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "5251",
+   "name": "Cab Mounting & Body Mounting",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1744479_122",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "5252",
+   "name": "Front Bumper & Bumper Stay",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1658048_123",
+     "description": "(9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1988675_124",
+     "description": "(0208- )ARL,GCC,GEN",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1366929_125",
+     "description": "BUMPER GUARD (9801- )ARL,GCC,GEN",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "5253",
+   "name": "Rear Bumper & Bumper Stay",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1194712_126",
+     "description": "(9801- )FZJ100,HDJ100,UZJ100",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "5351",
+   "name": "Radiator Grille",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1479837_127",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "5353",
+   "name": "Hood & Front Fender",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1957404_220",
+     "description": "(9801-0505)ARL,GCC,GEN ; (0309-0506)CHI",
+     "dateRange": "[01.1998-05.2005]"
+    },
+    {
+     "uid": "2348944_221",
+     "description": "(0505- )ARL,GCC,GEN ; (0506- )CHI",
+     "dateRange": "[05.2005-]"
+    }
+   ]
+  },
+  {
+   "code": "5354",
+   "name": "Hood Lock & Hinge",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1709474_222",
+     "description": "(9801- )LHD",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "5355",
+   "name": "Front Fender Apron & Dash Panel",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "2264120_223",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "5551",
+   "name": "Instrument Panel & Glove Compartment",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "2357600_128",
+     "description": "(9801- )LHD",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "2321422_129",
+     "description": "(9801-0208)LHD",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1984163_130",
+     "description": "(0208- )LHD",
+     "dateRange": "[08.2002-]"
+    }
+   ]
+  },
+  {
+   "code": "5553",
+   "name": "Cowl Panel & Windshield Glass",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1968895_224",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "5851",
+   "name": "Front Floor Panel & Front Floor Member",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1343553_131",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "5852",
+   "name": "Rear Floor Panel & Rear Floor Member",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "2212748_132",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "2202850_133",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "5853",
+   "name": "Floor Insulator",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1233481_211",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "5854",
+   "name": "Floor Mat & Silencer Pad",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1122954_134",
+     "description": "CARPET (9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "5855",
+   "name": "Console Box & Bracket",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "2389247_212",
+     "description": "(9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1632945_213",
+     "description": "(0208- )",
+     "dateRange": "[08.2002-]"
+    }
+   ]
+  },
+  {
+   "code": "6151",
+   "name": "Side Member",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1356275_135",
+     "description": "OUTER PANEL (9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1671967_136",
+     "description": "INNER PANEL,RH (9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1543956_137",
+     "description": "INNER PANEL,LH (9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "6152",
+   "name": "Side Window",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1661059_138",
+     "description": "(9801- )ARL,GCC,GEN",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "6153",
+   "name": "Roof Panel & Back Panel",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1548345_139",
+     "description": "ROOF PANEL (9801- )ARL,GCC,GEN",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1694212_140",
+     "description": "ROOF PANEL, W(MOON ROOF) (9801- )ARL,GCC,GEN ; (0309- )CHI",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1706196_141",
+     "description": "MOON ROOF (9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1895181_142",
+     "description": "MOON ROOF (0208- )ARL,GCC,GEN ; (0309- )CHI",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "2321558_143",
+     "description": "ROOF RACK (9801- )ARL,GCC,GEN",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1848228_144",
+     "description": "ROOF RAIL (9801- )ARL,GCC,GEN ; (0309- )CHI",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "6155",
+   "name": "Rear Ventilator & Roof Ventilator",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "2095144_145",
+     "description": "(9801- )ARL,GCC,GEN ; (0309- )CHI",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "6451",
+   "name": "Inside Trim Board",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1192607_146",
+     "description": "(9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1472090_147",
+     "description": "(0208- )",
+     "dateRange": "[08.2002-]"
+    }
+   ]
+  },
+  {
+   "code": "6452",
+   "name": "Roof Headlining & Silencer Pad",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "2163243_148",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1562199_149",
+     "description": "W(MOON ROOF) (9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "6454",
+   "name": "Package Tray Panel",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1118364_225",
+     "description": "(9801- )ARL,GCC,GEN",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "6751",
+   "name": "Front Door Panel & Glass",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1530321_150",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1792555_151",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "6753",
+   "name": "Front Door Lock & Handle",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1610532_152",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "6754",
+   "name": "Front Door Window Regulator & Hinge",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1811675_153",
+     "description": "(9801- )ARL,GCC,GEN ; (0309- )CHI",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "6755",
+   "name": "Rear Door Panel & Glass",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1956078_154",
+     "description": "DOOR PANEL (9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1718592_155",
+     "description": "DOOR TRIM (9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "6756",
+   "name": "Rear Door Lock & Handle",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1855250_156",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "6757",
+   "name": "Rear Door Window Regulator & Hinge",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "2063711_226",
+     "description": "(9801- )ARL,GCC,GEN ; (0309- )CHI",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "6761",
+   "name": "Back Door Panel & Glass",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1505762_157",
+     "description": "(9801- )LUB",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1509710_158",
+     "description": "(9801- )LUB",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "6762",
+   "name": "Back Door Lock & Hinge",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "2309545_159",
+     "description": "(9801- )LUB",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "6765",
+   "name": "Lock Cylinder Set",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "2077743_214",
+     "description": "(9801-0505)ARL,GCC,GEN ; (0309-0506)CHI",
+     "dateRange": "[01.1998-05.2005]"
+    },
+    {
+     "uid": "2017461_215",
+     "description": "W(IMMOBILIZER) (9801-0505)ARL,GCC,GEN ; (0309-0506)CHI",
+     "dateRange": "[01.1998-05.2005]"
+    },
+    {
+     "uid": "2158076_216",
+     "description": "(0505- )LHD..GCC,GEN ; (0506- )CHI",
+     "dateRange": "[05.2005-]"
+    }
+   ]
+  },
+  {
+   "code": "7151",
+   "name": "Seat & Seat Track",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "2284462_160",
+     "description": "FRONT SEAT(SEPARATE TYPE) (9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1188334_161",
+     "description": "FRONT SEAT(SEPARATE TYPE) (0208- )",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1432308_162",
+     "description": "FRONT SEAT (BENCH TYPE) (9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "2184170_163",
+     "description": "FRONT SEAT (BENCH TYPE) (0208- )",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1442851_164",
+     "description": "FRONT SEAT (ADJUSTER) (POWER SEAT) (9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "2183272_165",
+     "description": "FRONT SEAT (ADJUSTER) (NORMAL SEAT)(9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1261170_166",
+     "description": "FRONT SEAT(ADJUSTER)(VERTICAL SEAT)(9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "2159436_167",
+     "description": "FRONT SEAT (BENCH TYPE) (ADJUSTER) (9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1858216_168",
+     "description": "REAR NO.1 SEAT (BENCH TYPE) (9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "2166052_169",
+     "description": "REAR NO.1 SEAT (BENCH TYPE) (0208- )",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1827774_170",
+     "description": "REAR NO.1 SEAT (TYPE A) (9801- )LHD",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "2406142_171",
+     "description": "REAR NO.1 SEAT (TYPE B) (9801- )LHD",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1993656_172",
+     "description": "REAR NO.1 SEAT (ADJUSTER) (TYPE B) (9801- )LHD",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1309861_173",
+     "description": "REAR NO.1 SEAT (BENCH TYPE FITTING)(9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1698465_174",
+     "description": "REAR NO.1 SEAT (ADJUSTER) (TYPE A) (9801- )LHD",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1786715_175",
+     "description": "REAR NO.1 SEAT (HINGE & STRIKER) (9801- )LHD",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "2256472_176",
+     "description": "REAR NO.2 SEAT (9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1631585_177",
+     "description": "REAR NO.2 SEAT (0208- )",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1895785_178",
+     "description": "REAR NO.2 SEAT (OPPOSING TYPE) (9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1895785_179",
+     "description": "REAR NO.2 SEAT (OPPOSING TYPE) (0208- )",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1472949_180",
+     "description": "REAR NO.2 SEAT (FITTING PARTS) (9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1831635_181",
+     "description": "REAR NO.2 SEAT (STRIKER) ILLUST NO.10 OF10(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "7152",
+   "name": "Seat Belt",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1841153_182",
+     "description": "FRONT SEPARATE SEAT (9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1731784_183",
+     "description": "FRONT BENCH SEAT (9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1095714_184",
+     "description": "FRONT BENCH SEAT (0208- )",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "2111000_185",
+     "description": "REAR NO.1 SEAT (BENCH TYPE) (9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1840114_186",
+     "description": "REAR NO.1 SEAT (9801-0208)LHD",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "2323640_187",
+     "description": "REAR NO.1 SEAT (0208- )LHD",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1541855_188",
+     "description": "REAR NO.2 SEAT (9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "7451",
+   "name": "Armrest & Visor",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1684953_189",
+     "description": "ARMREST (9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1687118_190",
+     "description": "ARMREST (0208- )",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "2377617_191",
+     "description": "VISOR & ASSIST GRIP (9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "7454",
+   "name": "Battery Carrier",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "2249664_192",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "7455",
+   "name": "Caution Plate",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1758754_217",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "2039030_218",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1095154_219",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "7456",
+   "name": "Ash Receptacle",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1960704_193",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "7551",
+   "name": "Emblem & Name Plate",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1673566_194",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "7552",
+   "name": "Moulding",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1679943_195",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "7553",
+   "name": "Body Stripe",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "2150806_196",
+     "description": "(9801-9908)FZJ10#,HZJ105",
+     "dateRange": "[01.1998-08.1999]"
+    },
+    {
+     "uid": "2150806_197",
+     "description": "(9908-0008)FZJ10#,HZJ105",
+     "dateRange": "[08.1999-08.2000]"
+    },
+    {
+     "uid": "2150806_198",
+     "description": "TYPE A (0008-0108)GX,STD",
+     "dateRange": "[08.2000-08.2001]"
+    },
+    {
+     "uid": "2150806_199",
+     "description": "TYPE B (0008-0108)VX ; (0008-0108)FZJ100..LUB..5F",
+     "dateRange": "[08.2000-08.2001]"
+    },
+    {
+     "uid": "2150806_200",
+     "description": "TYPE A (0108-0208)GX,STD",
+     "dateRange": "[08.2001-08.2002]"
+    },
+    {
+     "uid": "2150806_201",
+     "description": "TYPE B (0108-0208)VX ; (0108-0208)FZJ100..LUB..5F",
+     "dateRange": "[08.2001-08.2002]"
+    },
+    {
+     "uid": "2150806_202",
+     "description": "(0208-0308)",
+     "dateRange": "[08.2002-08.2003]"
+    },
+    {
+     "uid": "2150806_203",
+     "description": "(0308-0408)ARL,GCC,GEN ; (0309-0506)CHI",
+     "dateRange": "[08.2003-08.2004]"
+    },
+    {
+     "uid": "2150806_204",
+     "description": "(0408-0505)ARL,GCC,GEN",
+     "dateRange": "[08.2004-05.2005]"
+    },
+    {
+     "uid": "2150806_205",
+     "description": "(0505-0607)ARL,GCC,GEN ; (0506- )CHI",
+     "dateRange": "[05.2005-07.2006]"
+    },
+    {
+     "uid": "2150806_206",
+     "description": "(0607- )GCC,GEN",
+     "dateRange": "[07.2006-]"
+    }
+   ]
+  },
+  {
+   "code": "7554",
+   "name": "Tool Box & License Plate Bracket",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1141121_207",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "7751",
+   "name": "Fuel Tank & Tube",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1636870_208",
+     "description": "FUEL TANK (9801- )FZJ100,UZJ100",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1068879_209",
+     "description": "FUEL TUBE (9801- )FZJ100",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "7851",
+   "name": "Accelerator Link",
+   "chapter": "Body",
+   "variants": [
+    {
+     "uid": "1988977_210",
+     "description": "(9801- )FZJ10#..LHD",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "8101",
+   "name": "Headlamp",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1912657_227",
+     "description": "(9801-0505) ; (0505-0506)CHI",
+     "dateRange": "[01.1998-05.2005]"
+    },
+    {
+     "uid": "1178445_228",
+     "description": "(0505-0506)ARL,GCC,GEN ; (0506- )",
+     "dateRange": "[05.2005-06.2005]"
+    },
+    {
+     "uid": "1178445_229",
+     "description": "(0505-0506)ARL,GCC,GEN ; (0506- )",
+     "dateRange": "[06.2005-]"
+    },
+    {
+     "uid": "1613917_230",
+     "description": "W(DISCHARGE HEADLAMP) (0505- )GCC",
+     "dateRange": "[05.2005-]"
+    }
+   ]
+  },
+  {
+   "code": "8102",
+   "name": "Fog Lamp",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1281735_231",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "8103",
+   "name": "Front Turn Signal Lamp",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1101274_342",
+     "description": "(9801- )5FC..CHI;UZJ100..ARL,GCC,GEN;FZJ10#,HDJ100,HZJ105",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "8106",
+   "name": "Side Turn Signal Lamp & Outer Mirror Lamp",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1697801_232",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "8111",
+   "name": "Rear Combination Lamp",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1083001_233",
+     "description": "(9801-0505) ; (0505-0506)CHI",
+     "dateRange": "[01.1998-05.2005]"
+    },
+    {
+     "uid": "1622160_234",
+     "description": "(0505- )ARL,GCC,GEN",
+     "dateRange": "[05.2005-]"
+    }
+   ]
+  },
+  {
+   "code": "8113",
+   "name": "Rear License Plate Lamp",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1816366_235",
+     "description": "(9801- )LUB",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1607096_236",
+     "description": "W(SPARE TIRE CARRIER=BACK DOOR) (9801- )LUB..GCC,GEN",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "8115",
+   "name": "Reflex Reflector",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1798445_339",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "8117",
+   "name": "Center Stop Lamp",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1224435_237",
+     "description": "(9801- )LUB",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "8121",
+   "name": "Interior Lamp",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1090622_238",
+     "description": "(9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "2291889_239",
+     "description": "(0208- )",
+     "dateRange": "[08.2002-]"
+    }
+   ]
+  },
+  {
+   "code": "8201",
+   "name": "Battery & Battery Cable",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1402740_240",
+     "description": "1 BATTERY (9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1402740_241",
+     "description": "2 BATTERY (9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1295517_242",
+     "description": "1 BATTERY (0208- )",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1402740_243",
+     "description": "2 BATTERY (0208- )",
+     "dateRange": "[08.2002-]"
+    }
+   ]
+  },
+  {
+   "code": "8202",
+   "name": "Wiring & Clamp",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "2322979_244",
+     "description": "ENGINE ROOM (9801-0208)FZJ10#",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1556409_245",
+     "description": "ENGINE ROOM (0208- )FZJ10#",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1139139_246",
+     "description": "ENGINE (9801-0208)FZJ10#",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1472687_247",
+     "description": "ENGINE (0208- )FZJ10#",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1477036_248",
+     "description": "COWL (9801-0208)LHD",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1308161_249",
+     "description": "COWL (0208- )LHD",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1204037_250",
+     "description": "INSTRUMENT PANEL (9801-0208)LHD",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1719942_251",
+     "description": "INSTRUMENT PANEL (0208- )LHD",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1415938_252",
+     "description": "DOOR (9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1777831_253",
+     "description": "DOOR (0208- )",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1672073_254",
+     "description": "SEAT (9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "2399990_255",
+     "description": "SEAT (0208- )",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1903156_256",
+     "description": "FLOOR,ROOF,LUGGAGE,BACK DOOR (9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1737317_257",
+     "description": "FLOOR,LUGGAGE (0208- )",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1620886_258",
+     "description": "ROOF,BACK DOOR (0208- )",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1217548_259",
+     "description": "BRACKET & CLAMP (9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "2142492_260",
+     "description": "BRACKET & CLAMP (9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "2272208_261",
+     "description": "BRACKET & CLAMP (9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "2381831_262",
+     "description": "CABLE BOND (9801- )FZJ10#",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "2204558_263",
+     "description": "CONNECTOR ILLUST NO.10 OF10(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "8301",
+   "name": "Meter",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1975934_264",
+     "description": "(9801-0208)5F",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1764931_265",
+     "description": "(0208- )",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "2144457_266",
+     "description": "(0208- )",
+     "dateRange": "[08.2002-]"
+    }
+   ]
+  },
+  {
+   "code": "8401",
+   "name": "Switch & Relay & Computer",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1288568_267",
+     "description": "ENGINE & TRANSMISSION (9801-0208)FZJ10#",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1627224_268",
+     "description": "ENGINE & TRANSMISSION (0208- )FZJ10#",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1417607_269",
+     "description": "ENGINE ROOM (9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1278803_270",
+     "description": "ENGINE ROOM (0208- )",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1999542_271",
+     "description": "COWL (9801-0208)LHD",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "2203729_272",
+     "description": "COWL (0208- )LHD",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1299416_273",
+     "description": "INSTRUMENT PANEL SWITCH (9801- )LHD",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1181005_274",
+     "description": "CENTER CLUSTER INTEGRATION (9801-0208)LHD",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "2402808_275",
+     "description": "CENTER CLUSTER INTEGRATION (0208- )LHD",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "2232540_276",
+     "description": "IGNITION & COMBINATION SWITCH (9801-0208)LHD",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "2136844_277",
+     "description": "IGNITION & COMBINATION SWITCH (0208- )LHD",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1867851_278",
+     "description": "DOOR & ROOF (9801- )LHD",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "2170626_279",
+     "description": "FLOOR & BACK DOOR (9801-0505)LHD..GCC,GEN ; (0309-0506)CHI",
+     "dateRange": "[01.1998-05.2005]"
+    },
+    {
+     "uid": "1252913_280",
+     "description": "FLOOR & BACK DOOR (0505- )UZJ100..LHD..5F ; (0505- )UZJ100..5FC..GCC,GEN ; (0505- )FZJ10#,HDJ100,HZJ105..LHD..GCC,GEN ; (0506- )5FC..CHI",
+     "dateRange": "[05.2005-]"
+    },
+    {
+     "uid": "2403724_281",
+     "description": "SEAT (9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "8404",
+   "name": "Electronic Fuel Injection System",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1235482_282",
+     "description": "ENGINE & ROOM (9801- )FZJ10#..LHD",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1992488_283",
+     "description": "REAR (9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "8408",
+   "name": "Cruise Control (Auto Drive)",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1379829_340",
+     "description": "(9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1973967_341",
+     "description": "(9801-0208) ; (0208- )VX..CHI;HDJ100,UZJ100..ARL,GCC,GEN",
+     "dateRange": "[01.1998-08.2002]"
+    }
+   ]
+  },
+  {
+   "code": "8414",
+   "name": "Abs & Vsc",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1280698_284",
+     "description": "(9801- )FZJ100,HDJ100,UZJ100",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "8420",
+   "name": "Wireless Door Lock",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1665784_285",
+     "description": "(9801-0208)LHD",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1431103_286",
+     "description": "(0208- )LHD",
+     "dateRange": "[08.2002-]"
+    }
+   ]
+  },
+  {
+   "code": "8421",
+   "name": "Air Bag",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1708624_287",
+     "description": "(9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "2211680_288",
+     "description": "(0208- )",
+     "dateRange": "[08.2002-]"
+    }
+   ]
+  },
+  {
+   "code": "8423",
+   "name": "Active Control Suspension (Electrical Parts)",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1143569_351",
+     "description": "(9801- )LHD",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "8424",
+   "name": "Anti-Theft Device",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "2087954_289",
+     "description": "WIRELESS=KEY TYPE (9801-0208)EFI,TDEFI",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "2381355_290",
+     "description": "LESS WIRELESS OR KEY HOLDER TYPE (9801-0208)EFI,TDEFI",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1977896_291",
+     "description": "(0208- )LHD",
+     "dateRange": "[08.2002-]"
+    }
+   ]
+  },
+  {
+   "code": "8501",
+   "name": "Windshield Wiper",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1834235_292",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "8502",
+   "name": "Rear Wiper",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1985023_293",
+     "description": "VERTICAL DOOR (9801- )LUB",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "8503",
+   "name": "Windshield Washer",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1530501_294",
+     "description": "W/O(HEADLAMP CLEANER) (9801- )ARL,GCC,GEN",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1320544_295",
+     "description": "W(HEADLAMP CLEANER) (9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1530501_296",
+     "description": "W(HEADLAMP CLEANER) (0208- )",
+     "dateRange": "[08.2002-]"
+    }
+   ]
+  },
+  {
+   "code": "8504",
+   "name": "Rear Washer",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1680198_297",
+     "description": "VERTICAL DOOR (9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "2231695_298",
+     "description": "DOUBLE LEAF DOOR (9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1555513_299",
+     "description": "VERTICAL DOOR (0208- )",
+     "dateRange": "[08.2002-]"
+    }
+   ]
+  },
+  {
+   "code": "8505",
+   "name": "Headlamp Cleaner",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1481713_345",
+     "description": "(9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "2138532_346",
+     "description": "(0208-0505) ; (0505-0506)CHI",
+     "dateRange": "[08.2002-05.2005]"
+    },
+    {
+     "uid": "2032109_347",
+     "description": "(0505-0506)ARL,GCC,GEN ; (0506- )",
+     "dateRange": "[05.2005-06.2005]"
+    },
+    {
+     "uid": "2032109_348",
+     "description": "(0505-0506)ARL,GCC,GEN ; (0506- )",
+     "dateRange": "[06.2005-]"
+    }
+   ]
+  },
+  {
+   "code": "8511",
+   "name": "Door Motor & Door Solenoid",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1762166_349",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "8513",
+   "name": "Seat Motor & Seat Heater",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1719572_350",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "8601",
+   "name": "Radio Receiver & Amplifier & Condenser",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1396729_300",
+     "description": "(9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1626027_301",
+     "description": "(0208- )",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1102475_302",
+     "description": "(9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1780947_303",
+     "description": "(0208- )",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1980217_304",
+     "description": "CONDENSER (9801- )FZJ10#,UZJ100",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "8602",
+   "name": "Speaker",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1778789_305",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "8604",
+   "name": "Antenna",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1419128_306",
+     "description": "(9801- )LHD",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "8611",
+   "name": "Horn",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1593228_307",
+     "description": "(9801- )DSL2,EFI,TD2",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "8701",
+   "name": "Mirror",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "2319009_308",
+     "description": "(9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "8712",
+   "name": "Heating & Air Conditioning - Heater Unit & Blower",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "2376855_343",
+     "description": "FRONT (9801- )LHD",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "2245046_344",
+     "description": "REAR (9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "8714",
+   "name": "Heating & Air Conditioning - Cooler Unit",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1664797_309",
+     "description": "FRONT (9801- )LHD ; (0408- )CHI",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1127979_310",
+     "description": "REAR,W(AUTOMATIC AIR CONDITIONER) (9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1682567_311",
+     "description": "REAR,W(MANUAL AIR CONDITIONER) (9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1321815_312",
+     "description": "COOL BOX (9801- )LHD",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1156810_313",
+     "description": "TELEPHONE TRAY(DEALER OPTION) (9907- )GCC",
+     "dateRange": "[07.1999-]"
+    },
+    {
+     "uid": "1654031_314",
+     "description": "O-RING (9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "8715",
+   "name": "Heating & Air Conditioning - Control & Air Duct",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "2358552_315",
+     "description": "FRONT HEATER CONTROL (9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1986083_316",
+     "description": "FRONT HEATER CONTROL,PUSH TYPE (0208- )GX,VX",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1356014_317",
+     "description": "FRONT HEATER CONTROL,DIAL TYPE (0208- )GX,STD",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1404249_318",
+     "description": "REAR HEATER CONTROL (9801- ) ; (0309- )CHI",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1379453_319",
+     "description": "FRONT DUCT (9801- )LHD",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "2330810_320",
+     "description": "REAR DUCT (9801-0208)",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1262660_321",
+     "description": "REAR DUCT (0208- ) ; (0309- )CHI",
+     "dateRange": "[08.2002-]"
+    },
+    {
+     "uid": "1119437_322",
+     "description": "SENSOR (9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "8716",
+   "name": "Heating & Air Conditioning - Water Piping",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "2152593_323",
+     "description": "FRONT (9801- )FZJ10#..ARL,GCC,GEN",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1924618_324",
+     "description": "FRONT,W(REAR HEATER) (9801- )FZJ10#..ARL,GCC,GEN",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1623404_325",
+     "description": "REAR (9801-0208) ; (0208- )UZJ100..ARL,GCC,GEN ; (0208- )FZJ10#,HDJ100,HZJ105",
+     "dateRange": "[01.1998-08.2002]"
+    },
+    {
+     "uid": "1623404_326",
+     "description": "REAR (9801-0208) ; (0208- )UZJ100..ARL,GCC,GEN ; (0208- )FZJ10#,HDJ100,HZJ105",
+     "dateRange": "[08.2002-]"
+    }
+   ]
+  },
+  {
+   "code": "8718",
+   "name": "Heating & Air Conditioning - Cooler Piping",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "1540134_327",
+     "description": "CONDENSER(SINGLE AIR CONDITIONER) (9801- )FZJ100,UZJ100..GCC ; (0008- )HDJ100..ARL",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1645744_328",
+     "description": "CONDENSER(DUAL AIR CONDITIONER) (9801- )FZJ100,HDJ100,UZJ100",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1832409_329",
+     "description": "FRONT(SINGLE AIR CONDITIONER) (9801- )FZJ10#..LHD",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1063343_330",
+     "description": "FRONT(SINGLE AIR CON. & COOL BOX) (9801- )FZJ10#..LHD",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1812808_331",
+     "description": "FRONT(DUAL AIR CONDITIONER) (9801- )FZJ100",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1307006_332",
+     "description": "FRONT(DUAL AIR CON. & COOL BOX) (9801- )FZJ100",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1685613_333",
+     "description": "REAR(SINGLE AIR CON. & COOL BOX) (9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "2062619_334",
+     "description": "REAR(DUAL AIR CONDITIONER) (9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1513023_335",
+     "description": "REAR(DUAL AIR CON. & COOL BOX) (9801- )",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1654031_336",
+     "description": "O-RING (9801- )",
+     "dateRange": "[01.1998-]"
+    }
+   ]
+  },
+  {
+   "code": "8719",
+   "name": "Heating & Air Conditioning - Compressor",
+   "chapter": "Electrical",
+   "variants": [
+    {
+     "uid": "2389067_337",
+     "description": "(9801- )FZJ10#",
+     "dateRange": "[01.1998-]"
+    },
+    {
+     "uid": "1793714_338",
+     "description": "(9801-0505)FZJ10#,HDJ100,HZJ105 ; (9801-0505)UZJ100..5FC..ARL,CHI,GEN ; (0505- )UZJ100..CHI",
+     "dateRange": "[01.1998-05.2005]"
+    }
+   ]
+  }
+ ]
+}

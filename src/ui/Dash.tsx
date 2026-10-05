@@ -127,7 +127,7 @@ export default function Dash() {
 
   // Space revs, E starts and stops
   useEffect(() => {
-    const typing = (e: KeyboardEvent) => e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement;
+    const typing = (e: KeyboardEvent) => (e.target instanceof HTMLInputElement && ['text', 'search'].includes(e.target.type)) || e.target instanceof HTMLTextAreaElement;
     const down = (e: KeyboardEvent) => {
       if (typing(e)) return;
       if (e.code === 'Space') {

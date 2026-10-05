@@ -60,7 +60,7 @@ def place_all(objs, skin_x):
 
     # grille sits in the front opening, scaled to the opening height
     grille = D.build_grille()
-    emblem = next((c for c in grille.children if c.name == "TRIM_0000_front_emblem"), None)
+    emblem = next((c for c in grille.children if c.name == "TRIM_7551_front_emblem"), None)
     k = 0.228 / 0.25
     grille.data.transform(Matrix.Diagonal((1.0, 1.0, k, 1.0)))
     if emblem is not None:
@@ -73,14 +73,14 @@ def place_all(objs, skin_x):
     # badges
     badges = D.build_badges()
     for key, (x, z) in {"TRIM_0000_back_door_name_plate": (0.41, 1.165),
-                        "TRIM_0000_back_door_emblem": (-0.125, 1.272),
-                        "TRIM_0000_grade_badge": (-0.62, 1.0)}.items():
+                        "TRIM_7551_back_door_emblem": (-0.125, 1.272),
+                        "TRIM_7551_grade_badge": (-0.62, 1.0)}.items():
         u = skin_u_rear(x, z)
         co = blender_co(u, x, z)
         place(badges[key], co, basis("+Y", normal_at(co)))
         out[key] = badges[key]
     for side, sgn in (("L", 1.0), ("R", -1.0)):
-        key = f"TRIM_0000_quarter_badge_{side}"
+        key = f"TRIM_7551_quarter_badge_{side}"
         u, z = 3.52, 1.29
         co = blender_co(u, sgn * skin_x(u, z), z)
         place(badges[key], co, basis("+X" if side == "L" else "-X", normal_at(co)))

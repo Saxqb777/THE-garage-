@@ -205,7 +205,7 @@ def classify(src, smat, c, n, island=10**9):
     # lamps
     if exterior and inbox(c, R.HEADLAMP, sg):
         if src == PAINT and n[2] > 0.3 and z > 0.985:
-            return f"BODY_5301_front_fender_{s}", "paint_white"  # painted lip above the lamp, not housing
+            return f"BODY_5353_front_fender_{s}", "paint_white"  # painted lip above the lamp, not housing
         if src == GLASS_OUT:
             mk = "lamp_lens_clear"
         elif src == PAINT or src == BLACK:
@@ -226,47 +226,47 @@ def classify(src, smat, c, n, island=10**9):
             mk = "lamp_lens_red"
         else:
             mk = base
-        return f"LIGHT_8105_rear_combination_lamp_{s}", mk
+        return f"LIGHT_8111_rear_combination_lamp_{s}", mk
     if src in ("left2", "right2", "lightback", "rear", "boz7fa_land2004.021"):
-        return f"LIGHT_8105_rear_combination_lamp_{s}", base
+        return f"LIGHT_8111_rear_combination_lamp_{s}", base
     if src == "flakka.2006.21":
-        return f"LIGHT_0000_side_turn_signal_lamp_{s}", "lamp_lens_amber"
+        return f"LIGHT_8106_side_turn_signal_lamp_{s}", "lamp_lens_amber"
 
     # front end
     if src == "flakka_sh3artoyota1":
-        return "TRIM_0000_front_emblem", "chrome"
+        return "TRIM_7551_front_emblem", "chrome"
     if src in (GREY, CHROME, BLACK) and inbox(c, R.GRILLE):
-        return "BODY_0000_radiator_grille", "plastic_black_gloss"
+        return "BODY_5351_radiator_grille", "plastic_black_gloss"
     if exterior and src != PAINT and y < R.FRONT_BUMPER_Y1 and z < R.BUMPER_Z1:
         mk = {GLASS_OUT: "lamp_lens_clear", BLACK: "plastic_black_matte", CHROME: "plastic_trim_grey"}.get(src, "plastic_trim_grey")
         if src == LAMPS:
             mk = base
-        return "BODY_5201_front_bumper", mk
+        return "BODY_5252_front_bumper", mk
     if exterior and src != PAINT and y > R.REAR_BUMPER_Y0 and z < R.BUMPER_Z1:
         if src == "flakka.2006.10":
             return "BODY_0000_body_shell", "rubber_tire"
         mk = {"flakka.2006.18": "lamp_lens_red", BLACK: "plastic_black_matte"}.get(src, "plastic_trim_grey")
-        return "BODY_5202_rear_bumper", mk
+        return "BODY_5253_rear_bumper", mk
 
     # small parts on the sides
     if exterior and inbox(c, R.MIRROR, sg) and src in (PAINT, BLACK, "mirror2", "mirror3", GREY):
         # set 2 car: body colour housings; the sail base stays black
         mk = "chrome" if src in ("mirror2", "mirror3") else ("plastic_black_matte" if (src == BLACK or ax < 0.93) else "paint_white")
-        return f"BODY_0000_outer_mirror_{s}", mk
+        return f"BODY_8701_outer_mirror_{s}", mk
     small = island < 3000  # the door skin is one big island, handles and badges are small ones
     if (src == CHROME or (src == PAINT and small)) and (inbox(c, R.HANDLE_FRONT, sg) or inbox(c, R.HANDLE_REAR, sg)):
         if ax < 0.992:
             return None  # flat backing plate behind the grip; the door skin is intact underneath
         which = "front" if inbox(c, R.HANDLE_FRONT, sg) else "rear"
-        return f"DOOR_0000_{which}_door_outside_handle_{s}", "chrome"
+        return f"DOOR_{'6753' if which == 'front' else '6756'}_{which}_door_outside_handle_{s}", "chrome"
     if src == PAINT and inbox(c, R.FUEL_LID):
         return "BODY_0000_fuel_filler_lid", "tex_paint_white"
     if src == PAINT and inbox(c, R.QUARTER_BADGE, sg):
-        return f"TRIM_0000_quarter_badge_{s}", "chrome"
+        return f"TRIM_7551_quarter_badge_{s}", "chrome"
     if src in ("logogxr1", "TextPlus001"):
-        return "TRIM_0000_grade_badge", "chrome"
+        return "TRIM_7551_grade_badge", "chrome"
     if src == PAINT and inbox(c, R.REAR_EMBLEM):
-        return "TRIM_0000_back_door_emblem", "chrome"
+        return "TRIM_7551_back_door_emblem", "chrome"
     if src == "flakka.2006.23":
         if R.MUDGUARD_FRONT_Y[0] <= y <= R.MUDGUARD_FRONT_Y[1]:
             return f"BODY_0000_mudguard_front_{s}", "rubber_seal"
@@ -281,58 +281,58 @@ def classify(src, smat, c, n, island=10**9):
         if inbox(c, R.REAR_GLASS):
             if ax < BACK_DOOR_GAP:
                 return None
-            return f"GLASS_6703_back_door_glass_{s}", "glass_privacy"
+            return f"GLASS_6761_back_door_glass_{s}", "glass_privacy"
         if src == GLASS_TINT and z > 1.85 and y > 2.0:
-            return "LIGHT_8105_rear_combination_lamp_L" if x >= 0 else "LIGHT_8105_rear_combination_lamp_R", "lamp_lens_red"
+            return "LIGHT_8111_rear_combination_lamp_L" if x >= 0 else "LIGHT_8111_rear_combination_lamp_R", "lamp_lens_red"
         if ax > R.DOOR_SIDE_X and z > 1.15:
             if y < line_y(R.B_LINE, z):
-                return f"GLASS_6701_front_door_glass_{s}", "glass_clear"
+                return f"GLASS_6751_front_door_glass_{s}", "glass_clear"
             if y < R.REAR_DOOR_GLASS_SPLIT_Y:
-                return f"GLASS_6702_rear_door_glass_{s}", "glass_privacy"
+                return f"GLASS_6755_rear_door_glass_{s}", "glass_privacy"
             if y < line_y(R.REAR_DOOR_LINE, z):
-                return f"GLASS_6702_rear_door_quarter_glass_{s}", "glass_privacy"
-            return f"GLASS_0000_quarter_window_glass_{s}", "glass_privacy"
+                return f"GLASS_6755_rear_door_quarter_glass_{s}", "glass_privacy"
+            return f"GLASS_6152_quarter_window_glass_{s}", "glass_privacy"
         return "BODY_0000_body_shell", "glass_privacy"
     if src == GLASS_OUT and inbox(c, R.WINDSHIELD):
-        return "GLASS_5601_windshield_glass", "glass_clear"
+        return "GLASS_5553_windshield_glass", "glass_clear"
 
     # interior
     if src == SEATS:
         if y > R.SEAT_SPLIT_Y:
-            return "INT_0000_rear_seat", base
-        return f"INT_0000_front_seat_{s}", base
+            return "INT_7151_rear_seat", base
+        return f"INT_7151_front_seat_{s}", base
     if src in STEERING:
-        return "INT_0000_steering_wheel", "interior_plastic_grey" if smat.startswith("Material #37") else base
+        return "INT_4504_steering_wheel", "interior_plastic_grey" if smat.startswith("Material #37") else base
     if src == CARPET:
-        return "INT_0000_floor_carpet", base
+        return "INT_5854_floor_carpet", base
     if src in INTERIOR_DASH and not (ax > 0.84 and z < 1.25):
-        return "INT_0000_instrument_panel", base
+        return "INT_5551_instrument_panel", base
 
     # back doors (barn doors): the tailgate skin and its frames, split by side with a real gap
     if y > R.BACK_DOOR_Y0 and in_outline(ax, z, R.BACK_DOOR_OUTLINE) and src in (PAINT, GREY, BLACK, TRIMS, CHROME):
         if ax < BACK_DOOR_GAP:
             return None
-        return f"DOOR_6703_back_door_{s}", base
+        return f"DOOR_6761_back_door_{s}", base
 
     # hood
     if src == PAINT and y < R.HOOD_REAR_Y and ax < R.HOOD_SIDE_X and z > R.HOOD_FRONT_Z:
-        return "BODY_5301_hood", base
+        return "BODY_5353_hood", base
 
     # side doors: anything outboard of the drip rail between the gap lines
     if ax > R.DOOR_SIDE_X and R.DOOR_BOTTOM < z < 1.95 and src not in (SEATS, CARPET):
         if src in INTERIOR_DASH and ax < 0.84:
-            return "INT_0000_instrument_panel", base
+            return "INT_5551_instrument_panel", base
         a = line_y(R.A_LINE, z)
         b = line_y(R.B_LINE, z)
         r = line_y(R.REAR_DOOR_LINE, z)
         if a <= y < b:
-            return f"DOOR_6701_front_door_{s}", base
+            return f"DOOR_6751_front_door_{s}", base
         if b <= y < r:
-            return f"DOOR_6702_rear_door_{s}", base
+            return f"DOOR_6755_rear_door_{s}", base
         if src == PAINT and y < a and z > 0.70 and ax > 0.44 and y > -2.6:
-            return f"BODY_5301_front_fender_{s}", "tex_paint_white"
+            return f"BODY_5353_front_fender_{s}", "tex_paint_white"
     if src in INTERIOR_DASH:
-        return "INT_0000_instrument_panel", base
+        return "INT_5551_instrument_panel", base
     if src == "flakka.2006.22":
         return "BODY_0000_body_shell", "underbody_black"
     if src == "flakka.2006.10":
@@ -598,8 +598,8 @@ def lower_door_skin(door_key, side, y_from, y_to):
 def gxr_additions(out, log):
     gap = 0.004
     for side in ("L", "R"):
-        fd = out.get(f"DOOR_6701_front_door_{side}")
-        rd = out.get(f"DOOR_6702_rear_door_{side}")
+        fd = out.get(f"DOOR_6751_front_door_{side}")
+        rd = out.get(f"DOOR_6755_rear_door_{side}")
         if fd is not None:
             co, polys = lower_door_skin(fd.name, side, lambda z: line_y(R.A_LINE, max(z, 0.42)) + gap, lambda z: R.B_LINE[0][0] - gap)
             append_mesh(fd, co, polys, "paint_white")

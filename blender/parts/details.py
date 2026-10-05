@@ -5,13 +5,13 @@ object. All parts are standalone meshes in a documented local frame so they
 can be placed onto the body later. Units are metres, Z up.
 
 Builders
-    build_grille()                 BODY_0000_radiator_grille (+ child TRIM_0000_front_emblem)
+    build_grille()                 BODY_5351_radiator_grille (+ child TRIM_7551_front_emblem)
     build_badges()                 dict of the five rear and quarter badges
-    build_mirror(side)             BODY_0000_outer_mirror_L / _R
-    build_door_handle(which, side) DOOR_0000_<which>_door_outside_handle_L / _R
-    build_side_marker(side)        LIGHT_0000_side_turn_signal_lamp_L / _R
+    build_mirror(side)             BODY_8701_outer_mirror_L / _R
+    build_door_handle(which, side) DOOR_6753_front_door_outside_handle_L / _R (6756 for rear)
+    build_side_marker(side)        LIGHT_8106_side_turn_signal_lamp_L / _R
     build_mudguard(position)       BODY_0000_mudguard_<position>
-    build_wiper(which, side)       ELEC_0000_<which>_wiper_arm_<side> (+ child blade)
+    build_wiper(which, side)       ELEC_8501_front_wiper_arm_<side> or ELEC_8502_rear_wiper_arm_<side> (+ child blade)
 
 Local frames (see each builder's docstring for the exact extents)
     grille          origin at the centre of the mounting plane, faces -Y
@@ -654,7 +654,7 @@ GRILLE_BOW = 0.015
 
 
 def build_grille():
-    """BODY_0000_radiator_grille with child TRIM_0000_front_emblem.
+    """BODY_5351_radiator_grille with child TRIM_7551_front_emblem.
 
     Local frame: origin at the centre of the mounting plane (y = 0), the grille faces
     -Y, Z up. The whole part lives at y <= 0: the back of the surround touches y = 0
@@ -763,9 +763,9 @@ def build_grille():
     for v in bm.verts:
         v.co.y -= GRILLE_BOW * max(0.0, 1.0 - (v.co.x / half) ** 2)
 
-    grille = _make_object("BODY_0000_radiator_grille", bm, ["plastic_trim_grey", "plastic_black_gloss", "plastic_black_matte"],
+    grille = _make_object("BODY_5351_radiator_grille", bm, ["plastic_trim_grey", "plastic_black_gloss", "plastic_black_matte"],
                           sharp_deg=40.0)
-    _build_emblem("TRIM_0000_front_emblem", 0.15, 0.10, "-Y", parent=grille,
+    _build_emblem("TRIM_7551_front_emblem", 0.15, 0.10, "-Y", parent=grille,
                   location=(0.0, -0.032 - GRILLE_BOW + 0.0006, z_e))
     return grille
 
@@ -803,9 +803,9 @@ def build_badges():
     TRIM_0000_back_door_name_plate  black plate 0.50 x 0.065 x 0.012 with raised chrome
                                     "LAND CRUISER"; origin at the centre of its back face,
                                     faces +Y. Materials: 0 plastic_black_gloss, 1 chrome.
-    TRIM_0000_back_door_emblem      chrome Toyota emblem 0.13 x 0.085, back face centre, +Y.
-    TRIM_0000_grade_badge           chrome "G" 0.035 tall, back face centre, faces +Y.
-    TRIM_0000_quarter_badge_L / _R  chrome "4500 EFI" 0.18 x 0.03, back face centre,
+    TRIM_7551_back_door_emblem      chrome Toyota emblem 0.13 x 0.085, back face centre, +Y.
+    TRIM_7551_grade_badge           chrome "G" 0.035 tall, back face centre, faces +Y.
+    TRIM_7551_quarter_badge_L / _R  chrome "4500 EFI" 0.18 x 0.03, back face centre,
                                     L faces +X, R faces -X, text reads left to right from outside.
     """
     out = {}
@@ -823,17 +823,17 @@ def build_badges():
     out[name] = _make_object(name, bm, ["plastic_black_gloss", "chrome"], sharp_deg=45.0)
 
     # rear emblem
-    name = "TRIM_0000_back_door_emblem"
+    name = "TRIM_7551_back_door_emblem"
     out[name] = _build_emblem(name, 0.13, 0.085, "+Y")
 
     # grade badge G
-    name = "TRIM_0000_grade_badge"
+    name = "TRIM_7551_grade_badge"
     bm = _text_bm("G", 0.035, stretch=1.3, thickness=0.003, chamfer=0.0006, facing="+Y")
     out[name] = _make_object(name, bm, ["chrome"], sharp_deg=50.0)
 
     # quarter badges
     for side, facing in (("L", "+X"), ("R", "-X")):
-        name = f"TRIM_0000_quarter_badge_{side}"
+        name = f"TRIM_7551_quarter_badge_{side}"
         bm = _text_bm("4500 EFI", 0.028, width_target=0.18, shear=0.22, spacing=1.0, thickness=0.0025,
                       chamfer=0.0005, facing=facing)
         out[name] = _make_object(name, bm, ["chrome"], sharp_deg=50.0)
@@ -846,7 +846,7 @@ def build_badges():
 
 
 def build_mirror(side="L"):
-    """BODY_0000_outer_mirror_L / _R, the base trim black mirror.
+    """BODY_8701_outer_mirror_L / _R, the base trim black mirror.
 
     Local frame (L): origin at the centre of the triangular sail base where it meets
     the door skin (x = 0 plane), housing out along +X, glass faces +Y, Z up.
@@ -889,7 +889,7 @@ def build_mirror(side="L"):
     _extrude_loops(sail, [[tri]], h_wall=0.008, profile=[(0.0025, 0.011), (0.0045, 0.012)], mat_index=2)
     _set_material(_merge(bm, sail, fn=_frame_map("+X")), 2)
 
-    name = f"BODY_0000_outer_mirror_{side}"
+    name = f"BODY_8701_outer_mirror_{side}"
     ob = _make_object(name, bm, ["plastic_black_gloss", "chrome", "plastic_black_matte"], sharp_deg=40.0)
     if side == "R":
         _mirror_x(ob)
@@ -902,7 +902,7 @@ def build_mirror(side="L"):
 
 
 def build_door_handle(which="front", side="L"):
-    """DOOR_0000_<which>_door_outside_handle_<side>: chrome pull handle in a black cup.
+    """DOOR_6753/6756_<which>_door_outside_handle_<side>: chrome pull handle in a black cup.
 
     Local frame: origin at the centre of the cup's mounting face on the door skin,
     faces +X (L) or -X (R), Z up, forward is -Y. Cup outline 0.27 x 0.064 with a 1.2 mm
@@ -971,7 +971,7 @@ def build_door_handle(which="front", side="L"):
             # dark lock face on the outer disc, chrome bezel around it
             f.material_index = 1 if abs(f.calc_center_median().x - 0.012) < 1e-4 else 0
 
-    name = f"DOOR_0000_{which}_door_outside_handle_{side}"
+    name = f"DOOR_{'6753' if which == 'front' else '6756'}_{which}_door_outside_handle_{side}"
     ob = _make_object(name, bm, ["chrome", "plastic_black_matte"], sharp_deg=42.0)
     if side == "R":
         _mirror_x(ob)
@@ -984,7 +984,7 @@ def build_door_handle(which="front", side="L"):
 
 
 def build_side_marker(side="L"):
-    """LIGHT_0000_side_turn_signal_lamp_<side>: amber side repeater 0.069 x 0.032.
+    """LIGHT_8106_side_turn_signal_lamp_<side>: amber side repeater 0.069 x 0.032.
 
     Local frame: origin at the centre of the mounting face on the wing, faces +X (L)
     or -X (R), Z up, forward -Y. Housing 4 mm thick, domed lens to 11.5 mm proud.
@@ -1011,7 +1011,7 @@ def build_side_marker(side="L"):
                    base=hd + 0.0005, mat_index=1)
     _set_material(_merge(bm, lb, fn=fm), 1)
 
-    name = f"LIGHT_0000_side_turn_signal_lamp_{side}"
+    name = f"LIGHT_8106_side_turn_signal_lamp_{side}"
     ob = _make_object(name, bm, ["lamp_housing", "lamp_lens_amber", "chrome"], sharp_deg=45.0)
     if side == "R":
         _mirror_x(ob)
@@ -1198,7 +1198,7 @@ def _wiper_blade_bm(length, scale):
 
 
 def build_wiper(which="front", side="L"):
-    """ELEC_0000_<which>_wiper_arm_<side> with child ELEC_0000_<which>_wiper_blade_<side>.
+    """ELEC_8501/8502_<which>_wiper_arm_<side> with child ELEC_8501/8502_<which>_wiper_blade_<side>.
 
     Local frame: origin at the arm pivot on the glass plane, local +Z is the glass normal
     (pointing away from the glass) and everything sits at z >= 0. Front arms are 0.55 m
@@ -1227,8 +1227,9 @@ def build_wiper(which="front", side="L"):
             for v in b.verts:
                 v.co.x = -v.co.x
             bmesh.ops.reverse_faces(b, faces=b.faces)
-    arm_name = f"ELEC_0000_{which}_wiper_arm_{side}"
-    blade_name = f"ELEC_0000_{which}_wiper_blade_{side}"
+    code = "8501" if which == "front" else "8502"  # Toyota EPC: 8501 windshield wiper, 8502 rear wiper
+    arm_name = f"ELEC_{code}_{which}_wiper_arm_{side}"
+    blade_name = f"ELEC_{code}_{which}_wiper_blade_{side}"
     arm = _make_object(arm_name, arm_bm, ["plastic_black_matte"], sharp_deg=40.0)
     _make_object(blade_name, blade_bm, ["plastic_black_matte", "rubber_seal"], sharp_deg=40.0,
                  parent=arm, location=(direction * arm_len, 0.0, 0.0))

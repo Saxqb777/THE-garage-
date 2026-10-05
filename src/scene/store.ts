@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import type { CatalogPart } from '@/data/catalog';
 import { SCENES, isSceneKey, type SceneKey } from './scenes';
 
 export const MODEL_URL = '/models/lc100.glb';
@@ -61,6 +62,12 @@ type GarageState = {
   focusAssembly: (key: string) => void;
   explodeUp: () => void;
   assemble: () => void;
+  /** Parts catalogue from /api/parts (M7), keyed by part key. */
+  catalog: Map<string, CatalogPart> | null;
+  catalogSource: 'neon' | 'seed' | null;
+  /** Service layer: highlight the parts due at this many km, or off. */
+  service: number | null;
+  setService: (km: number | null) => void;
   /** The scene on screen. */
   scene: SceneKey;
   /** The scene asked for; it replaces `scene` once its sky has loaded (SceneSwap). */
@@ -98,7 +105,7 @@ const initialScene: SceneKey = isSceneKey(query.get('scene')) ? (query.get('scen
 
 const ASSEMBLED: ExplodeState = { level: 0, system: null, assembly: null };
 
-/** ?x=all, ?x=DOOR or ?x=DOOR_6701_front_door_L */
+/** ?x=all, ?x=DOOR or ?x=DOOR_6751_front_door_L */
 function explodeFromParam(x: string | null): ExplodeState {
   if (!x) return ASSEMBLED;
   if (x === 'all') return { level: 1, system: null, assembly: null };
@@ -156,6 +163,10 @@ export const useGarage = create<GarageState>()((set) => ({
       return { explode: ASSEMBLED };
     }),
   assemble: () => set({ explode: ASSEMBLED }),
+  catalog: null,
+  catalogSource: null,
+  service: null,
+  setService: (service) => set((s) => ({ service, xray: service ? true : s.xray })),
   scene: initialScene,
   targetScene: initialScene,
   setScene: (targetScene) => set({ targetScene }),
@@ -185,6 +196,9 @@ export type GarageDebug = ModelInfo & {
   selected: string | null;
   xray: boolean;
   explode: ExplodeState;
+  service: number | null;
+  catalogSource: 'neon' | 'seed' | null;
+  catalogSize: number;
   view: 'exterior' | 'cabin';
   lift: boolean;
   camBusy: boolean;
@@ -218,6 +232,9 @@ if (typeof window !== 'undefined') {
       selected: s.selected,
       xray: s.xray,
       explode: s.explode,
+      service: s.service,
+      catalogSource: s.catalogSource,
+      catalogSize: s.catalog?.size ?? 0,
       view: s.view,
       lift: s.lift,
       camBusy: s.camBusy,

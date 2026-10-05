@@ -4,6 +4,8 @@ import { useEffect } from 'react';
 import { useEnvironment, useProgress } from '@react-three/drei';
 import { CREDITS } from '@/data/credits';
 import contract from '@/data/parts.m1.json';
+import { dueAt } from '@/data/catalog';
+import { goToPart } from '@/scene/goTo';
 import { SCENES, SCENE_ORDER, hdriUrl } from '@/scene/scenes';
 import { PLACEHOLDER_URL, useGarage, type PresetKey } from '@/scene/store';
 import styles from './Hud.module.css';
@@ -47,12 +49,18 @@ export default function Hud() {
   const setLift = useGarage((s) => s.setLift);
   const inGarage = shownKey === 'garage';
   const exploded = useGarage((s) => s.explode.level > 0);
+  const service = useGarage((s) => s.service);
+  const setService = useGarage((s) => s.setService);
+  const catalog = useGarage((s) => s.catalog);
+  const due = service && catalog ? dueAt([...catalog.values()], service).sort((a, b) => a.nameEn.localeCompare(b.nameEn)) : [];
   const explodeAll = useGarage((s) => s.explodeAll);
   const assemble = useGarage((s) => s.assemble);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.repeat || e.metaKey || e.ctrlKey || e.altKey) return;
+      // typing in the search box is not a shortcut (checkboxes and sliders still are)
+      if ((e.target instanceof HTMLInputElement && ['text', 'search'].includes(e.target.type)) || e.target instanceof HTMLTextAreaElement) return;
       if (e.key === 'Escape') {
         const st = useGarage.getState();
         if (st.selected) st.select(null);
@@ -178,6 +186,30 @@ export default function Hud() {
           <input type="checkbox" checked={xray} onChange={(e) => setXray(e.target.checked)} />
           <span>X Ray</span>
         </label>
+      </div>
+
+      <div className={styles.service}>
+        <p className={styles.sectionTitle}>Service</p>
+        <div className={styles.chips} role="radiogroup" aria-label="Service interval">
+          {[5000, 10000, 40000, 80000].map((km) => (
+            <button key={km} type="button" role="radio" aria-checked={service === km} className={service === km ? styles.sceneOn : undefined} disabled={!catalog} onClick={() => setService(service === km ? null : km)}>
+              {km / 1000}k
+            </button>
+          ))}
+        </div>
+        {service && (
+          <ul className={styles.dueList}>
+            {due.length === 0 && <li className={styles.hint}>Nothing listed for this interval yet</li>}
+            {due.map((p) => (
+              <li key={p.key}>
+                <button type="button" onClick={() => goToPart(p.key)}>
+                  {p.nameEn}
+                  <span>{p.serviceIntervalKm! / 1000}k</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       <p className={styles.hint}>Click a part for its card · click doors to open · drag to orbit · G get in · H all doors · L lights · X x ray · 1 to 5 scenes · Esc back</p>

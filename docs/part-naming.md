@@ -19,7 +19,7 @@ Regular expression used by the validators:
 ^(BODY|DOOR|GLASS|WHEEL|SUSP|BRAKE|ENG|COOL|EXH|TRANS|DRIVE|ELEC|INT|AC|LIGHT|TRIM)_(\d{4})_([a-z0-9]+(?:_[a-z0-9]+)*?)(?:_(L|R|F|RR))?$
 ```
 
-Examples: `DOOR_6701_front_door_L`, `ENG_1903_alternator`, `BRAKE_4701_front_brake_pad_R`, `WHEEL_0000_tire_rear_R`.
+Examples: `DOOR_6751_front_door_L`, `ENG_1903_alternator`, `BRAKE_4705_front_disc_brake_pad`, `WHEEL_0000_tire_rear_R`.
 
 ## Rules
 
@@ -35,13 +35,11 @@ Examples: `DOOR_6701_front_door_L`, `ENG_1903_alternator`, `BRAKE_4701_front_bra
 
 Each part in src/data/parts.m1.json has a `groupStatus`:
 
-* `verified`: checked against the Toyota EPC for this VIN. None yet.
-* `recalled`: from memory of the Toyota EPC structure, very likely right, must be checked.
-* `unknown`: code is `0000`, flagged for lookup.
+* `verified`: the group appears in the Toyota EPC group index for this exact variant (FZJ100, 1FZ-FE, GX, 5 speed manual, LHD, GCC), saved in reference/epc/fzj100_gcc_gx_mtm_groups.json. Checked at variant level, not per VIN.
+* `recalled`: from memory of the Toyota EPC structure, must be checked. None left in the contract.
+* `unknown`: code is `0000`, because the variant's catalogue has no single group for the part (body shell, tires, wheel assemblies) or the GX does not list it (mudguards, side steps, fuel filler lid).
 
-Keys freeze once the codes are verified, before seeding the database or sharing any deep link. Until then a corrected code just means editing the contract and rebuilding.
-
-Recalled codes in use: 5201 front bumper, 5202 rear bumper, 5301 hood and front fender, 5601 windshield glass, 6701 front door panel and glass, 6702 rear door panel and glass, 6703 back door panel and glass, 8101 headlamp, 8105 rear combination lamp.
+On 2026-10-05 the keys were re-keyed from recalled to verified codes (for example front door 6701 became 6751, rear combination lamp 8105 became 8111, front bumper 5201 became 5252) before the database was seeded. Keys are now frozen: they are the database primary keys and the deep link slugs. A later change needs a migration of the parts table and redirects for old links.
 
 ## M1 part list
 

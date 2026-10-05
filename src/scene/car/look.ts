@@ -224,7 +224,7 @@ const NIGHT_BY_PART: { part: RegExp; glow: Record<string, Glow> }[] = [
   },
   {
     // the red is painted in the lamp texture under a clear lens
-    part: /^LIGHT_8105_rear_combination_lamp_/,
+    part: /^LIGHT_8111_rear_combination_lamp_/,
     glow: {
       tex_lamp_rear: { emissive: '#ff2a1c', intensity: 9, useMap: true, redOnly: true },
       lamp_lens_red: { emissive: '#ff1a10', intensity: 7 },

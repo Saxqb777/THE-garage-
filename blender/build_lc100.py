@@ -89,16 +89,16 @@ def place_on_source(objs):
     from blender.parts import details as D
     from blender.parts import placement as PL
     out = {}
-    door_l = objs.get("DOOR_6703_back_door_L")
+    door_l = objs.get("DOOR_6761_back_door_L")
     if door_l is not None:
         badges = D.build_badges()
         # the source model carries its own chrome LAND CRUISER garnish, so our plate is not placed
         for key in ("TRIM_0000_back_door_name_plate",):
             if key in badges:
                 bpy.data.objects.remove(badges[key])
-        for key in ("TRIM_0000_back_door_emblem", "TRIM_0000_grade_badge", "TRIM_0000_quarter_badge_L", "TRIM_0000_quarter_badge_R"):
+        for key in ("TRIM_7551_back_door_emblem", "TRIM_7551_grade_badge", "TRIM_7551_quarter_badge_L", "TRIM_7551_quarter_badge_R"):
             if key in badges and key not in objs:
-                if key.startswith("TRIM_0000_quarter"):
+                if key.startswith("TRIM_7551_quarter"):
                     sg = 1.0 if key.endswith("L") else -1.0
                     loc, nrm = surface_hit([objs["BODY_0000_body_shell"]], (sg * 2.0, 2.06, 1.31), (-sg, 0, 0))
                     if loc is not None:
@@ -108,7 +108,7 @@ def place_on_source(objs):
                 bpy.data.objects.remove(badges[key])
             elif key in badges:
                 bpy.data.objects.remove(badges[key])
-    ws = objs.get("GLASS_5601_windshield_glass")
+    ws = objs.get("GLASS_5553_windshield_glass")
     if ws is not None:
         for side, x in (("L", 0.55), ("R", -0.05)):
             loc, nrm = surface_hit([ws], (x, -4.0, 1.28), (0, 1, 0))
@@ -124,7 +124,7 @@ def place_on_source(objs):
             for c in arm.children:
                 out[c.name] = c
     for side, sg in (("L", 1.0), ("R", -1.0)):
-        glass = objs.get(f"GLASS_6703_back_door_glass_{side}")
+        glass = objs.get(f"GLASS_6761_back_door_glass_{side}")
         if glass is None:
             continue
         loc, nrm = surface_hit([glass], (sg * 0.09, 4.0, 1.42), (0, -1, 0))
@@ -176,19 +176,19 @@ def hinge_pivots():
     z_mid = 0.95
     if SOURCE == "model":
         from blender.parts import source_regions as R
-        piv = {"BODY_5301_hood": (0.0, R.HOOD_REAR_Y, 1.26)}
+        piv = {"BODY_5353_hood": (0.0, R.HOOD_REAR_Y, 1.26)}
         for side, sgn in (("L", 1.0), ("R", -1.0)):
-            piv[f"DOOR_6701_front_door_{side}"] = (sgn * 0.985, R.A_LINE[0][0], z_mid)
-            piv[f"DOOR_6702_rear_door_{side}"] = (sgn * 0.985, R.B_LINE[0][0], z_mid)
-            piv[f"DOOR_6703_back_door_{side}"] = (sgn * 0.80, 2.40, 1.2)
+            piv[f"DOOR_6751_front_door_{side}"] = (sgn * 0.985, R.A_LINE[0][0], z_mid)
+            piv[f"DOOR_6755_rear_door_{side}"] = (sgn * 0.985, R.B_LINE[0][0], z_mid)
+            piv[f"DOOR_6761_back_door_{side}"] = (sgn * 0.80, 2.40, 1.2)
         return piv
     piv = {
-        "BODY_5301_hood": (0.0, 0.45 - HALF_WB, 1.245),
+        "BODY_5353_hood": (0.0, 0.45 - HALF_WB, 1.245),
     }
     for side, sgn in (("L", 1.0), ("R", -1.0)):
-        piv[f"DOOR_6701_front_door_{side}"] = (sgn * (skin_x(0.632, z_mid) + 0.004), 0.632 - HALF_WB, z_mid)
-        piv[f"DOOR_6702_rear_door_{side}"] = (sgn * (skin_x(1.692, z_mid) + 0.004), 1.692 - HALF_WB, z_mid)
-        piv[f"DOOR_6703_back_door_{side}"] = (sgn * 0.80, S.U_REAR + 0.02 - HALF_WB, 1.2)
+        piv[f"DOOR_6751_front_door_{side}"] = (sgn * (skin_x(0.632, z_mid) + 0.004), 0.632 - HALF_WB, z_mid)
+        piv[f"DOOR_6755_rear_door_{side}"] = (sgn * (skin_x(1.692, z_mid) + 0.004), 1.692 - HALF_WB, z_mid)
+        piv[f"DOOR_6761_back_door_{side}"] = (sgn * 0.80, S.U_REAR + 0.02 - HALF_WB, 1.2)
     return piv
 
 

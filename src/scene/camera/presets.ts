@@ -26,14 +26,14 @@ export const UNDER_GROUND: Shot = { position: [2.6, 0.2, 0.7], target: [0, 0.42,
  */
 export const SEATS: Record<Seat, { door: string; approach: Shot; eye: V3; look: V3; fov: number }> = {
   driver: {
-    door: 'DOOR_6701_front_door_L',
+    door: 'DOOR_6751_front_door_L',
     approach: { position: [2.35, 1.55, 0.2], target: [0.45, 1.35, 0.25], fov: 40 },
     eye: [0.45, 1.5, -0.14],
     look: [0.2, 1.02, 2.8],
     fov: 62,
   },
   rear: {
-    door: 'DOOR_6702_rear_door_L',
+    door: 'DOOR_6755_rear_door_L',
     approach: { position: [2.35, 1.55, -0.6], target: [0.4, 1.35, -0.6], fov: 40 },
     eye: [0.12, 1.5, -0.98],
     look: [0.0, 1.05, 3.0],
