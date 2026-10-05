@@ -1,10 +1,11 @@
 'use client';
 
 import { useEffect, useMemo, useRef } from 'react';
-import type { Group, Object3D, SpotLight } from 'three';
+import { Euler, Group, Quaternion, Vector3, type Object3D, type SpotLight } from 'three';
 import { useFrame, type ThreeEvent } from '@react-three/fiber';
 import { Bvh, useGLTF } from '@react-three/drei';
 import gsap from 'gsap';
+import { engine, setGear } from '@/engine/sim';
 import { carLift } from '../liftState';
 import { useGarage } from '../store';
 import { closeHinges, poseHinges, rigHinges, type HingeRig } from './hinges';
@@ -23,6 +24,8 @@ export default function CarModel({ url }: { url: string }) {
   const open = useGarage((s) => s.open);
   const lightsOn = useGarage((s) => s.lightsOn);
   const xray = useGarage((s) => s.xray);
+  // body parts go into a sprung group that can roll on its suspension; wheels stay planted
+  const rig = useMemo(() => sprungRig(scene), [scene]);
   const info = useMemo(() => inspectModel(scene), [scene]);
   const rigs = useMemo(() => rigHinges(scene, info.parts.values()), [scene, info]);
 
@@ -80,8 +83,17 @@ export default function CarModel({ url }: { url: string }) {
 
   // the car rides the lift
   const body = useRef<Group>(null);
-  useFrame(() => {
+  useFrame((_, dt) => {
     if (body.current) body.current.position.y = carLift.y;
+    // engine torque reaction and idle rock, about a roll centre above the axles
+    q.setFromEuler(euler.set(engine.pitch, 0, engine.roll));
+    rig.sprung.quaternion.copy(q);
+    rig.sprung.position.copy(PIVOT).sub(tmp.copy(PIVOT).applyQuaternion(q));
+    // first gear when the car is up on the lift, so revving turns the wheels
+    const gear = carLift.y > 1 ? '1' : 'N';
+    if (engine.gear !== gear) setGear(gear);
+    const spin = (engine.wheelRpm / 60) * Math.PI * 2 * Math.min(dt, 0.05);
+    if (spin) for (const w of rig.wheels) w.rotateX(spin);
   });
 
   return (
@@ -92,6 +104,28 @@ export default function CarModel({ url }: { url: string }) {
       {lightsOn && <Headlights />}
     </group>
   );
+}
+
+const PIVOT = new Vector3(0, 0.55, 0);
+const q = new Quaternion();
+const euler = new Euler();
+const tmp = new Vector3();
+
+/** Moves every top level node except the wheels into one group, once per loaded scene. */
+function sprungRig(scene: Object3D) {
+  let sprung = scene.getObjectByName('__sprung') as Group | undefined;
+  if (!sprung) {
+    sprung = new Group();
+    sprung.name = '__sprung';
+    for (const child of [...scene.children]) {
+      const key = child.userData.name;
+      if (typeof key === 'string' && key.startsWith('WHEEL_')) continue;
+      sprung.add(child);
+    }
+    scene.add(sprung);
+  }
+  const wheels = scene.children.filter((c) => typeof c.userData.name === 'string' && c.userData.name.startsWith('WHEEL_'));
+  return { sprung, wheels };
 }
 
 // Picking. Ghosted (X Ray) meshes let the event through to whatever is behind them, and a
