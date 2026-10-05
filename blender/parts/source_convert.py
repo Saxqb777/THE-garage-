@@ -204,6 +204,8 @@ def classify(src, smat, c, n, island=10**9):
 
     # lamps
     if exterior and inbox(c, R.HEADLAMP, sg):
+        if src == PAINT and n[2] > 0.3 and z > 0.985:
+            return f"BODY_5301_front_fender_{s}", "paint_white"  # painted lip above the lamp, not housing
         if src == GLASS_OUT:
             mk = "lamp_lens_clear"
         elif src == PAINT or src == BLACK:
@@ -253,8 +255,8 @@ def classify(src, smat, c, n, island=10**9):
         return f"BODY_0000_outer_mirror_{s}", mk
     small = island < 3000  # the door skin is one big island, handles and badges are small ones
     if (src == CHROME or (src == PAINT and small)) and (inbox(c, R.HANDLE_FRONT, sg) or inbox(c, R.HANDLE_REAR, sg)):
-        if src == CHROME and ax < 0.992:
-            return None  # flat chrome backing plate behind the grip; the door skin is intact underneath
+        if ax < 0.992:
+            return None  # flat backing plate behind the grip; the door skin is intact underneath
         which = "front" if inbox(c, R.HANDLE_FRONT, sg) else "rear"
         return f"DOOR_0000_{which}_door_outside_handle_{s}", "chrome"
     if src == PAINT and inbox(c, R.FUEL_LID):

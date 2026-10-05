@@ -51,7 +51,7 @@ const TUNES: Record<string, Tune> = {
   plastic_black_matte: { color: '#17181a', roughness: 0.62, metalness: 0, dust: 0.6, sheen: 0.2, sheenRoughness: 0.9, sheenColor: '#666' },
   rubber_seal: { color: '#0c0c0d', roughness: 0.75, metalness: 0, dust: 0.3 },
   rubber_tire: { color: '#141415', roughness: 0.82, metalness: 0, sheen: 0.45, sheenRoughness: 0.75, sheenColor: '#3a3a3a', dust: 1 },
-  alloy_wheel: { color: '#b8bbbe', roughness: 0.34, metalness: 0.95, clearcoat: 0.5, clearcoatRoughness: 0.2, envMapIntensity: 1.1, dust: 0.9 },
+  alloy_wheel: { color: '#aeb1b4', roughness: 0.42, metalness: 0.95, clearcoat: 0.4, clearcoatRoughness: 0.3, envMapIntensity: 1.1, dust: 0.9 },
   chrome: { color: '#f2f3f5', roughness: 0.07, metalness: 1, envMapIntensity: 1.3 },
   glass_clear: { color: '#eef7f1', roughness: 0.03, metalness: 0, transmission: 1, ior: 1.52, thickness: 0.006, envMapIntensity: 1.2, transparent: true },
   glass_privacy: { color: '#1b2224', roughness: 0.04, metalness: 0, transmission: 0.55, ior: 1.52, thickness: 0.006, envMapIntensity: 1.2, transparent: true },

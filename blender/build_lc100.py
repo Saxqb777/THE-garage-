@@ -151,7 +151,7 @@ def place_on_source(objs):
 
 
 def step_parts(objs):
-    from blender.parts import wheel
+    from blender.parts import wheel6 as wheel
     for pos in wheel.POSITIONS:
         empty = wheel.build_wheel_assembly(pos)
         objs[empty.name] = empty
