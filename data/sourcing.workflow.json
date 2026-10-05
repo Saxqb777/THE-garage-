@@ -1,0 +1,2635 @@
+{
+ "plan": {
+  "per_part": [
+   {
+    "part": "Engine 1FZ-FE (block, head, cam cover, intake, exhaust manifold)",
+    "route": "build",
+    "pick": "Procedural Blender build to 1FZ-FE dimensions (inline 6, 4477 cc, cast iron block, DOHC head with the two piece cam cover and TOYOTA/24 VALVE/EFI style top, long runner intake on the left, cast exhaust manifold on the right). Optional kitbash: Lame3dModels 'Toyota/Lexus 2JZ-GTE' (CC BY) only for small details such as pulleys, never as the visible engine",
+    "url": "https://sketchfab.com/3d-models/toyotalexus-2jz-gte-670ccab7e4e54e6d83074117bb44586e",
+    "licence": "Own work (build); kitbash source is CC Attribution",
+    "price_usd": 0,
+    "why": "No licensable 1FZ-FE exists. The only real 1FZ-FE and intake scans (GrabCAD, 4AM_Engineering) fall under GrabCAD's non commercial internal use licence. Every paid inline 6 is a 2JZ, a BMW look or a generic turbo engine, which would show a parts customer the wrong engine. Build it as separate parts (block, head, cam covers, intake plenum, runners, exhaust manifold, oil pan) so explode works. If the 4AM_Engineering uploader gives written commercial permission, his scan becomes the best base: see the questions."
+   },
+   {
+    "part": "Gearbox H151F",
+    "route": "build",
+    "pick": "Procedural build: bellhousing, main case, extension housing and shift tower to the H151F outline",
+    "url": "https://grabcad.com/library/toyota-h151f-transmission-for-1hd-t-1fz-fe-1",
+    "licence": "Own work. The linked GrabCAD scan is non commercial and is listed only as the exact part that would need the author's permission",
+    "price_usd": 0,
+    "why": "The paid generic gearboxes (RenderHub 3D Horse $69, AVTEC $3, Fab QLEE) are other shapes. The RenderHub one has a web friendly licence but still looks wrong. A gearbox is mostly simple cast shells, so a build is cheap and accurate enough."
+   },
+   {
+    "part": "Transfer case HF2A",
+    "route": "build",
+    "pick": "Procedural build: twin cast halves, front and rear output flanges, centre diff lock actuator",
+    "url": "https://grabcad.com/library/fzj80-hf2av-transfer-case-scan-1",
+    "licence": "Own work. The GrabCAD scan is non commercial and named only for a permission request",
+    "price_usd": 0,
+    "why": "Every licensable transfer case is a GM NP261, a generic CAD part or a placeholder. The HF2A shape is distinctive and easy to block out."
+   },
+   {
+    "part": "Ladder frame",
+    "route": "build",
+    "pick": "Procedural build to the FZJ100 frame (2850 wheelbase, boxed rails, kick ups, crossmembers, body mounts). vr.designer_09 'LADDER FRAME CHASSIS WITH MOUNTING' (CC BY) is a fallback reference for crossmember and mount detail",
+    "url": "https://sketchfab.com/3d-models/ladder-frame-chassis-with-mounting-997344d875f446ee9bca883ff381e150",
+    "licence": "Own work; fallback CC Attribution (credit: 'LADDER FRAME CHASSIS WITH MOUNTING' by vr.designer_09, CC BY 4.0)",
+    "price_usd": 0,
+    "why": "The CC BY frames are generic CAD rails at 400k to 490k faces. Reshaping one to the LC100 is about as much work as building our own, and the result is cleaner and lighter. The Prado chassis on CGTrader is an unknown generation, needs an 8.8M polygon decimation, and its RF licence 21A.3 conflicts with serving a plain GLB."
+   },
+   {
+    "part": "Front IFS (upper and lower arms, knuckles, torsion bars, shocks)",
+    "route": "build",
+    "pick": "Procedural build: double wishbone arms, knuckle, longitudinal torsion bars anchored at a frame crossmember, monotube shocks. Generic CC BY 'TORSION BAR' by vr.designer_09 (38,324 faces) only as a detail reference",
+    "url": "https://sketchfab.com/3d-models/torsion-bar-ec123b7ec46a4dd2b13efec95be8a994",
+    "licence": "Own work; reference is CC Attribution",
+    "price_usd": 0,
+    "why": "No licensable model has a torsion bar IFS. The Prado and NNAVAS chassis use coilovers. The arm shapes must match the frame we build anyway."
+   },
+   {
+    "part": "Steering rack and linkage",
+    "route": "build",
+    "pick": "Procedural build: rack housing with boots, tie rods, power steering lines, intermediate shaft",
+    "url": "https://www.printables.com/model/229023-rack-and-pinion-steering",
+    "licence": "Own work. The Printables model (CC BY) is toy geometry and is not recommended",
+    "price_usd": 0,
+    "why": "Simple cylinders and boots. Only toy or generic options exist."
+   },
+   {
+    "part": "Rear axle with differential, 4 links, lateral rod, coil springs, shocks",
+    "route": "build",
+    "pick": "Procedural build: banjo housing with the 9.5 inch style diff cover, 2 upper and 2 lower links, lateral rod, coils, shocks. Rysky '4-Link Suspension' (CC BY) as the topology and explode reference. vr.designer_09 'COIL SPRING' (CC BY, 40,376 faces) is usable for the coils after rescaling, or build the coils procedurally",
+    "url": "https://sketchfab.com/3d-models/4-link-suspension-944ae9888c8e4ca89bc7692162acace2",
+    "licence": "Own work; references are CC Attribution",
+    "price_usd": 0,
+    "why": "No FZJ100 rear axle exists anywhere. The 4 link reference is monster truck scale. Housing, links and springs are simple procedural shapes we can set to the exact track and link geometry."
+   },
+   {
+    "part": "Front differential and CV axles",
+    "route": "build",
+    "pick": "Procedural build: frame mounted front diff housing, two CV shafts with boots",
+    "url": "https://www.cgtrader.com/3d-models/vehicle/vehicle-part/half-axle",
+    "licence": "Own work. The CGTrader 'Half Axle' ($29.99, RF) is the paid alternative but carries the 21A.3 extraction clause",
+    "price_usd": 0,
+    "why": "A CV shaft is a rod with two boots. Paying for one with a licence that conflicts with a plain GLB is not worth it."
+   },
+   {
+    "part": "Propeller shafts (front and rear)",
+    "route": "free",
+    "pick": "PolyPhantom 'Driveshaft' (CC BY, 17,330 faces, 5 objects, U joints and slip joint), rescaled to LC100 lengths with the texture cleaned. A procedural build is equally fine",
+    "url": "https://sketchfab.com/3d-models/driveshaft-09b38796c78e49d6bbaf6b7fa63b856f",
+    "licence": "CC Attribution. Credit: 'Driveshaft' by PolyPhantom, CC BY 4.0, modified",
+    "price_usd": 0,
+    "why": "The licence is clean, the parts are separate and the shape is generic: a cardan shaft looks right on any truck. Rescaling is trivial."
+   },
+   {
+    "part": "Front brakes (vented rotor, 4 piston caliper)",
+    "route": "build",
+    "pick": "Rotor: pao1011 'Vented Disk Brake Rotor' (CC BY, 6 hub holes, decimate and convert from inches). Caliper: procedural build of the Toyota cast 4 piston fixed caliper",
+    "url": "https://sketchfab.com/3d-models/vented-disk-brake-rotor-b4393b994037442db7da86a4fba8fb85",
+    "licence": "Rotor CC Attribution (credit: 'Vented Disk Brake Rotor' by pao1011, CC BY 4.0, modified); caliper own work",
+    "price_usd": 0,
+    "why": "The rotor is a good generic OEM style match with 6 lugs. Every caliper found is a performance or Brembo style part, and a branded or sporty caliper would mislead customers."
+   },
+   {
+    "part": "Rear brakes",
+    "route": "build",
+    "pick": "Rotor: the same pao1011 rotor scaled down, or procedural. Caliper: procedural single piston floating caliper with the drum in hat parking brake",
+    "url": "https://sketchfab.com/3d-models/vented-disk-brake-rotor-b4393b994037442db7da86a4fba8fb85",
+    "licence": "CC Attribution for the rotor; own work for the caliper",
+    "price_usd": 0,
+    "why": "Same reasoning as the front brakes."
+   },
+   {
+    "part": "Exhaust system (downpipes, catalytic converters, mid pipe, muffler, tailpipe)",
+    "route": "build",
+    "pick": "Procedural pipe routing along the real path (curve sweeps). Catalytic converter body from the Science Museum Group 'Catalytic converter, 1982-1983' (CC0) if it looks right, otherwise procedural",
+    "url": "https://sketchfab.com/3d-models/catalytic-converter-1982-1983-5e59f014795748e5b8354d6321eaf082",
+    "licence": "Own work; the cat body is CC0 Public Domain (no attribution required, credit optional)",
+    "price_usd": 0,
+    "why": "Exhaust routing is specific to the car and the frame, so no downloaded system will line up. Pipes are quick to sweep along curves. kryoxshade 'Exhaust System' has ambiguous extra terms, and the Fab one carries the extraction clause."
+   },
+   {
+    "part": "Fuel tank",
+    "route": "build",
+    "pick": "Procedural build: steel tank with straps and a filler neck to the LC100 dimensions (96 L class main tank, located ahead of the rear axle on the right)",
+    "url": "https://www.cgtrader.com/3d-models/vehicle/vehicle-part/metallic-car-fuel-tank",
+    "licence": "Own work. The CGTrader tank ($40, RF, 21A.3) is not recommended",
+    "price_usd": 0,
+    "why": "Its shape is specific to the car. A generic tank is the wrong shape."
+   },
+   {
+    "part": "Radiator and fan",
+    "route": "free",
+    "pick": "Core: LadyLionStudios / ACBRadio 'Car Radiator Clean & Rusted' (CC BY, about 6.9k triangles once the backdrop is removed), resized to the LC100 core. Fan clutch, blade and shroud: procedural, since the 1FZ-FE uses an engine driven viscous fan",
+    "url": "https://sketchfab.com/3d-models/car-radiator-clean-rusted-fbx-low-poly-free-95d46daf678b4716ab626cab6f43e40e",
+    "licence": "CC Attribution. Credit: 'Car Radiator Clean & Rusted' by ACBRadio (uploaded by LadyLionStudios), CC BY 4.0, modified",
+    "price_usd": 0,
+    "why": "A radiator core is generic and this one is light and textured. The included electric fan is wrong for this car, so drop it and build the viscous fan and shroud."
+   },
+   {
+    "part": "Alternator",
+    "route": "free",
+    "pick": "B0bik 'Alternator' (CC BY, 147k faces, Hitachi photogrammetry scan): decimate and repaint it clean",
+    "url": "https://sketchfab.com/3d-models/alternator-e94842c63e6b4557a20f5751779c7e7f",
+    "licence": "CC Attribution. Credit: 'Alternator' by B0bik, CC BY 4.0, modified",
+    "price_usd": 0,
+    "why": "It is a real Japanese alternator scan, so it reads close to the Denso unit. Alternators look broadly alike. If the Hitachi casting detail looks wrong next to the engine, fall back to a procedural build."
+   },
+   {
+    "part": "Starter",
+    "route": "free",
+    "pick": "menarzuw 'ELECTRIC STARTER MOTOR + ANIMATED' (CC BY, named separate parts): keep the outer shell, solenoid and drive end, and drop the internals",
+    "url": "https://sketchfab.com/3d-models/electric-starter-motor-animated-7d7e1fecacaf4751945de538b8c1378f",
+    "licence": "CC Attribution. Credit: 'Electric Starter Motor' by menarzuw, CC BY 4.0, modified",
+    "price_usd": 0,
+    "why": "Its parts are named and separate, and the author says it matches real world dimensions. It sits mostly hidden under the intake anyway."
+   },
+   {
+    "part": "AC compressor",
+    "route": "build",
+    "pick": "Procedural build: Denso 10PA style body with a clutch pulley",
+    "url": "https://sketchfab.com/3d-models/the-component-of-air-conditioning-compressor-de546e06317f498db7b5bf43c4e4b1db",
+    "licence": "Own work. The scanology scan (CC BY) is only one housing component and is not usable",
+    "price_usd": 0,
+    "why": "No complete compressor model with a clean licence exists. It is a simple cylinder plus a pulley."
+   },
+   {
+    "part": "Battery",
+    "route": "build",
+    "pick": "Procedural box with terminals, hold down and an unbranded label",
+    "url": "https://sketchfab.com/3d-models/car-battery-728462a4f3f744008bd2c702604bb95c",
+    "licence": "Own work. The CC BY battery models carry brand labels",
+    "price_usd": 0,
+    "why": "Trivial to build, and that avoids repainting third party branding."
+   },
+   {
+    "part": "Air filter box",
+    "route": "build",
+    "pick": "Procedural build of the LC100 airbox and intake duct, left front of the bay",
+    "url": "https://sketchfab.com/3d-models/air-box-25d393351d444e25833c50c3f61a7d1e",
+    "licence": "Own work. The only CC BY airbox is a 1M face Mercedes scan",
+    "price_usd": 0,
+    "why": "Its shape is specific to the car, and no Toyota airbox exists."
+   },
+   {
+    "part": "Spare wheel carrier",
+    "route": "build",
+    "pick": "Procedural underfloor winch carrier with cradle (the LC100 carries its spare under the rear), reusing our own wheel6 wheel",
+    "url": "https://sketchfab.com/3d-models/ladder-frame-chassis-104cc916740c4754b05ab40dd3cd2a00",
+    "licence": "Own work (the URL is a placeholder reference only; no carrier model exists)",
+    "price_usd": 0,
+    "why": "Nothing was found, and it is simple sheet metal plus a winch."
+   }
+  ],
+  "extra_verified": [
+   {
+    "site": "Sketchfab",
+    "title": "TORSION BAR",
+    "url": "https://sketchfab.com/3d-models/torsion-bar-ec123b7ec46a4dd2b13efec95be8a994",
+    "author": "vr.designer_09",
+    "licence": "CC Attribution",
+    "licence_ok": "yes",
+    "price_usd": 0,
+    "formats": "Sketchfab download",
+    "polys": 38324,
+    "covers": [
+     "front IFS (torsion bar)"
+    ],
+    "fit": "generic",
+    "separate_parts": null,
+    "notes": "Generic heavy duty torsion bar from the same CAD author as the frames. Useful only as a detail reference. A torsion bar is a splined rod, which is easy to build.",
+    "verdict": "keep",
+    "evidence": "Sketchfab API /v3/models/ec123b7e...: name TORSION BAR, user vr.designer_09, licence CC Attribution, faceCount 38324, isDownloadable true, description 'A torsion bar is a suspension component that resists twisting forces...'"
+   },
+   {
+    "site": "Sketchfab",
+    "title": "Fuel Pump - Simplified",
+    "url": "https://sketchfab.com/3d-models/fuel-pump-simplified-f36da5ed8f334b5b8d770a011e95f2f1",
+    "author": "reyn.ad",
+    "licence": "CC Attribution",
+    "licence_ok": "yes",
+    "price_usd": 0,
+    "formats": "Sketchfab download",
+    "polys": 1036,
+    "covers": [
+     "fuel pump"
+    ],
+    "fit": "generic",
+    "separate_parts": null,
+    "notes": "Very low poly, from the Engine Management System Lowpoly Pack. Fine as an in tank pump marker.",
+    "verdict": "keep",
+    "evidence": "Sketchfab API: licence CC Attribution, faceCount 1036, downloadable, description 'One of the simple 3D Model from Engine Management System - Lowpoly Pack'."
+   },
+   {
+    "site": "Sketchfab",
+    "title": "COIL SPRING",
+    "url": "https://sketchfab.com/3d-models/coil-spring-3bf2215ce5f34e83a966c780393956fc",
+    "author": "vr.designer_09",
+    "licence": "CC Attribution",
+    "licence_ok": "yes",
+    "price_usd": 0,
+    "formats": "Sketchfab download",
+    "polys": 40376,
+    "covers": [
+     "rear springs"
+    ],
+    "fit": "generic",
+    "separate_parts": null,
+    "notes": "Generic helical spring. Rescale it to the LC100 rear coil, or build a procedural helix, which is lighter.",
+    "verdict": "keep",
+    "evidence": "Sketchfab API: licence CC Attribution, faceCount 40376, downloadable, description 'A coil spring is a vital component of a vehicle's suspension system...'."
+   },
+   {
+    "site": "Sketchfab",
+    "title": "LADDER FRAME CHASSIS WITH MOUNTING",
+    "url": "https://sketchfab.com/3d-models/ladder-frame-chassis-with-mounting-997344d875f446ee9bca883ff381e150",
+    "author": "vr.designer_09",
+    "licence": "CC Attribution",
+    "licence_ok": "yes",
+    "price_usd": 0,
+    "formats": "Sketchfab download",
+    "polys": 488810,
+    "covers": [
+     "ladder frame"
+    ],
+    "fit": "generic",
+    "separate_parts": null,
+    "notes": "Generic CAD frame with mounts. Its only role is as a fallback or reference for crossmember detail.",
+    "verdict": "keep",
+    "evidence": "Sketchfab API: licence CC Attribution, faceCount 488810, downloadable, description 'A ladder frame chassis is a strong structural design made of two parallel longitudinal rails...'."
+   }
+  ],
+  "recommendation": "Build almost all of the mechanicals procedurally in Blender to real FZJ100 dimensions. Use CC BY or CC0 models only where the part shape is generic and the licence is clean: propeller shafts (PolyPhantom), the rotor (pao1011), the radiator core (ACBRadio), the alternator (B0bik), the starter (menarzuw) and optionally the catalytic converter (Science Museum, CC0). Total cost is $0.\n\nWhy not buy:\n- No complete LC100 or LX470 model with a real underbody and engine is licensable. The candidates are either body only (Squir, HighRock), game mods or rips, or come with the wrong engine (the Alqhtani 2JZ).\n- Every paid mechanical model is generic or the wrong part: 2JZ or BMW style engines, a GM transfer case, pickup or Prado chassis with coilovers, performance calipers. On a parts shop site, those would show customers parts that are not on their car.\n- Almost every marketplace licence (CGTrader RF 21A.3, Fab Standard 4(c), TurboSquid Standard, 3DExport Basic, Unity EULA) requires stopping end users from extracting the model, and a plain GLB served to a browser fails that.\n- RenderHub's Extended Use licence is the one exception that suits the web, but its only relevant items are generic (a 3D Horse gearbox at $69, a BMW style I6 at $199).\n\nThe exact parts exist only as GrabCAD scans:\n- 4AM_Engineering's 1FZ-FE, intake manifold, H151F and HF2AV scans, plus Daniel Klyuev's 37110-6A060 rear prop shaft STEP.\n- GrabCAD's terms limit these to non commercial internal use. The single highest value move is to ask those authors for written commercial permission. With it, the 1FZ-FE, H151F and HF2A could be decimated scans instead of builds.\n\nBuild order, by visibility:\n1. Engine with its manifolds and cam cover.\n2. Frame.\n3. Front IFS with the torsion bars.\n4. Rear axle with the links.\n5. Gearbox and transfer case.\n6. Exhaust and fuel tank.\n7. Brakes and ancillaries.\n\nBuild every assembly as separate named parts so explode works.\n\nThese are geometry, explode and shader heavy Blender steps, so per the project rules they are better on Fable.\n\nAttribution goes in the credits for each CC BY model used.\n\nSeparate risk: the car's own body (reference/model/lc100_2006_cc_by) appears to be DR1KING100K's Sketchfab upload, and its texture names suggest a game mod origin. Verify its CC BY claim before going public, because it affects the whole site, not just these parts.",
+  "total_cost_usd": 0,
+  "questions": [
+   "Are you OK with building most mechanical parts ourselves (accurate shape and dimensions, but procedural rather than scanned) instead of paying for generic models that look like the wrong car?",
+   "Should I draft a polite message to 4AM_Engineering on GrabCAD (the 1FZ-FE, intake, H151F and HF2AV scans) and Daniel Klyuev (the 37110-6A060 LC100 rear prop shaft) asking for written permission to use their models commercially on the site? If they agree, the engine, gearbox and transfer case become real scans.",
+   "Is a paid licence acceptable at all? If so, the only web compatible one found is RenderHub's Extended Use licence. CGTrader, Fab, TurboSquid and 3DExport would need the GLB encrypted or the seller's written OK. Would you accept obfuscating the GLB, or asking sellers by message?",
+   "How detailed should the underbody be? Visible from the lift and Under camera only (moderate detail, lighter GLB), or full explode quality for every bolt on part?",
+   "Do you have photos of a real LC100 underside and engine bay (or access to one in the shop) that I can measure from? They would make the procedural builds much more accurate than catalogue diagrams alone.",
+   "The source body model (lc100_2006_cc_by, likely DR1KING100K on Sketchfab) has texture names that suggest it came from a game mod. Can you confirm where you got it and who made it, so we know its CC BY claim holds before the site goes public?",
+   "Is it fine to show credits for CC BY parts (radiator, alternator, starter, prop shaft, rotor) in a credits panel in the app?"
+  ]
+ },
+ "kept": [
+  {
+   "area": "full_vehicle",
+   "site": "Fab",
+   "title": "PICKUP TRUCK CHASSIS 4",
+   "url": "https://www.fab.com/listings/7adfb16b-5dd4-4ce2-a683-7903a7f8ab57",
+   "author": "NNAVAS 3D",
+   "licence": "Standard License",
+   "licence_ok": "unclear",
+   "price_usd": 89.99,
+   "formats": "Blender, FBX, OBJ, converted GLB/glTF/USDZ",
+   "polys": 40500,
+   "covers": [
+    "ladder frame",
+    "front IFS",
+    "rear axle",
+    "driveshafts",
+    "shocks",
+    "brakes"
+   ],
+   "fit": "generic",
+   "separate_parts": true,
+   "notes": "Price box now confirmed: 'Select a License ($89.99)'. Published July 11, 2025. Elements 'logically named and grouped so they can be separated'. Generic modern pickup, no engine. Fab EULA 4(c): may Distribute a Project incorporating Content but 'must restrict end users from extracting or otherwise using Content outside of the Project'; a plain GLB does not restrict extraction, so only usable if the GLB is obfuscated or encrypted. Fab EULA 6(a) also bars combining Standard Content with CC BY-SA content. Keep as generic fallback with the licence caveat.",
+   "verdict": "keep",
+   "evidence": "Opened Fab listing in headless browser: description quoted, file pickup_truck_chassis_4wd_ifs_blend.zip, price ($89.99), License terms Standard License. Read Fab EULA section 4(c) and 6(a) at fab.com/eula."
+  },
+  {
+   "area": "full_vehicle",
+   "site": "Fab",
+   "title": "Car Chassis and Engine",
+   "url": "https://www.fab.com/listings/ba170f29-014b-42fe-97e9-df51435dc5ec",
+   "author": "NoneCG",
+   "licence": "Standard License",
+   "licence_ok": "unclear",
+   "price_usd": 99.99,
+   "formats": "3ds Max, Maya, Cinema 4D, Blender, FBX, OBJ",
+   "polys": 340607,
+   "covers": [
+    "engine",
+    "gearbox",
+    "exhaust",
+    "front suspension",
+    "rear suspension",
+    "brakes",
+    "steering",
+    "transmission",
+    "wheels"
+   ],
+   "fit": "generic",
+   "separate_parts": true,
+   "notes": "Confirmed: 'From $99.99 to $199.99', published Nov 27 2025, updated July 3 2026, every object named, subdivision base mesh 340,607 polys. Passenger car layout, not a ladder frame 4x4, engine type unspecified. Same Fab 4(c) extraction restriction. Keep only as a generic fallback.",
+   "verdict": "keep",
+   "evidence": "Opened Fab listing: description quoted, 'Polys: 340.607 Verts: 350.274', '(From $99.99 to $199.99)', License terms Standard License."
+  },
+  {
+   "area": "full_vehicle",
+   "site": "CGTrader",
+   "title": "Toyota Land Cruiser Prado Chassis system",
+   "url": "https://www.cgtrader.com/3d-models/car/suv/toyota-land-cruiser-prado-chassis-system",
+   "author": "ash-m-design",
+   "licence": "Royalty Free License (no AI)",
+   "licence_ok": "unclear",
+   "price_usd": 89.99,
+   "formats": "SLDPRT, OBJ, FBX, STL, IGES, MAX, DWG",
+   "polys": 8817422,
+   "covers": [
+    "ladder frame",
+    "front IFS double wishbone",
+    "rear suspension (trailing arm, air spring)",
+    "steering",
+    "brakes front",
+    "brakes rear",
+    "wheels"
+   ],
+   "fit": "generic",
+   "separate_parts": true,
+   "notes": "Confirmed 35 parts, SolidWorks native, 8.8M polys. The page does not state which Prado generation, and a commenter asks 'What year Land Cruiser is this chassis for?', so even the Prado fit is unverified. Rear air spring trailing arm differs from the LC100 4 link. CGTrader 21A.3 end user access rule makes a plain GLB non compliant. Keep as generic reference/fallback with that caveat.",
+   "verdict": "keep",
+   "evidence": "Opened page: part list quoted, $89.99, 8817422 polygons, Native SLDPRT 55 MB, published 2022-02-08, comment 'What year Land Cruiser is this chassis for?'."
+  },
+  {
+   "area": "full_vehicle",
+   "site": "Sketchfab",
+   "title": "LADDER FRAME CHASSIS",
+   "url": "https://sketchfab.com/3d-models/ladder-frame-chassis-104cc916740c4754b05ab40dd3cd2a00",
+   "author": "vr.designer_09",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download",
+   "polys": 418652,
+   "covers": [
+    "ladder frame"
+   ],
+   "fit": "generic",
+   "separate_parts": false,
+   "notes": "Generic CAD ladder frame, tags cad, chassis, chassisdesign. Clean CC BY, downloadable. Sibling 'LADDER FRAME CHASSIS WITH MOUNTING' (997344d875f446ee9bca883ff381e150) confirmed CC BY, 488,810 faces, downloadable. Placeholder frame only.",
+   "verdict": "keep",
+   "evidence": "API: CC Attribution, 418652 faces, downloadable, description 'The ladder frame chassis is a robust structural layout consisting of two longitudinal rails connected by cross members...'."
+  },
+  {
+   "area": "engine_trans",
+   "site": "CGTrader",
+   "title": "Toyota Land Cruiser J100 GXR 2004 high quality with engine",
+   "url": "https://www.cgtrader.com/3d-models/car/suv/toyota-land-cruiser-j100-gxr-2004-high-quality-with-engine",
+   "author": "Alqhtani",
+   "licence": "Royalty Free License (no AI)",
+   "licence_ok": "unclear",
+   "price_usd": 28.26,
+   "formats": "OBJ, MAX, FBX",
+   "polys": 1694605,
+   "covers": [
+    "complete LC100 body and interior",
+    "engine (described as '3000 twin cam toyota turbo', i.e. a 2JZ type, not the 1FZ-FE)"
+   ],
+   "fit": "close",
+   "separate_parts": null,
+   "notes": "The description never mentions a chassis or underbody, so it is not the complete mechanical car we need. The engine is the wrong one, a 2JZ style twin cam turbo. The seller also sells on RenderHub as askobar505usq (vendor bio 'Abdulaziz Alqhtani'), where his Land Cruiser is labelled IP Restricted. Origin of the engine is unknown. We already have the body, so its value here is low. CGTrader 21A.3 requires 'all commercially reasonable measures to prevent the end user from gaining access' in software, for example by encrypting the Product data. A plain GLB fails that rule.",
+   "verdict": "keep",
+   "evidence": "Opened the page. Description: 'Toyota Land Cruiser J100 GX.R 2004 high poly and quality full texture 3 rims 3000 twin cam toyota turbo engine high texture uv map for body high interior quality and texture'. One-time purchase $28.26, 1694605 polygons, 1 review, published 2023-03-06, features Animated. Checked the CGTrader terms for the Incorporated Product definition and the 21A.3 encryption clause."
+  },
+  {
+   "area": "engine_trans",
+   "site": "CGTrader",
+   "title": "Toyota 2JZ-GTE Engine",
+   "url": "https://www.cgtrader.com/3d-models/vehicle/vehicle-part/toyota-2jz-gte-engine-2932b715-2f42-4ecd-93ce-df9507c67ce8",
+   "author": "100by100Studio",
+   "licence": "Royalty Free License (no AI)",
+   "licence_ok": "unclear",
+   "price_usd": 48,
+   "formats": "MAX (Corona 2015, 7.18 MB); OBJ, FBX, 3DS, DWG, textures",
+   "polys": 35834,
+   "covers": [
+    "engine (Toyota 2JZ inline six stand-in)"
+   ],
+   "fit": "close",
+   "separate_parts": true,
+   "notes": "Confirmed 90 parts and a game-ready build. Reviewers say the object and texture naming is poor. The CGTrader 21A.3 extraction rule applies.",
+   "verdict": "keep",
+   "evidence": "Page: '2jz-GTE 3000 VVT-i Twin Turbo Engine... Rigged and animated... It consists of 90 parts... 4 sets of 2K textures, PBR Metalness'. Price $48.00 (was $80.00, 40% off), 5 reviews. I did not see the poly figure in my capture, so it comes from the sweep."
+  },
+  {
+   "area": "engine_trans",
+   "site": "CGTrader",
+   "title": "Toyota 2JZ GTE VVTi engine",
+   "url": "https://www.cgtrader.com/3d-models/vehicle/vehicle-part/toyota-2jz-gte-vvti-engine",
+   "author": "DersinStudio",
+   "licence": "Royalty Free License (no AI)",
+   "licence_ok": "unclear",
+   "price_usd": 52.5,
+   "formats": "MAX 2011 and 2010 (Mental Ray); FBX, OBJ, 3DS",
+   "polys": 44884,
+   "covers": [
+    "engine (2JZ inline six stand-in)",
+    "gearbox (RWD transmission)",
+    "propeller shaft",
+    "differential",
+    "cooling accessories"
+   ],
+   "fit": "close",
+   "separate_parts": true,
+   "notes": "The sweep missed that this listing includes an RWD transmission, a cardan shaft and a differential, with 75 named parts in total. That makes it a full engine, gearbox and driveline stand-in in one purchase. The CGTrader 21A.3 extraction rule applies. My capture cut off before the price, so the price is from the sweep.",
+   "verdict": "keep",
+   "evidence": "Page description: 'Only 44.884 polys! 75 parts in total... Features RWD transmission, cardan shaft, differential and cooling accessories. Game Ready... all objects and materials in scene are named appropriated; real world size'."
+  },
+  {
+   "area": "engine_trans",
+   "site": "CGTrader",
+   "title": "Engine Inline 6 cylinders Animated",
+   "url": "https://www.cgtrader.com/3d-models/car/car/engine-inline-6-cylinders-animated",
+   "author": "UlanK",
+   "licence": "Royalty Free License (no AI)",
+   "licence_ok": "unclear",
+   "price_usd": 12.49,
+   "formats": "FBX, textures",
+   "polys": 107000,
+   "covers": [
+    "engine (JZ style inline six stand-in)"
+   ],
+   "fit": "close",
+   "separate_parts": null,
+   "notes": "I compared it with Sketchfab 'Engine Inline 6 (Motor) Animated' by cachetf (uid 80ada65c02654d00ac0fb086500da660, 107171 faces, not downloadable, 2022-08-06, 'For all questions contact cachetf@gmail.com'). The spec text is word for word the same and the face count matches, so this is the same asset. Whether UlanK and cachetf are the same person is not proven. Ask the seller before buying.",
+   "verdict": "keep",
+   "evidence": "Page: 'MidPoly model asset Engine Inline 6 cyl Animated 3 Texture _d/_m/_n Ready for Game', $12.49 (was $24.99, 50% off), tags toyota and jdm, no reviews. Sketchfab API on the cachetf model shows the same description text."
+  },
+  {
+   "area": "engine_trans",
+   "site": "CGTrader",
+   "title": "Inline 6 Cylinder Car Engine",
+   "url": "https://www.cgtrader.com/3d-models/industrial/industrial-part/inline-6-cylinder-car-engine",
+   "author": "3dmi",
+   "licence": "Royalty Free License (no AI)",
+   "licence_ok": "unclear",
+   "price_usd": 119.2,
+   "formats": "MAX (Scanline, V-Ray 2014); OBJ, FBX, C4D, MA, 3DS",
+   "polys": 139034,
+   "covers": [
+    "engine (generic twin cam inline six)"
+   ],
+   "fit": "generic",
+   "separate_parts": null,
+   "notes": "An expensive generic engine built for rendering. The CGTrader 21A.3 extraction rule applies.",
+   "verdict": "keep",
+   "evidence": "Page: 'Inline 6 Cylinder Car Engine is a high quality, photo real model... originally modeled in 3ds Max 2012 and rendered with V-Ray'. Price $119.20 (was $149.00, 20% off). Tags include twin and turbo."
+  },
+  {
+   "area": "engine_trans",
+   "site": "CGTrader",
+   "title": "AVTEC Manual Transmission - Gearbox 3D Model",
+   "url": "https://www.cgtrader.com/3d-models/vehicle/vehicle-part/avtec-manual-transmission-gearbox-3d-model",
+   "author": "ishiv01",
+   "licence": "Royalty Free License (no AI)",
+   "licence_ok": "unclear",
+   "price_usd": 3,
+   "formats": "BLEND (9.68 MB); OBJ, FBX, GLTF, PLY, STL",
+   "polys": null,
+   "covers": [
+    "gearbox (generic longitudinal manual)"
+   ],
+   "fit": "generic",
+   "separate_parts": null,
+   "notes": "'AVTEC-style' refers to the Indian gearbox maker, not a Toyota part. The listing is new with 23 views, no reviews and no polygon count. Very cheap. The CGTrader 21A.3 extraction rule applies.",
+   "verdict": "keep",
+   "evidence": "Page: 'A detailed 3D model of an AVTEC-style automotive manual transmission assembly, complete with the bellhousing, main transmission casing, mounting brackets, and tail housing section'. $3.00, published 2026-09-02, ishiv01 with 0 reviews."
+  },
+  {
+   "area": "engine_trans",
+   "site": "RenderHub",
+   "title": "Transmission (transmission3)",
+   "url": "https://www.renderhub.com/3d-horse/transmission3",
+   "author": "3D Horse",
+   "licence": "Extended Use License",
+   "licence_ok": "yes",
+   "price_usd": 69,
+   "formats": ".max, .3ds, .c4d, .lwo, .obj, .xsi",
+   "polys": 399640,
+   "covers": [
+    "gearbox (generic longitudinal manual)"
+   ],
+   "fit": "generic",
+   "separate_parts": null,
+   "notes": "The licence works for us. One caveat: the agreement says you 'may not redistribute, publish or make a Digital Asset available to any third party unless the Digital Asset becomes part of a larger Creation'. A gearbox inside the whole car app counts as a larger Creation. The agreement has no encryption clause. Sale price $41.40.",
+   "verdict": "keep",
+   "evidence": "Page: $69.00, $41.40 at 40% off for 7 days. 'Extended Use License... for both non-commercial and commercial purposes'. 399,640 polygons. Read renderhub.com/info/3d-content-licensing. Permitted uses include 'Computer games and software (computer/web/mobile games...)' and 'website designs and layouts'. I found no extraction or encryption requirement."
+  },
+  {
+   "area": "engine_trans",
+   "site": "RenderHub",
+   "title": "Turbo Straight Six Cylinder Engine",
+   "url": "https://www.renderhub.com/3d-horse/turbo-straight-six-cylinder-engine",
+   "author": "3D Horse",
+   "licence": "Extended Use License",
+   "licence_ok": "yes",
+   "price_usd": 199,
+   "formats": ".max, .3ds, .c4d, .lwo, .ma, .obj, .xsi",
+   "polys": 1703180,
+   "covers": [
+    "engine (generic turbo inline six, no internals)"
+   ],
+   "fit": "generic",
+   "separate_parts": null,
+   "notes": "It looks like a BMW engine, not a Toyota, and it is very heavy. The licence suits the web.",
+   "verdict": "keep",
+   "evidence": "Page: $199.00, $119.40 at 40% off. Extended Use License, 1,703,180 polygons. 'Model based on real engine... No internal parts... 2 versions for 3ds Max included'."
+  },
+  {
+   "area": "engine_trans",
+   "site": "Sketchfab",
+   "title": "Toyota 1JZ-GTE VVTi",
+   "url": "https://sketchfab.com/3d-models/toyota-1jz-gte-vvti-99ef46b26980424d88dfed361bb468f4",
+   "author": "Kurwa.Zoku",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download",
+   "polys": 1000086,
+   "covers": [
+    "engine (1JZ-GTE real scan)"
+   ],
+   "fit": "close",
+   "separate_parts": false,
+   "notes": "A photogrammetry scan, so original work and not a rip. Merged mesh.",
+   "verdict": "keep",
+   "evidence": "Sketchfab API: CC Attribution, 1000086 faces, downloadable. Tags include realityscan and jzx100. Description 'Toyota 1JZ-GTE VVTi engine'."
+  },
+  {
+   "area": "engine_trans",
+   "site": "Sketchfab",
+   "title": "Toyota/Lexus 2JZ-GTE",
+   "url": "https://sketchfab.com/3d-models/toyotalexus-2jz-gte-670ccab7e4e54e6d83074117bb44586e",
+   "author": "Lame3dModels",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download",
+   "polys": 100052,
+   "covers": [
+    "engine (2JZ inline six stand-in)"
+   ],
+   "fit": "close",
+   "separate_parts": null,
+   "notes": "The author's uploads are a series of self-made engine parts (V8 Hemi block, head, headers, intake, water pump, piston, rocker arm), which suggests original work. One upload is labelled 'Fully AI generated', so check the asset quality.",
+   "verdict": "keep",
+   "evidence": "Sketchfab API: CC Attribution, 100052 faces, 56190 vertices, 12 materials, created 2024-11-18. Description: 'inline 6 used famously on the toyota A80 Supra or the mk4 feel free to use without credit'. Listed the author's other uploads through search."
+  },
+  {
+   "area": "engine_trans",
+   "site": "Sketchfab",
+   "title": "jeep Cherokee xj engine",
+   "url": "https://sketchfab.com/3d-models/jeep-cherokee-xj-engine-a2dde88a8dd94b8aae4e26f054cfb2a0",
+   "author": "1530media",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download",
+   "polys": 355687,
+   "covers": [
+    "engine (AMC 4.0 inline six, rough in-car scan)"
+   ],
+   "fit": "generic",
+   "separate_parts": false,
+   "notes": "A rough phone scan, low value.",
+   "verdict": "keep",
+   "evidence": "Sketchfab API: CC Attribution, 355687 faces. 'quick scan of the infamous jeep Cherokee XJ's 4.0 i6 engine. This is from my 1995 Jeep XJ', tagged trnio."
+  },
+  {
+   "area": "engine_trans",
+   "site": "Sketchfab",
+   "title": "NP261 HD Transfer Case",
+   "url": "https://sketchfab.com/3d-models/np261-hd-transfer-case-9cb9935f768741689a8da82a92d7a1c3",
+   "author": "yegorpro",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download",
+   "polys": 2000019,
+   "covers": [
+    "transfer case (GM NP261, generic)"
+   ],
+   "fit": "generic",
+   "separate_parts": false,
+   "notes": "Confirmed. A GM part, not Toyota.",
+   "verdict": "keep",
+   "evidence": "Sketchfab API: CC Attribution, 2000019 faces. 'NP 261 HD manual transfer case... 3D scanned with revopoint range, merged from 4x scans'."
+  },
+  {
+   "area": "engine_trans",
+   "site": "Sketchfab",
+   "title": "Fd Rx-7 Transmission",
+   "url": "https://sketchfab.com/3d-models/fd-rx-7-transmission-f13d0ea5daea42709912317bc5ac0e54",
+   "author": "lunchinthetree",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download",
+   "polys": 428971,
+   "covers": [
+    "gearbox (generic longitudinal 5 speed scan)"
+   ],
+   "fit": "generic",
+   "separate_parts": false,
+   "notes": "Confirmed as an original scan.",
+   "verdict": "keep",
+   "evidence": "Sketchfab API: CC Attribution, 428971 faces, tagged realityscan-mobile. 'This is a stock 5 speed transmission from a 1993 Mazda RX-7 FD'."
+  },
+  {
+   "area": "engine_trans",
+   "site": "Sketchfab",
+   "title": "Gearbox Scanned by Revopoint INSPIRE 2",
+   "url": "https://sketchfab.com/3d-models/gearbox-scanned-by-revopoint-inspire-2-790e51a350c7425dbbca938ed0f63249",
+   "author": "Revopoint3d",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download",
+   "polys": 2377318,
+   "covers": [
+    "gearbox housing (generic)"
+   ],
+   "fit": "generic",
+   "separate_parts": false,
+   "notes": "A scanner vendor's demo scan under CC BY.",
+   "verdict": "keep",
+   "evidence": "Sketchfab API: CC Attribution, 2377318 faces. 'Car's gearbox captured with the Revopoint INSPIRE 2'."
+  },
+  {
+   "area": "engine_trans",
+   "site": "3DExport",
+   "title": "ic straight 6 dohc vvt engine",
+   "url": "https://3dexport.com/3d-model-ic-straight-6-dohc-vvt-engine-309234",
+   "author": "3dpixel",
+   "licence": "Basic License (Extended License available)",
+   "licence_ok": "unclear",
+   "price_usd": 125,
+   "formats": ".3DS, .FBX, .MAX, .OBJ",
+   "polys": 819037,
+   "covers": [
+    "engine (generic DOHC inline six with internals)"
+   ],
+   "fit": "generic",
+   "separate_parts": true,
+   "notes": "The two 3DExport pages contradict each other. The licence page bans distributing the model 'in a file format that is usable by any 3D application', and a GLB is such a format.",
+   "verdict": "keep",
+   "evidence": "Product page: $125.00 USD, Basic License, 819037 polygons, 2020-08-31. Description says 'all moving parts separate, piston, conroad, camshaft, crankshaft, valves, springs'. Usage section says Basic covers 'native apps, web apps, video games'. The licence page (3dexport.com/basic-license-and-extended-license) says 'you cannot distribute the purchased model in a file format that is usable by any 3D application... publish your final product in a proprietary, native file format'. Its table caps 'One native app, web app, or game' at 250 000 downloads or sales."
+  },
+  {
+   "area": "engine_trans",
+   "site": "CGTrader",
+   "title": "Vehicle transfer case assembly",
+   "url": "https://www.cgtrader.com/3d-models/vehicle/vehicle-part/vehicle-transfer-case-assembly",
+   "author": "boysitinh-thanhdung",
+   "licence": "Royalty Free License (no AI)",
+   "licence_ok": "unclear",
+   "price_usd": 12.5,
+   "formats": "IAM (Inventor) only",
+   "polys": 86245,
+   "covers": [
+    "transfer case (generic CAD)"
+   ],
+   "fit": "generic",
+   "separate_parts": true,
+   "notes": "The page shows the $25.00 one-time price discounted to $12.50. The description is boilerplate about a control module and says nothing about the model. My capture missed the poly count, so 86245 is from the sweep.",
+   "verdict": "keep",
+   "evidence": "Page: 'One-time purchase $25.00 $12.50', Royalty Free License (no AI). Description: 'The transfer case control module runs the four-wheel drive (4WD) drivetrain...'. No reviews."
+  },
+  {
+   "area": "engine_trans",
+   "site": "CGTrader",
+   "title": "Solid Axle Differential and Transfer Case low-poly",
+   "url": "https://www.cgtrader.com/3d-models/vehicle/vehicle-part/solid-axle-differential-and-transfer-case",
+   "author": "tuxedocat3",
+   "licence": "Royalty Free License (no AI)",
+   "licence_ok": "unclear",
+   "price_usd": 2,
+   "formats": "OBJ, FBX, BLEND",
+   "polys": 10207,
+   "covers": [
+    "transfer case (placeholder)",
+    "rear axle (generic)"
+   ],
+   "fit": "generic",
+   "separate_parts": null,
+   "notes": "Placeholder quality.",
+   "verdict": "keep",
+   "evidence": "Page: $2.00, 10207 polygons, 28413 vertices, published 2021-05-15, 1 review. 'Solid / Live axle with differential and a transfer case / box Low poly Rendered in UE4. Material textures not included'."
+  },
+  {
+   "area": "engine_trans",
+   "site": "3D CAD Browser",
+   "title": "Transfer Case 4x4 CAD Model",
+   "url": "https://www.3dcadbrowser.com/3d-model/transfer-case-4x4",
+   "author": "Nestor Camacho",
+   "licence": "Royalty-Free License. Commercial and editorial use according to site license terms. Redistribution of source files is not allowed.",
+   "licence_ok": "unclear",
+   "price_usd": null,
+   "formats": "STEP, IGES; converted MAX, FBX, OBJ, BLEND, C4D",
+   "polys": null,
+   "covers": [
+    "transfer case (generic with yokes)"
+   ],
+   "fit": "generic",
+   "separate_parts": null,
+   "notes": "No price shown. A GLB served to browsers might count as redistributing the source files, so this is unclear.",
+   "verdict": "keep",
+   "evidence": "Page: '4x4 Transfer Case with Yokes. Uploaded by Nestor Camacho on January 2019'. Licence block quoted verbatim. Polygons shown as '-' (CAD solid)."
+  },
+  {
+   "area": "chassis_susp",
+   "site": "CGTrader",
+   "title": "Toyota Land Cruiser Prado Chassis system 3D model rigged",
+   "url": "https://www.cgtrader.com/3d-models/car/suv/toyota-land-cruiser-prado-chassis-system",
+   "author": "ash-m-design",
+   "licence": "Royalty Free License (no AI)",
+   "licence_ok": "unclear",
+   "price_usd": 89.99,
+   "formats": "SLDPRT native (55 MB); OBJ, FBX, STL, IGE, MAX, DWG",
+   "polys": 8817422,
+   "covers": [
+    "ladder frame",
+    "front IFS double wishbone",
+    "steering",
+    "rear axle trailing arms",
+    "rear dampers",
+    "brake discs",
+    "calipers",
+    "axle hubs",
+    "tires"
+   ],
+   "fit": "close",
+   "separate_parts": true,
+   "notes": "Correction: the page states 8,817,422 polygons (the sweep had null). That is raw CAD tessellation, so heavy decimation and retopology are needed. It has 35 parts: upper and lower control arm, spring and damper, rear air spring, tie rod, steering mechanism, steering knuckle, chassis frame, rear trailing arm suspension, rear damper, tire, rim, caliper, brake pads, brake disc, axle hub. The Prado generation is not stated. The front uses coilovers, not torsion bars, and the rear uses air springs. CGTrader RF licence 21A.3: software (video games, simulations, VR worlds) 'must take all commercially reasonable measures to prevent the end user from gaining access to the Product' (proprietary format, password protected or encrypted data). A plain GLB in the browser likely fails this. Incorporated Product (def. 8) means it cannot be extracted 'without the use of reverse engineering tools'.",
+   "verdict": "keep",
+   "evidence": "Opened the page in the headless browser: title, description and part list as quoted, price $89.99, 'Royalty Free License (no AI)', native SLDPRT 55 MB, '8817422 polygons / 4407261 vertices', created by ash-m-design. I read CGTrader General Terms def. 8 and 21A.3 myself."
+  },
+  {
+   "area": "chassis_susp",
+   "site": "CGTrader",
+   "title": "Toyota Land Cruiser Prado Chassis Frame",
+   "url": "https://www.cgtrader.com/3d-models/car/suv/toyota-land-cruiser-prado-chassis",
+   "author": "ash-m-design",
+   "licence": "Royalty Free License (no AI)",
+   "licence_ok": "unclear",
+   "price_usd": 39.99,
+   "formats": "STL, OBJ, MAX, DWG, FBX, IGE, SLDPRT",
+   "polys": 1197295,
+   "covers": [
+    "ladder frame",
+    "rear trailing arm suspension",
+    "rear damper"
+   ],
+   "fit": "close",
+   "separate_parts": true,
+   "notes": "9 parts: chassis body, rear trailing arms, rear damper. The one buyer review (mbelanger) reports that the SolidWorks assembly has missing file references, the native file is SW 2022, there is no STEP file and the naming is poor. Same CGTrader RF 21A.3 protection requirement as the chassis system.",
+   "verdict": "keep",
+   "evidence": "Opened the page: 'Number of parts: 9', the part list, $39.99 one time purchase, '1197295 polygons / 597779 vertices', RF (no AI), created by ash-m-design, plus the buyer review text."
+  },
+  {
+   "area": "chassis_susp",
+   "site": "Fab",
+   "title": "PICKUP TRUCK CHASSIS 4",
+   "url": "https://www.fab.com/listings/7adfb16b-5dd4-4ce2-a683-7903a7f8ab57",
+   "author": "NNAVAS 3D",
+   "licence": "Standard License (Fab)",
+   "licence_ok": "unclear",
+   "price_usd": 89.99,
+   "formats": "Blender, FBX, OBJ; Fab converted GLB, glTF, USDZ",
+   "polys": 40500,
+   "covers": [
+    "ladder frame",
+    "front IFS",
+    "rear solid axle",
+    "propeller shafts",
+    "shocks",
+    "brakes"
+   ],
+   "fit": "generic",
+   "separate_parts": true,
+   "notes": "A single cab short bed modern pickup chassis with independent front suspension. 'Elements are logically named and grouped', 4096 textures. The same model is on CGTrader at https://www.cgtrader.com/3d-models/vehicle/vehicle-part/pickup-truck-chassis-4wd-ifs ($62.30 sale, $89.00 list, RF, 40,400 polys, MAX/OBJ/FBX/BLEND/3DS). The Fab EULA, Standard 4c, says you may Distribute a Project 'solely as incorporated in the Project in object code and you must restrict end users from extracting or otherwise using Content outside of the Project'. A raw GLB needs protection.",
+   "verdict": "keep",
+   "evidence": "Opened the Fab listing in the browser: description quoted, license 'Standard License', price ($89.99), file pickup_truck_chassis_4wd_ifs_blend.zip 10.62 MB, published July 11 2025. I opened the CGTrader copy too ($62.30/$89.00). I read the Fab EULA Section 4c myself."
+  },
+  {
+   "area": "chassis_susp",
+   "site": "Fab",
+   "title": "PICKUP TRUCK CHASSIS 5",
+   "url": "https://www.fab.com/listings/8e5e192d-f70f-4ee2-b7f2-6bc251c4a9a1",
+   "author": "NNAVAS 3D",
+   "licence": "Standard License (Fab)",
+   "licence_ok": "unclear",
+   "price_usd": 89.99,
+   "formats": "Blender, FBX, OBJ; Fab converted GLB, glTF, USDZ",
+   "polys": 46000,
+   "covers": [
+    "ladder frame",
+    "front IFS",
+    "rear solid axle",
+    "propeller shafts",
+    "shocks",
+    "brakes"
+   ],
+   "fit": "generic",
+   "separate_parts": true,
+   "notes": "Correction: the Fab price is $89.99 (the sweep had null). It is a crew cab short bed heavy duty pickup chassis, so it is longer and bigger than the LC100. The CGTrader copy is https://www.cgtrader.com/3d-models/vehicle/vehicle-part/hd-pickup-truck-chassis-4wd-ifs at $62.30 sale, $89.00 list, RF, 46,000 polys. Same Fab 4c and CGTrader 21A.3 extraction caveats. Chassis 4 is a better proportion match.",
+   "verdict": "keep",
+   "evidence": "Opened the Fab listing: '3D model of a modern 4wd chassis for a crew cab short bed heavy duty pickup truck with independent front suspension', license selector ($89.99), Standard License, file hd_pickup_truck_4wd_ifs_blend.zip 12.22 MB. I opened the CGTrader copy as well."
+  },
+  {
+   "area": "chassis_susp",
+   "site": "CGTrader",
+   "title": "PICKUP TRUCK CHASSIS 4WD",
+   "url": "https://www.cgtrader.com/3d-models/vehicle/truck/pickup-truck-chassis-4wd",
+   "author": "NNAVAS-3D",
+   "licence": "Royalty Free License (no AI)",
+   "licence_ok": "unclear",
+   "price_usd": 62.3,
+   "formats": "MAX native (4.67 MB); OBJ, FBX, 3DS, textures",
+   "polys": 41854,
+   "covers": [
+    "ladder frame",
+    "front axle",
+    "rear axle",
+    "propeller shafts",
+    "shocks",
+    "brakes"
+   ],
+   "fit": "generic",
+   "separate_parts": true,
+   "notes": "Older NNAVAS chassis made in 3ds Max 2016. The page does not say IFS. 'Only the brakes are UV mapped and textured, the rest has materials.' $62.30 sale, $89.00 list. This is the weakest of the NNAVAS set; prefer Chassis 4 (IFS).",
+   "verdict": "keep",
+   "evidence": "Opened the page: description quoted, '41.854 polygons with subdivision level at 0', $62.30 / $89.00 -30%, created by NNAVAS-3D, native MAX."
+  },
+  {
+   "area": "chassis_susp",
+   "site": "Sketchfab",
+   "title": "Double Wishbone and Live Axle Suspension",
+   "url": "https://sketchfab.com/3d-models/double-wishbone-and-live-axle-suspension-5cf0120b9bca4fd6a20c9357f7e5efaf",
+   "author": "_BlackWAVE_",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download; FBX on Fab (free, CC BY 4.0) with converted GLB/glTF/USDZ",
+   "polys": 2529306,
+   "covers": [
+    "tube frame",
+    "double wishbone suspension",
+    "live axle",
+    "coilovers",
+    "wheels"
+   ],
+   "fit": "generic",
+   "separate_parts": null,
+   "notes": "A concept rig: 'not all parts are correct'. The thumbnail shows an off-road tube frame with big tyres, not a ladder frame. 2.5M faces, so it needs heavy decimation. Only useful as kitbash parts (wishbones, coilovers).",
+   "verdict": "keep",
+   "evidence": "Checked the Sketchfab API: licence CC Attribution, 2,529,306 faces, downloadable, published 2024-01-05, description as quoted. The Fab free listing (8ff6a042...) states 'Creative Commons Attribution (CC BY 4.0)', FBX 63.46 MB. I saw the thumbnail."
+  },
+  {
+   "area": "chassis_susp",
+   "site": "Sketchfab",
+   "title": "4-Link Suspension",
+   "url": "https://sketchfab.com/3d-models/4-link-suspension-944ae9888c8e4ca89bc7692162acace2",
+   "author": "Rysky (Jorma Rysky)",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download",
+   "polys": 108540,
+   "covers": [
+    "rear solid axle",
+    "4 link arms",
+    "panhard / lateral rod",
+    "coilovers"
+   ],
+   "fit": "generic",
+   "separate_parts": true,
+   "notes": "The description mentions Stuntman Ignition, but this is an original reference model by the artist (ArtStation image linked), not a game rip: he made it to show the links the game left out. The links are colour coded, at monster truck scale. Good for the 4 link plus lateral rod topology and the explode logic. Needs restyling and rescaling.",
+   "verdict": "keep",
+   "evidence": "Checked the Sketchfab API: CC Attribution, 108,540 faces, full description read (teaching reference, 'two variations of 4-link arrangement'). The thumbnail shows the coloured links, a panhard bar and a frame stub over monster tyres."
+  },
+  {
+   "area": "chassis_susp",
+   "site": "Sketchfab",
+   "title": "GAZ-69 Vehicle Chassis / Frame",
+   "url": "https://sketchfab.com/3d-models/gaz-69-vehicle-chassis-frame-e67d8918300f4aaeaa783a6e3b7053be",
+   "author": "petar.gachev",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download",
+   "polys": 526212,
+   "covers": [
+    "ladder frame",
+    "front solid axle",
+    "rear solid axle",
+    "leaf springs",
+    "propeller shafts",
+    "wheels"
+   ],
+   "fit": "generic",
+   "separate_parts": null,
+   "notes": "Textured 4K Soviet 4x4 chassis with leaf sprung solid axles. The thumbnail shows a weathered vintage look. The description says 'ALLOWED use this model - for games, visual and art projects, presentations (with showing credits)'. That does not narrow CC BY, but credit is needed. Wrong suspension type for the LC100.",
+   "verdict": "keep",
+   "evidence": "Checked the Sketchfab API: CC Attribution, 526,212 faces, published 2025-08-17, full description read. I saw the thumbnail."
+  },
+  {
+   "area": "chassis_susp",
+   "site": "Sketchfab",
+   "title": "LADDER FRAME CHASSIS",
+   "url": "https://sketchfab.com/3d-models/ladder-frame-chassis-104cc916740c4754b05ab40dd3cd2a00",
+   "author": "vr.designer_09",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download (CAD origin)",
+   "polys": 418652,
+   "covers": [
+    "ladder frame"
+   ],
+   "fit": "generic",
+   "separate_parts": null,
+   "notes": "A bare frame: two rails with kick ups and crossmembers (thumbnail confirms). Needs decimation and reshaping to the FZJ100 (2850 wheelbase). Its sister 'LADDER FRAME CHASSIS WITH MOUNTING' (997344d8..., CC BY, 488,810 faces) adds a rear tube bumper crossmember and body mounts.",
+   "verdict": "keep",
+   "evidence": "Checked the Sketchfab API for both: CC Attribution, 418,652 and 488,810 faces, tags cad/chassis, descriptions read. I saw both thumbnails."
+  },
+  {
+   "area": "chassis_susp",
+   "site": "Sketchfab",
+   "title": "Vented Disk Brake Rotor",
+   "url": "https://sketchfab.com/3d-models/vented-disk-brake-rotor-b4393b994037442db7da86a4fba8fb85",
+   "author": "pao1011",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download (3ds Max 2025 to OBJ, inches)",
+   "polys": 151600,
+   "covers": [
+    "brakes front (vented rotor)"
+   ],
+   "fit": "generic",
+   "separate_parts": null,
+   "notes": "Plain vented rotor with 6 hub holes. The thumbnail shows a clean OEM style hat rotor, a good generic match for the LC100's 6 lug pattern. Decimate it and convert from inches.",
+   "verdict": "keep",
+   "evidence": "Checked the Sketchfab API: CC Attribution, 151,600 faces, published 2026-08-26, description 'Has 6 hub holes'. I saw the thumbnail."
+  },
+  {
+   "area": "chassis_susp",
+   "site": "Sketchfab",
+   "title": "Brake Disk Vented Steel Rotor",
+   "url": "https://sketchfab.com/3d-models/brake-disk-vented-steel-rotor-afcbf63c2213414e93f0a4ffb5bb06f5",
+   "author": "the_86_guy",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download",
+   "polys": 64768,
+   "covers": [
+    "brakes rear (rotor)",
+    "brakes front (vented rotor)"
+   ],
+   "fit": "generic",
+   "separate_parts": null,
+   "notes": "Generic rotor tagged 'aftermarket', aimed at sport cars. The pao1011 rotor is the better match.",
+   "verdict": "keep",
+   "evidence": "Checked the Sketchfab API: CC Attribution, 64,768 faces, description 'You can use it on sport cars', tags aftermarket, brake-disc."
+  },
+  {
+   "area": "chassis_susp",
+   "site": "Sketchfab",
+   "title": "BRAKE CALLIPER",
+   "url": "https://sketchfab.com/3d-models/brake-calliper-b18ea04df4504172a70a4b32d72818a2",
+   "author": "vr.designer_09",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download (NX CAD)",
+   "polys": 65112,
+   "covers": [
+    "brakes front (caliper)"
+   ],
+   "fit": "generic",
+   "separate_parts": null,
+   "notes": "The thumbnail shows an unbranded, long, multi piston fixed caliper with a performance look. That is bulkier and more styled than the Toyota cast 4 piston, so it needs restyling. The licence is clean.",
+   "verdict": "keep",
+   "evidence": "Checked the Sketchfab API: CC Attribution, 65,112 faces, tags nx/cadmodel, generic educational description. I saw the thumbnail."
+  },
+  {
+   "area": "chassis_susp",
+   "site": "Sketchfab",
+   "title": "Driveshaft",
+   "url": "https://sketchfab.com/3d-models/driveshaft-09b38796c78e49d6bbaf6b7fa63b856f",
+   "author": "PolyPhantom",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download",
+   "polys": 17330,
+   "covers": [
+    "propeller shaft"
+   ],
+   "fit": "generic",
+   "separate_parts": true,
+   "notes": "Tagged zil-157, so it is modelled on a ZIL truck cardan shaft: weathered, with U joints and a splined slip joint (thumbnail). '5 objects, Polygons 11734'. Rescale and clean the texture for the LC100 front and rear shafts, using the GrabCAD 37110-6A060 proportions as reference.",
+   "verdict": "keep",
+   "evidence": "Checked the Sketchfab API: CC Attribution, 17,330 faces, description 'Points: 11160 Polygons: 11734 Objects: 5', tags include zil-157 and cardan. I saw the thumbnail."
+  },
+  {
+   "area": "chassis_susp",
+   "site": "CGTrader",
+   "title": "Half Axle",
+   "url": "https://www.cgtrader.com/3d-models/vehicle/vehicle-part/half-axle",
+   "author": "dragosburian",
+   "licence": "Royalty Free License (no AI)",
+   "licence_ok": "unclear",
+   "price_usd": 29.99,
+   "formats": "OBJ, BLEND, DAE, FBX",
+   "polys": 79030,
+   "covers": [
+    "front CV drive shafts"
+   ],
+   "fit": "generic",
+   "separate_parts": true,
+   "notes": "'Different parts are separate for ease of handle', quads, subdivisible. Alternative: 'Driveshaft with CV-joints' by borgs ($19.00 list, $9.50 sale, 44,716 polys, OBJ/3DS/C4D/FBX). Both carry the CGTrader RF 21A.3 caveat.",
+   "verdict": "keep",
+   "evidence": "Opened the page: description quoted, one time purchase $29.99, RF (no AI), created by dragosburian, formats OBJ/BLEND/DAE/FBX. I opened the borgs Driveshaft page too ($19.00/$9.50, 44716 polygons)."
+  },
+  {
+   "area": "chassis_susp",
+   "site": "CGTrader",
+   "title": "Vehicle transfer case assembly",
+   "url": "https://www.cgtrader.com/3d-models/vehicle/vehicle-part/vehicle-transfer-case-assembly",
+   "author": "boysitinh-thanhdung",
+   "licence": "Royalty Free License (no AI)",
+   "licence_ok": "unclear",
+   "price_usd": 12.5,
+   "formats": "IAM only (Autodesk Inventor assembly)",
+   "polys": 86245,
+   "covers": [
+    "transfer case"
+   ],
+   "fit": "generic",
+   "separate_parts": null,
+   "notes": "New fact: the only format is IAM, an Inventor assembly. Without Inventor, getting it to GLB is hard. The description is generic text about a 'transfer case control module', not about the model. The seller has 3 reviews. Not the HF2A shape. $25.00 list, $12.50 sale. Low value. The tuxedocat3 'Solid Axle Differential and Transfer Case' ($2.00, 10,207 polys, OBJ/FBX/BLEND, RF) is easier to use.",
+   "verdict": "keep",
+   "evidence": "Opened the page: $25.00 / $12.50, RF (no AI), created by boysitinh-thanhdung, 'File format IAM Provided by designer', description as noted. I opened the tuxedocat3 page too ($2.00, 10207 polygons)."
+  },
+  {
+   "area": "chassis_susp",
+   "site": "Sketchfab",
+   "title": "[Free] Coilover Shock Absorber Damper",
+   "url": "https://sketchfab.com/3d-models/free-coilover-shock-absorber-damper-92e61757780840a683abdd38c4e8a700",
+   "author": "rprispil",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download (2K PBR textures)",
+   "polys": 15790,
+   "covers": [
+    "shocks",
+    "springs"
+   ],
+   "fit": "generic",
+   "separate_parts": null,
+   "notes": "A racing style coilover made for a track Xsara. Only the damper body suits the LC100 (front: torsion bar plus shock; rear: separate coil and shock). The author notes 'normal map issues, update soon'. 'COIL SPRING' by vr.designer_09 (3bf2215c..., CC BY, 40,376 faces) is confirmed for the rear coils.",
+   "verdict": "keep",
+   "evidence": "Checked the Sketchfab API: CC Attribution, 15,790 faces, description read. Coil spring also checked: CC Attribution, 40,376 faces."
+  },
+  {
+   "area": "chassis_susp",
+   "site": "Sketchfab",
+   "title": "Differential",
+   "url": "https://sketchfab.com/3d-models/differential-acaf00f5bcf64bc48253602e48bec0ab",
+   "author": "ArmMTEd",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download",
+   "polys": 72542,
+   "covers": [
+    "differential internals"
+   ],
+   "fit": "generic",
+   "separate_parts": null,
+   "notes": "Education model, empty description. Useful only for a diff cutaway or explode, not for the axle housing.",
+   "verdict": "keep",
+   "evidence": "Checked the Sketchfab API: CC Attribution, 72,542 faces, published 2017-06-01, tag education, no description."
+  },
+  {
+   "area": "ancillaries",
+   "site": "Sketchfab",
+   "title": "Alternator",
+   "url": "https://sketchfab.com/3d-models/alternator-e94842c63e6b4557a20f5751779c7e7f",
+   "author": "B0bik",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download",
+   "polys": 147482,
+   "covers": [
+    "alternator"
+   ],
+   "fit": "close",
+   "separate_parts": false,
+   "notes": "Rusted Hitachi unit made by photogrammetry. Needs a clean texture pass and decimation. Sweep claims confirmed.",
+   "verdict": "keep",
+   "evidence": "API: licence CC Attribution, 147482 faces, downloadable, 1 material, tags hitachi, rust, photogrammetry, car. Description: 'Old aternator, rusted. Photogrametry in reality capture from 200 64mpx photos.'"
+  },
+  {
+   "area": "ancillaries",
+   "site": "Sketchfab",
+   "title": "Car alternator",
+   "url": "https://sketchfab.com/3d-models/car-alternator-c7ddcec7798349d5abcdb84002a64340",
+   "author": "unrealengine432 (Ele.G on Fab/Unreal Marketplace)",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download",
+   "polys": 1319604,
+   "covers": [
+    "alternator"
+   ],
+   "fit": "generic",
+   "separate_parts": false,
+   "notes": "The Fab copy (https://www.fab.com/listings/a059ef68-2caf-4996-bc70-40bb0693d1d0) is by Ele.G, shown as Free under the Standard License with the same description, so the uploader is the same author. Take the Sketchfab CC BY copy. Very heavy.",
+   "verdict": "keep",
+   "evidence": "API: CC Attribution, 1319604 faces, downloadable, tags nanite, ue5, realityscan. Description: 'Car alternator accurate scan...' and it links to the Ele.G Unreal Marketplace profile. Fab page opened: 'More from Ele.G', Standard License, Free, 139 MB OBJ zip."
+  },
+  {
+   "area": "ancillaries",
+   "site": "Sketchfab",
+   "title": "Alternator",
+   "url": "https://sketchfab.com/3d-models/alternator-d2789bf232614301a0325c864706e0e6",
+   "author": "dilkaarrow",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download",
+   "polys": 7734,
+   "covers": [
+    "alternator"
+   ],
+   "fit": "generic",
+   "separate_parts": null,
+   "notes": "Light, stylised fallback with 7 materials.",
+   "verdict": "keep",
+   "evidence": "API: CC Attribution, 7734 faces, 7 materials, downloadable, generic educational description."
+  },
+  {
+   "area": "ancillaries",
+   "site": "Sketchfab",
+   "title": "ELECTRIC STARTER MOTOR + ANIMATED",
+   "url": "https://sketchfab.com/3d-models/electric-starter-motor-animated-7d7e1fecacaf4751945de538b8c1378f",
+   "author": "menarzuw",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download",
+   "polys": 1566322,
+   "covers": [
+    "starter motor"
+   ],
+   "fit": "generic",
+   "separate_parts": true,
+   "notes": "All parts are named and separate, so it explodes well. Very heavy: drop the internals or decimate them.",
+   "verdict": "keep",
+   "evidence": "API: CC Attribution, 1566322 faces, 6 materials, downloadable. Description: 'All parts are fully modeled and named. Model is accurate to real-world dimensions... available for free.'"
+  },
+  {
+   "area": "ancillaries",
+   "site": "Sketchfab",
+   "title": "The Component Of Air-conditioning Compressor",
+   "url": "https://sketchfab.com/3d-models/the-component-of-air-conditioning-compressor-de546e06317f498db7b5bf43c4e4b1db",
+   "author": "scanology",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download",
+   "polys": 812476,
+   "covers": [
+    "AC compressor (one housing component only)"
+   ],
+   "fit": "generic",
+   "separate_parts": false,
+   "notes": "Scanner vendor demo (PRINCE scanner advert) of one compressor component, not a complete compressor with clutch pulley. Weak base. Plan to model the AC compressor ourselves.",
+   "verdict": "keep",
+   "evidence": "API: CC Attribution, 812476 faces, tags 3dscanner, quality-control. Description is only a link to the PRINCE 3D scanner product."
+  },
+  {
+   "area": "ancillaries",
+   "site": "Sketchfab",
+   "title": "Car Radiator Clean & Rusted FBX Low Poly FREE",
+   "url": "https://sketchfab.com/3d-models/car-radiator-clean-rusted-fbx-low-poly-free-95d46daf678b4716ab626cab6f43e40e",
+   "author": "LadyLionStudios (made by ACBRadio)",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "FBX, Sketchfab download",
+   "polys": 10900,
+   "covers": [
+    "radiator",
+    "electric fan and shroud"
+   ],
+   "fit": "generic",
+   "separate_parts": true,
+   "notes": "The 10.9k faces include a 4k triangle 360 backdrop. The radiator itself is 6.9k triangles. Credit ACBRadio as the maker.",
+   "verdict": "keep",
+   "evidence": "API: CC Attribution, 10900 faces, 5 materials. Description: 'made by ACBRadio... Blender 2.92, Quixel Mixer... Normal, Deffuse... 360 backdrop total poly count: Triangles 4k... Car Radiator: Triangles 6.9k'."
+  },
+  {
+   "area": "ancillaries",
+   "site": "Sketchfab",
+   "title": "Car radiator",
+   "url": "https://sketchfab.com/3d-models/car-radiator-7694147996f54ee28d58d81566440b8e",
+   "author": "flow3d",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download",
+   "polys": 2749,
+   "covers": [
+    "radiator"
+   ],
+   "fit": "generic",
+   "separate_parts": false,
+   "notes": "Simple fallback.",
+   "verdict": "keep",
+   "evidence": "API: CC Attribution, 2749 faces, 2 materials, description 'Radiador de carro'."
+  },
+  {
+   "area": "ancillaries",
+   "site": "Sketchfab",
+   "title": "Radiator Fan",
+   "url": "https://sketchfab.com/3d-models/radiator-fan-6035a2d8bd194fb5a7437637d742ef89",
+   "author": "raflysalsapermana",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download",
+   "polys": 4314,
+   "covers": [
+    "engine fan blade"
+   ],
+   "fit": "generic",
+   "separate_parts": false,
+   "notes": "No description and no tags, so whether it is a car fan cannot be confirmed from the metadata. Generic fan.",
+   "verdict": "keep",
+   "evidence": "API: CC Attribution, 4314 faces, 1 material, empty description, no tags."
+  },
+  {
+   "area": "ancillaries",
+   "site": "Sketchfab",
+   "title": "Car Battery",
+   "url": "https://sketchfab.com/3d-models/car-battery-728462a4f3f744008bd2c702604bb95c",
+   "author": "AshleyMawson",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download (Maya, Substance textures)",
+   "polys": 11082,
+   "covers": [
+    "battery"
+   ],
+   "fit": "wrong",
+   "separate_parts": false,
+   "notes": "The branded label needs repainting. A battery is trivial to model.",
+   "verdict": "keep",
+   "evidence": "API: CC Attribution, 11082 faces, tags substancepainter, carbattery. Description says it was modelled in Maya as a learning piece."
+  },
+  {
+   "area": "ancillaries",
+   "site": "Sketchfab",
+   "title": "Exhaust Manifold",
+   "url": "https://sketchfab.com/3d-models/exhaust-manifold-e207a050afef44b8805e88acfa439cd7",
+   "author": "hoxsvl",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download, 8k texture",
+   "polys": 635704,
+   "covers": [
+    "exhaust manifold"
+   ],
+   "fit": "generic",
+   "separate_parts": false,
+   "notes": "Photoscan of a rusty junk part. Heavy decimation needed.",
+   "verdict": "keep",
+   "evidence": "API: CC Attribution, 635704 faces. Description: 'Old Rusty Exhaust Manifold, Metashape, 234 images, Texture 8192x8192'."
+  },
+  {
+   "area": "ancillaries",
+   "site": "Sketchfab",
+   "title": "EXHAUST MANIFOLD",
+   "url": "https://sketchfab.com/3d-models/exhaust-manifold-b7ffccf1ceac48eaa941537fe54a25cd",
+   "author": "vr.designer_09",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download",
+   "polys": 323140,
+   "covers": [
+    "exhaust manifold"
+   ],
+   "fit": "generic",
+   "separate_parts": false,
+   "notes": "CAD style, turbo oriented, so the wrong type for the naturally aspirated 1FZ-FE.",
+   "verdict": "keep",
+   "evidence": "API: CC Attribution, 323140 faces, tags cad, exhaust-manifold. The description mentions turbocharging efficiency."
+  },
+  {
+   "area": "ancillaries",
+   "site": "Sketchfab",
+   "title": "Catalytic converter, 1982-1983",
+   "url": "https://sketchfab.com/3d-models/catalytic-converter-1982-1983-5e59f014795748e5b8354d6321eaf082",
+   "author": "sciencemuseum",
+   "licence": "CC0 Public Domain",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download",
+   "polys": 60000,
+   "covers": [
+    "catalytic converter"
+   ],
+   "fit": "generic",
+   "separate_parts": false,
+   "notes": "Cleanest licence in the list.",
+   "verdict": "keep",
+   "evidence": "API: CC0 Public Domain, 60000 faces, downloadable, Science Museum Group description."
+  },
+  {
+   "area": "ancillaries",
+   "site": "Sketchfab",
+   "title": "Exhaust System",
+   "url": "https://sketchfab.com/3d-models/exhaust-system-f4ac64c4e0364cc7a5e0b4126727503e",
+   "author": "kryoxshade",
+   "licence": "CC Attribution (plus extra conditions in the description)",
+   "licence_ok": "unclear",
+   "price_usd": 0,
+   "formats": "Sketchfab download (Blender)",
+   "polys": 28108,
+   "covers": [
+    "mufflers and pipes"
+   ],
+   "fit": "generic",
+   "separate_parts": null,
+   "notes": "The extra terms say 'free... for personal and commercial projects' with credit, and 'Do not resell, re-upload, or redistribute the model or modified versions as your own'. Serving a credited GLB is arguably not redistributing it 'as your own', but the wording is ambiguous. Get a one line OK from the author to be safe.",
+   "verdict": "keep",
+   "evidence": "API: CC Attribution, 28108 faces, 3 materials. The full description text was read, including those quoted conditions and 'License Type: CC BY 4.0'."
+  },
+  {
+   "area": "ancillaries",
+   "site": "Sketchfab",
+   "title": "Toyota Yaris P1 - Bosal muffler scan",
+   "url": "https://sketchfab.com/3d-models/toyota-yaris-p1-bosal-muffler-scan-e040726fbf874c1dbfe25876fddc1605",
+   "author": "sylvester.bartos",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "STL, Sketchfab download",
+   "polys": 1987286,
+   "covers": [
+    "muffler"
+   ],
+   "fit": "generic",
+   "separate_parts": false,
+   "notes": "Aftermarket Bosal muffler for a Yaris, not a Toyota part for this car. Usable only as a generic silencer shape.",
+   "verdict": "keep",
+   "evidence": "API: CC Attribution, 1987286 faces. Description: '3D scan of the BOSAL exhaust muffler for Toyota Yaris p1 (1999-2003, 1SZ-FE)... Einstar... meant for reference'."
+  },
+  {
+   "area": "ancillaries",
+   "site": "Sketchfab",
+   "title": "Oil Filter Bosch - Low Poly",
+   "url": "https://sketchfab.com/3d-models/oil-filter-bosch-low-poly-78ef32cc40914e76986f0e6a8e93d3aa",
+   "author": "JiggleSticks",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download (Blender)",
+   "polys": 5784,
+   "covers": [
+    "oil filter"
+   ],
+   "fit": "wrong",
+   "separate_parts": null,
+   "notes": "Carries Bosch branding (tag BOSCH). Remove the branding or model our own.",
+   "verdict": "keep",
+   "evidence": "API: CC Attribution, 5784 faces, 5 materials, tags BOSCH, low-poly."
+  },
+  {
+   "area": "ancillaries",
+   "site": "Sketchfab",
+   "title": "Spark Plug",
+   "url": "https://sketchfab.com/3d-models/spark-plug-398d4795562544f28e2efb2066876776",
+   "author": "flow3d",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download",
+   "polys": 18312,
+   "covers": [
+    "spark plugs"
+   ],
+   "fit": "generic",
+   "separate_parts": null,
+   "notes": "Fine.",
+   "verdict": "keep",
+   "evidence": "API: CC Attribution, 18312 faces, 2 materials, description 'spark plug for light vehicles'."
+  },
+  {
+   "area": "ancillaries",
+   "site": "Sketchfab",
+   "title": "Ignition Coil - Simplified",
+   "url": "https://sketchfab.com/3d-models/ignition-coil-simplified-58150c56900c4a81a6926f1a878c9e9d",
+   "author": "reyn.ad",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download",
+   "polys": 1332,
+   "covers": [
+    "ignition coils"
+   ],
+   "fit": "generic",
+   "separate_parts": null,
+   "notes": "Part of the Engine Management System Lowpoly Pack. The same pack has a Fuel Pump (https://sketchfab.com/3d-models/fuel-pump-simplified-f36da5ed8f334b5b8d770a011e95f2f1, CC BY, 1036 faces).",
+   "verdict": "keep",
+   "evidence": "API: CC Attribution, 1332 faces. Description: 'One of the simple 3D Model from Engine Management System - Lowpoly Pack... used in my VR Project... Feel free to use it'."
+  },
+  {
+   "area": "ancillaries",
+   "site": "Sketchfab",
+   "title": "Air Box",
+   "url": "https://sketchfab.com/3d-models/air-box-25d393351d444e25833c50c3f61a7d1e",
+   "author": "CzeskiFrenD",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download",
+   "polys": 1000004,
+   "covers": [
+    "air filter box"
+   ],
+   "fit": "generic",
+   "separate_parts": false,
+   "notes": "Mercedes part scanned with RealityScan Mobile. Untextured and heavy. Modelling our own box is easier.",
+   "verdict": "keep",
+   "evidence": "API: CC Attribution, 1000004 faces, tag realityscan-mobile, description 'Clk w209 om642 intake air box'."
+  },
+  {
+   "area": "ancillaries",
+   "site": "CGTrader",
+   "title": "Car Alternator - PBR Game Ready",
+   "url": "https://www.cgtrader.com/3d-models/vehicle/vehicle-part/car-alternator-pbr-game-ready",
+   "author": "RealTimeWorld3D",
+   "licence": "Royalty Free License (no AI)",
+   "licence_ok": "unclear",
+   "price_usd": 15,
+   "formats": "Native plus exchange formats",
+   "polys": 21048,
+   "covers": [
+    "alternator"
+   ],
+   "fit": "generic",
+   "separate_parts": null,
+   "notes": "CGTrader 21A.3 requires measures that stop end users reaching the product. A plain GLB served to the browser fails that, so this needs the seller's written OK or obfuscation.",
+   "verdict": "keep",
+   "evidence": "Page opened: $15.00, Royalty Free License (no AI), 21048 polygons, 10589 vertices, 2 PBR presets. CGTrader terms re-read: '21A.3. If you use any Product in software products (such as video games, simulations, or VR-worlds) you must take all commercially reasonable measures to prevent the end user from gaining access to the Product.'"
+  },
+  {
+   "area": "ancillaries",
+   "site": "CGTrader",
+   "title": "Automotive Starter Motor 3D Model Low Poly PBR",
+   "url": "https://www.cgtrader.com/3d-models/vehicle/vehicle-part/automotive-starter-motor-3d-model-low-poly-pbr",
+   "author": "Helico3D",
+   "licence": "Royalty Free License (no AI)",
+   "licence_ok": "unclear",
+   "price_usd": 80,
+   "formats": "Native plus exchange formats",
+   "polys": 69698,
+   "covers": [
+    "starter motor (with a cutaway version)"
+   ],
+   "fit": "generic",
+   "separate_parts": null,
+   "notes": "Includes a cutaway version. Expensive, with the same 21A.3 issue. The free CC BY menarzuw starter is better.",
+   "verdict": "keep",
+   "evidence": "Page opened: $80.00, Royalty Free License (no AI), 69698 polygons. Description: 'Car Starter Motor with Cutaway Version - Low Poly PBR Game Ready'."
+  },
+  {
+   "area": "ancillaries",
+   "site": "CGTrader",
+   "title": "Car Exhaust Catalytic Converter",
+   "url": "https://www.cgtrader.com/3d-models/vehicle/vehicle-part/car-exhaust-catalytic-converter",
+   "author": "jvr3D",
+   "licence": "Royalty Free License (no AI)",
+   "licence_ok": "unclear",
+   "price_usd": 25,
+   "formats": "OBJ, FBX, MAX, 3DS, PDF",
+   "polys": 42000,
+   "covers": [
+    "catalytic converter"
+   ],
+   "fit": "generic",
+   "separate_parts": true,
+   "notes": "Comes in three configurations. 21A.3 applies.",
+   "verdict": "keep",
+   "evidence": "Page opened: $25.00 list with a $17.50 sale, Royalty Free License (no AI), 42000 polygons, 'Three way catalytic converter in three different configurations'."
+  },
+  {
+   "area": "ancillaries",
+   "site": "CGTrader",
+   "title": "Metallic Car Fuel Tank",
+   "url": "https://www.cgtrader.com/3d-models/vehicle/vehicle-part/metallic-car-fuel-tank",
+   "author": "akcad",
+   "licence": "Royalty Free License (no AI)",
+   "licence_ok": "unclear",
+   "price_usd": 40,
+   "formats": "FBX, OBJ",
+   "polys": 42616,
+   "covers": [
+    "fuel tank"
+   ],
+   "fit": "generic",
+   "separate_parts": null,
+   "notes": "Generic tank modelled in Creo. 21A.3 applies. Modelling our own is probably simpler.",
+   "verdict": "keep",
+   "evidence": "Page opened: $40.00 list with a $28.00 sale, 42616 polygons, 'originally created using Creo Design Essentials... Game Ready'."
+  },
+  {
+   "area": "ancillaries",
+   "site": "CGTrader",
+   "title": "Free Car part Ignition Spark Plug Ignition Coil",
+   "url": "https://www.cgtrader.com/3d-models/car/car/car-part-ignition-spark-plug-ignition-coil",
+   "author": "Affekta",
+   "licence": "Royalty Free License (no AI)",
+   "licence_ok": "unclear",
+   "price_usd": 0,
+   "formats": "Multiple (per listing)",
+   "polys": null,
+   "covers": [
+    "spark plugs",
+    "ignition coils"
+   ],
+   "fit": "generic",
+   "separate_parts": null,
+   "notes": "Free, but 21A.3 still applies. The CC BY Sketchfab parts are safer.",
+   "verdict": "keep",
+   "evidence": "Page title: 'Free Car part Ignition Spark Plug Ignition Coil 3D model', Royalty Free License (no AI). The other prices on the page belong to promoted items."
+  },
+  {
+   "area": "ancillaries",
+   "site": "Fab",
+   "title": "Engine Parts Prop Pack - Realistic Automotive Components",
+   "url": "https://www.fab.com/listings/7d38715d-8f43-4677-a894-bff8b10a20fd",
+   "author": "KK Design",
+   "licence": "Fab Standard License",
+   "licence_ok": "unclear",
+   "price_usd": 24.99,
+   "formats": "Per listing (not captured)",
+   "polys": null,
+   "covers": [
+    "alternator",
+    "starter motor",
+    "exhaust manifold",
+    "spark plugs",
+    "oil filter",
+    "air filter"
+   ],
+   "fit": "generic",
+   "separate_parts": true,
+   "notes": "The Fab EULA says you 'must restrict end users from extracting or otherwise using Content outside of the Project', so a raw GLB is a problem. Generic parts with a turbo emphasis.",
+   "verdict": "keep",
+   "evidence": "Listing opened: 'More from KK Design', '(From $24.99 to $89.99)', Standard License, with the prop list from the description. Fab EULA re-read: the quoted extraction clause in section c, Distributing Other Projects."
+  },
+  {
+   "area": "ancillaries",
+   "site": "Fab",
+   "title": "Car Condenser",
+   "url": "https://www.fab.com/listings/2e40aacb-802c-4361-8ab7-9b4c9032e421",
+   "author": "Donadel Studio",
+   "licence": "Fab Standard License",
+   "licence_ok": "unclear",
+   "price_usd": 2.99,
+   "formats": "FBX, converted GLB/glTF/USDZ (27.16 MB zip)",
+   "polys": null,
+   "covers": [
+    "AC condenser"
+   ],
+   "fit": "generic",
+   "separate_parts": null,
+   "notes": "I found the author name the sweep missed. The Fab extraction clause applies.",
+   "verdict": "keep",
+   "evidence": "Listing opened: 'More from Donadel Studio', '(From $2.99 to $3.99)', Standard License, car-condenser.zip 27.16 MB."
+  },
+  {
+   "area": "ancillaries",
+   "site": "Fab",
+   "title": "Full exhaust system",
+   "url": "https://www.fab.com/listings/c993ab17-04f4-4b1e-bce1-52d7b7ce608d",
+   "author": "mattou3d",
+   "licence": "Fab Standard License",
+   "licence_ok": "unclear",
+   "price_usd": 14.99,
+   "formats": "OBJ, converted GLB/glTF/USDZ (88 MB zip)",
+   "polys": null,
+   "covers": [
+    "mufflers and pipes"
+   ],
+   "fit": "generic",
+   "separate_parts": null,
+   "notes": "CAD made in Inventor 2017 and heavy (88 MB). Whether it includes a catalytic converter is not stated. The Fab extraction clause applies.",
+   "verdict": "keep",
+   "evidence": "Listing opened: 'Made with Inventor 2017. Download it and put it on your 3D car models', '(From $14.99 to $16.99)', Standard License, full-exhaust-system.zip 88.01 MB."
+  },
+  {
+   "area": "ancillaries",
+   "site": "Sketchfab",
+   "title": "Engine Chevy Chevette 1977",
+   "url": "https://sketchfab.com/3d-models/engine-chevy-chevette-1977-ef123ab4b01140179745751dab5d7864",
+   "author": "flow3d",
+   "licence": "CC Attribution",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "Sketchfab download (Blender 2.83)",
+   "polys": 439893,
+   "covers": [
+    "alternator",
+    "water pump",
+    "belts and pulleys",
+    "air filter (carb style)"
+   ],
+   "fit": "generic",
+   "separate_parts": true,
+   "notes": "Wrong engine, but a source of pulley, belt and water pump geometry.",
+   "verdict": "keep",
+   "evidence": "API: CC Attribution, 439893 faces, 27 materials. Description lists separately modelled pulleys, alternator, water pump, carburettor and air filter."
+  },
+  {
+   "area": "cad",
+   "site": "Printables",
+   "title": "Inline 6-Cylinder Engine with optional Valvetrain",
+   "url": "https://www.printables.com/model/1045923-inline-6-cylinder-engine-with-optional-valvetrain",
+   "author": "BlackSabbath",
+   "licence": "Creative Commons — Public Domain (CC0)",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "STL and STEP derived STL, many part files (c001..c019, Pistons, Rods, Bearings_Crankshaft, Oilsump v4, Handcrank)",
+   "polys": null,
+   "covers": [
+    "generic inline 6 block, sump, crank, rods, pistons, valvetrain"
+   ],
+   "fit": "generic",
+   "separate_parts": true,
+   "notes": "Licence clean and parts separate, but a printable mechanism model, not a 1FZ-FE: no intake, accessories, exhaust manifold or real casting detail. Usable only as a cutaway base.",
+   "verdict": "keep",
+   "evidence": "Printables GraphQL API: license 'Creative Commons — Public Domain' (CC0), file list shown. Page itself returned Cloudflare 403 in the browser."
+  },
+  {
+   "area": "cad",
+   "site": "Printables",
+   "title": "Rack and Pinion Steering",
+   "url": "https://www.printables.com/model/229023-rack-and-pinion-steering",
+   "author": "Tooks",
+   "licence": "Creative Commons — Attribution (CC-BY)",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "STL (Rack, Gear, Linkage, Steering_Column, Uni_Joint parts, etc.)",
+   "polys": null,
+   "covers": [
+    "steering rack (educational demo)"
+   ],
+   "fit": "generic",
+   "separate_parts": true,
+   "notes": "'simplified model of how a car steers using a rack and pinion setup'. Toy geometry, weak fallback.",
+   "verdict": "keep",
+   "evidence": "Printables GraphQL API licence and file list."
+  },
+  {
+   "area": "cad",
+   "site": "Printables",
+   "title": "Exhaust manifold",
+   "url": "https://www.printables.com/model/285298-exhaust-manifold",
+   "author": "pavol.n",
+   "licence": "Creative Commons — Attribution (CC-BY)",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "STEP and STL ('Air_manifold v4')",
+   "polys": null,
+   "covers": [
+    "manifold (generic, not Toyota)"
+   ],
+   "fit": "generic",
+   "separate_parts": false,
+   "notes": "File is named 'Air_manifold v4', so it may be an intake style manifold rather than exhaust. Generic AM design. Very weak fallback.",
+   "verdict": "keep",
+   "evidence": "Printables GraphQL API: CC-BY, summary 'Special design for AM. Printable without any supports', files Air_manifold v4.step/.stl."
+  },
+  {
+   "area": "game_assets",
+   "site": "Fab",
+   "title": "Double Wishbone and Live Axle Suspension",
+   "url": "https://www.fab.com/listings/8ff6a042-cb8f-4520-afa1-394c7b81f799",
+   "author": "BlackWAVE",
+   "licence": "Creative Commons Attribution (CC BY 4.0)",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "fbx (zip double-wishbone-and-live-axle-suspension.zip, 63.46 MB), plus Fab converted GLB, glTF, USDZ",
+   "polys": null,
+   "covers": [
+    "front IFS (double wishbone)",
+    "rear solid axle"
+   ],
+   "fit": "generic",
+   "separate_parts": null,
+   "notes": "Confirmed free, CC BY 4.0. Author: 'This is just an idea in progress, not all parts are correct'. Concept combining independent and solid suspension; no torsion bars, 4 link or lateral rod stated. Poly count and object split not stated on the page. Best licence in this area; generic geometry to be reshaped.",
+   "verdict": "keep",
+   "evidence": "Opened Fab listing in headless browser: description quoted, 'License terms Creative Commons Attribution (CC BY 4.0)', 'Free', published December 21, 2023, updated November 26, 2024, tags Car Axle Suspension Offroad."
+  },
+  {
+   "area": "game_assets",
+   "site": "Fab",
+   "title": "Car Engine (Scan)",
+   "url": "https://www.fab.com/listings/5280e99e-8cbe-4c9a-823b-8491063c6650",
+   "author": "Ele.G",
+   "licence": "Creative Commons Attribution (CC BY 4.0)",
+   "licence_ok": "yes",
+   "price_usd": 0,
+   "formats": "obj (car-engine-scan.zip, 39.10 MB), plus Fab converted GLB, glTF, USDZ",
+   "polys": null,
+   "covers": [
+    "engine (generic)"
+   ],
+   "fit": "generic",
+   "separate_parts": false,
+   "notes": "Description is only 'Car engine' plus two Google Drive links; tags Photogrammetry. A scan of an unidentified engine, so almost certainly one fused mesh (inference). Not a 1FZ-FE; generic stand in or texture reference only.",
+   "verdict": "keep",
+   "evidence": "Opened Fab listing: 'License terms Creative Commons Attribution (CC BY 4.0)', Free, published February 27, 2023, rating 5.0 (2)."
+  },
+  {
+   "area": "game_assets",
+   "site": "Fab",
+   "title": "Car alternator",
+   "url": "https://www.fab.com/listings/a059ef68-2caf-4996-bc70-40bb0693d1d0",
+   "author": "Ele.G",
+   "licence": "Standard License (Fab)",
+   "licence_ok": "unclear",
+   "price_usd": 0,
+   "formats": "obj (car-alternator.zip, 139.24 MB), plus Fab converted GLB, glTF, USDZ",
+   "polys": null,
+   "covers": [
+    "alternator"
+   ],
+   "fit": "generic",
+   "separate_parts": false,
+   "notes": "Free but Fab Standard License. Fab EULA s.4(c): 'you must restrict end users from extracting or otherwise using Content outside of the Project', so a plain browser GLB needs protection or the author's written OK. Description: 'Car alternator accurate scan ... use with nanite', 139 MB zip, so very heavy and needs decimation.",
+   "verdict": "keep",
+   "evidence": "Opened Fab listing: 'License terms Standard License', Free, file size 139.24 MB. Fab EULA fetched, section 4(c) extraction clause confirmed verbatim."
+  },
+  {
+   "area": "game_assets",
+   "site": "Fab",
+   "title": "Car Chassis and Engine",
+   "url": "https://www.fab.com/listings/ba170f29-014b-42fe-97e9-df51435dc5ec",
+   "author": "NoneCG",
+   "licence": "Standard License (Fab)",
+   "licence_ok": "unclear",
+   "price_usd": 99.99,
+   "formats": "3ds Max, Maya, Cinema 4D, Blender 4 (Cycles), FBX, OBJ (no Fab converted GLB listed); carchassis_max.zip 23.29 MB plus 1 additional file",
+   "polys": 340607,
+   "covers": [
+    "engine",
+    "gearbox",
+    "transmission",
+    "exhaust",
+    "front suspension",
+    "rear suspension",
+    "brakes",
+    "steering",
+    "wheels"
+   ],
+   "fit": "generic",
+   "separate_parts": true,
+   "notes": "$99.99 to $199.99 by tier. 'Every object and material has been carefully and properly named'. Subdivision base mesh, cm scale. Generic car chassis (tag Van), not body on frame. Listing says 'Allows usage with AI: No'. Fab Standard extraction clause applies. Most complete mechanical set in this area.",
+   "verdict": "keep",
+   "evidence": "Opened Fab listing: description quoted, 'Polys: 340.607 Verts: 350.274', 'From $99.99 to $199.99', Standard License, published November 27, 2025, updated July 3, 2026."
+  },
+  {
+   "area": "game_assets",
+   "site": "Fab",
+   "title": "PICKUP TRUCK CHASSIS 4",
+   "url": "https://www.fab.com/listings/7adfb16b-5dd4-4ce2-a683-7903a7f8ab57",
+   "author": "NNAVAS 3D",
+   "licence": "Standard License (Fab)",
+   "licence_ok": "unclear",
+   "price_usd": 89.99,
+   "formats": "Blender 2.9, FBX, OBJ (HI and LO subdivision), plus Fab converted GLB, glTF, USDZ; pickup_truck_chassis_4wd_ifs_blend.zip 10.62 MB",
+   "polys": 40500,
+   "covers": [
+    "ladder frame",
+    "front IFS",
+    "rear axle",
+    "driveshafts",
+    "brakes",
+    "shocks"
+   ],
+   "fit": "generic",
+   "separate_parts": true,
+   "notes": "Single cab short bed modern pickup chassis with IFS (4wd per file name). 40.5k polys at subdiv 0, 161k at level 1. 'Elements are logically named and grouped so they can be separated'. Closest layout to LC100 in this area, but pickup frame and likely leaf rear. Fab Standard extraction clause applies.",
+   "verdict": "keep",
+   "evidence": "Opened Fab listing: description quoted, '($89.99)', Standard License, published July 11, 2025, tags Chassis Axle Shaft Suspension Shock Truck 4x4 Brake."
+  },
+  {
+   "area": "game_assets",
+   "site": "Fab",
+   "title": "PICKUP TRUCK CHASSIS 7",
+   "url": "https://www.fab.com/listings/71447792-89a4-4f2e-b8eb-2e0865099c6e",
+   "author": "NNAVAS 3D",
+   "licence": "Standard License (Fab)",
+   "licence_ok": "unclear",
+   "price_usd": 69.99,
+   "formats": "Blender 3.0.1, FBX, OBJ (HI and LO subdivision), plus Fab converted GLB, glTF, USDZ; pickup_truck_chassis_7_blend.zip 12.08 MB",
+   "polys": 43500,
+   "covers": [
+    "ladder frame",
+    "front IFS",
+    "rear axle",
+    "driveshafts",
+    "brakes"
+   ],
+   "fit": "generic",
+   "separate_parts": true,
+   "notes": "Heavy duty single cab long bed pickup chassis with IFS; 43.5k at subdiv 0, 174k at level 1. Longer frame than the LC100, no 4x4 tag (CHASSIS 4 has one). Fab Standard extraction clause applies.",
+   "verdict": "keep",
+   "evidence": "Opened Fab listing: description quoted, '($69.99)', Standard License, published July 11, 2025."
+  },
+  {
+   "area": "game_assets",
+   "site": "Fab",
+   "title": "HEAVY DUTY AXLE AND DRIVESHAFT",
+   "url": "https://www.fab.com/listings/a0ff7a4c-4d92-49ed-b8bc-6bace7caf84e",
+   "author": "NNAVAS 3D",
+   "licence": "Standard License (Fab)",
+   "licence_ok": "unclear",
+   "price_usd": 39.99,
+   "formats": "Blender 2.9, FBX, OBJ (HI and LO subdivision); no Fab converted GLB; heavyduty_axle_driveshaft_blend.zip 5.48 MB",
+   "polys": 13600,
+   "covers": [
+    "rear axle",
+    "propeller shaft",
+    "brakes rear",
+    "suspension parts"
+   ],
+   "fit": "generic",
+   "separate_parts": true,
+   "notes": "'heavy duty axle with driveshaft, brakes and suspension', 13.6k at subdiv 0, 54.5k at level 1, logically named. Generic; needs LC100 track, 6 lug hubs, coil and link mounts. Fab Standard extraction clause applies.",
+   "verdict": "keep",
+   "evidence": "Opened Fab listing: description quoted, '($39.99)', Standard License, published July 11, 2025."
+  },
+  {
+   "area": "game_assets",
+   "site": "Fab",
+   "title": "Straight-Four Turbo Engine and Gearbox",
+   "url": "https://www.fab.com/listings/fdb77c0b-fc77-4045-b108-999d2e96297e",
+   "author": "QLEE",
+   "licence": "Standard License (Fab)",
+   "licence_ok": "unclear",
+   "price_usd": 69.99,
+   "formats": "3ds Max 2017 (V-Ray, Arnold), FBX, plus Fab converted GLB, glTF, USDZ; turbo_r4_engine_max.zip 62.07 MB",
+   "polys": 226449,
+   "covers": [
+    "engine (generic inline 4)",
+    "gearbox"
+   ],
+   "fit": "wrong",
+   "separate_parts": true,
+   "notes": "$69.99 to $104.99. 585 separate objects, 226k polys unsmoothed, 132 cm long. Inline 4 turbo, so wrong engine; only the gearbox might stand in for the H151F. 'Obj, 3DS and FBX file formats do not have textures/materials applied'. Fab Standard extraction clause applies. Marginal.",
+   "verdict": "keep",
+   "evidence": "Opened Fab listing: specs quoted, 'From $69.99 to $104.99', Standard License, published August 20, 2026."
+  },
+  {
+   "area": "game_assets",
+   "site": "Fab",
+   "title": "Engine Parts Prop Pack – Realistic Automotive Components",
+   "url": "https://www.fab.com/listings/7d38715d-8f43-4677-a894-bff8b10a20fd",
+   "author": "KK Design",
+   "licence": "Standard License (Fab)",
+   "licence_ok": "unclear",
+   "price_usd": 24.99,
+   "formats": "Unreal Engine asset package (UE 5.1 to 5.8) and fbx",
+   "polys": null,
+   "covers": [
+    "turbocharger",
+    "exhaust manifold",
+    "pistons and rods",
+    "crankshaft",
+    "camshaft",
+    "spark plugs",
+    "alternator",
+    "starter motor",
+    "oil filter",
+    "air filter",
+    "valves",
+    "fasteners"
+   ],
+   "fit": "generic",
+   "separate_parts": true,
+   "notes": "$24.99 to $89.99. Game ready props baked from high poly. Generic engine internals and ancillaries (also has a starter motor and filters the sweep omitted). Fab Standard extraction clause applies.",
+   "verdict": "keep",
+   "evidence": "Opened Fab listing: author KK Design, part list quoted, 'From $24.99 to $89.99', Standard License, published September 23, 2026."
+  },
+  {
+   "area": "game_assets",
+   "site": "Fab",
+   "title": "Brake Rotor Assembly",
+   "url": "https://www.fab.com/listings/cc45ab0d-451d-4712-b51e-abbbb9adefe6",
+   "author": "CarOnium",
+   "licence": "Standard License (Fab)",
+   "licence_ok": "unclear",
+   "price_usd": 38.99,
+   "formats": ".blend, .obj, .glb, .fbx (brake.zip 46.60 MB), 4k PBR textures",
+   "polys": 129736,
+   "covers": [
+    "brakes front"
+   ],
+   "fit": "generic",
+   "separate_parts": true,
+   "notes": "$38.99 to $39.99. Components Rotor, Calliper_housing, Clamp_Bolts, Mounting_clamp, Bolts. 'performance Brake' style, not the LC100 sliding 4 piston caliper. Fab Standard extraction clause applies.",
+   "verdict": "keep",
+   "evidence": "Opened Fab listing: component list and formats quoted, 'From $38.99 to $39.99', Standard License, published August 4, 2026."
+  },
+  {
+   "area": "game_assets",
+   "site": "Fab",
+   "title": "Full exhaust system",
+   "url": "https://www.fab.com/listings/c993ab17-04f4-4b1e-bce1-52d7b7ce608d",
+   "author": "mattou3d",
+   "licence": "Standard License (Fab)",
+   "licence_ok": "unclear",
+   "price_usd": 14.99,
+   "formats": "obj (full-exhaust-system.zip, 88.01 MB), plus Fab converted GLB, glTF, USDZ",
+   "polys": null,
+   "covers": [
+    "exhaust"
+   ],
+   "fit": "generic",
+   "separate_parts": null,
+   "notes": "$14.99 to $16.99. 'Made with Inventor 2017', a heavy CAD export. Generic routing. Fab Standard extraction clause applies.",
+   "verdict": "keep",
+   "evidence": "Opened Fab listing: description quoted, 'From $14.99 to $16.99', Standard License, published June 23, 2022."
+  },
+  {
+   "area": "game_assets",
+   "site": "Fab",
+   "title": "Off-Road 4x4 Truck | Overland SUV | Full Interior | Modular PBR | Tactical",
+   "url": "https://www.fab.com/listings/df231c59-ce58-43e1-ad7b-0f2db4a562ea",
+   "author": "Black Forge Assets",
+   "licence": "Standard License (Fab)",
+   "licence_ok": "unclear",
+   "price_usd": 124.99,
+   "formats": "Blender 4.5 and 5 native, FBX, OBJ, GLTF, GLB, USDZ, USDC, STL, DAE, DXF",
+   "polys": 166733,
+   "covers": [
+    "transmission",
+    "driveline"
+   ],
+   "fit": "wrong",
+   "separate_parts": true,
+   "notes": "$124.99 to $599.99. Generic overland SUV; 'Transmission is modeled in full detail and ready for animation', 'Interior and transmission can be removed entirely'. Only the driveline is of any use; expensive for that. Fab Standard extraction clause applies. Fallback only.",
+   "verdict": "keep",
+   "evidence": "Opened Fab listing: description quoted, 166,733 triangles, 'From $124.99 to $599.99', Standard License, published September 26, 2026."
+  },
+  {
+   "area": "game_assets",
+   "site": "Unity Asset Store",
+   "title": "SUV OFFROAD Suspension (CAR)",
+   "url": "https://assetstore.unity.com/packages/3d/vehicles/land/suv-offroad-suspension-car-227999",
+   "author": "Samidi",
+   "licence": "Standard Unity Asset Store EULA (license type shown as Extension Asset; seat option Single Entity)",
+   "licence_ok": "unclear",
+   "price_usd": 19.99,
+   "formats": "Unity package (2.1 MB, Unity 2020.3.37); source formats not listed",
+   "polys": null,
+   "covers": [
+    "front suspension",
+    "rear suspension",
+    "wheels"
+   ],
+   "fit": "generic",
+   "separate_parts": true,
+   "notes": "Page lists License 'Extension Asset', not the usual 3D asset category the sweep implied; Unity EULA 2.2.1 requires the asset to be embedded in a product and not a substantial portion, and bars redistribution; a browser GLB is extractable. Tiny 2.1 MB package, so low detail. Separation per the sweep's quote ('All details separated'); I could not see the full description.",
+   "verdict": "keep",
+   "evidence": "WebFetch of the listing: $19.99, publisher Samidi, released July 29, 2022, File size 2.1 MB, License 'Extension Asset', Standard Unity Asset Store EULA. Headless browser timed out."
+  }
+ ],
+ "dropped": [
+  {
+   "area": "full_vehicle",
+   "title": "Toyota Land Cruiser J100 GXR 2004 high quality with engine",
+   "url": "https://www.cgtrader.com/3d-models/car/suv/toyota-land-cruiser-j100-gxr-2004-high-quality-with-engine",
+   "why": "Opened page via headless browser: 'Toyota Land Cruiser J100 GX.R 2004 high poly and quality full texture 3 rims 3000 twin cam toyota turbo engine...', One-time purchase $28.26, 1694605 polygons / 1027306 vertices, Animated, Publish date 2023-03-06, 1 review, Royalty Free License (no AI). Read CGTrader T&C 21A.2 and 21A.3 text directly."
+  },
+  {
+   "area": "full_vehicle",
+   "title": "Toyota Land Cruiser J100 1997 2007 VRAY",
+   "url": "https://www.cgtrader.com/3d-models/car/suv/toyota-land-cruiser-j100-1997-2007-vray",
+   "why": "Opened page: 'High detailed model created by SQUIR team... 3 different 3dsmax files included', $90.30 / $129.00, 500000 polygons / 500000 vertices, Native MAX 30.2 MB, Royalty Free License (no AI), 16 previews."
+  },
+  {
+   "area": "full_vehicle",
+   "title": "Toyota Land Cruiser J100 1997-2007 3D Model",
+   "url": "https://3dexport.com/3d-model-toyota-land-cruiser-j100-1997-2007-64221",
+   "why": "Opened product page: '$ 159.00 USD Basic License / Extended License', Polygons 500000, Date 2013-01-03, Usage Information paragraph quoted above."
+  },
+  {
+   "area": "full_vehicle",
+   "title": "Toyota Land Cruiser J100 1997-2007",
+   "url": "https://squir.com/toyota-land-cruiser-j100-1997-2007.html",
+   "why": "Opened page: '€99.00', Polygons 500000, Vertices 500000, formats list; no licence section."
+  },
+  {
+   "area": "full_vehicle",
+   "title": "Generic land cruiser S100 Aus version",
+   "url": "https://www.cgtrader.com/3d-models/car/suv/generic-land-cruiser-s100-aus-version",
+   "why": "Opened page: $42.00 / $60.00, 979000 polygons / 711999 vertices, Publish date 2024-08-13, tags car, cab, chassis, serie79, land cruiser, overland, truck."
+  },
+  {
+   "area": "full_vehicle",
+   "title": "Toyota Land Cruiser 100 And Lexus LX 470",
+   "url": "https://sketchfab.com/3d-models/toyota-land-cruiser-100-and-lexus-lx-470-6c070bc55ed0402d9ab92f6fe666a02f",
+   "why": "Sketchfab API /v3/models/6c070bc5...: licence CC Attribution, faceCount 964560, downloadable, description 'Toyota Land Cruiser 100 And Lexus LX 470 in one file'. API search 'real racing 3 ford focus' returned 'Ford Focus 2 RS From Real Racing 3' by ZapupaNekra."
+  },
+  {
+   "area": "full_vehicle",
+   "title": "Land Cruiser Test",
+   "url": "https://sketchfab.com/3d-models/land-cruiser-test-c8a28ca697ee40129b588b3e297a43b5",
+   "why": "API: CC Attribution, 1343081 faces, empty description, tags land, cruiser, florida, offroad, overlord, toyota, beach, seaweed, lc100."
+  },
+  {
+   "area": "full_vehicle",
+   "title": "Lexus LX J100 2003",
+   "url": "https://sketchfab.com/3d-models/lexus-lx-j100-2003-1e2a4a0d99844ce7b56956fc0ea0d8a7",
+   "why": "API: CC Attribution, 1155672 faces, no description, tags []. API searches found the Holden and Bentley uploads by niev."
+  },
+  {
+   "area": "full_vehicle",
+   "title": "Toyota Land Cruiser Single Cab And Chassis",
+   "url": "https://sketchfab.com/3d-models/toyota-land-cruiser-single-cab-and-chassis-21593eba3a9f43d8818329a7f488b82a",
+   "why": "API: CC Attribution, 2163516 faces, no description or tags; search 'land cruiser chassis' returned both niev chassis uploads."
+  },
+  {
+   "area": "full_vehicle",
+   "title": "Toyota Land Cruiser 2006",
+   "url": "https://sketchfab.com/3d-models/toyota-land-cruiser-2006-f7294493dba64692bbe3ef8ab0a0c1af",
+   "why": "API: CC Attribution, 345272 faces, description 'Toyota Land Cruiser 2006'. API searches found DR1KING100K's S15 F&F and TS040 uploads. Read reference/model/lc100_2006_cc_by/LICENSE.md and listed its texture folder (37 files)."
+  },
+  {
+   "area": "full_vehicle",
+   "title": "2002 Lexus LX470",
+   "url": "https://sketchfab.com/3d-models/2002-lexus-lx470-0828e94759cb4ff084f8f6781a4f10de",
+   "why": "API: Free Standard, 238518 faces, tags lexus, 2003, Free3DModel, freedownload, beamng, beamngmod, lx470."
+  },
+  {
+   "area": "full_vehicle",
+   "title": "Toyota Land Cruiser HDJ100 enginebay. Lidar scan",
+   "url": "https://sketchfab.com/3d-models/toyota-land-cruiser-hdj100-enginebay-0fd7d2e12373494bb77f35a5ea8f5c0f",
+   "why": "API: CC Attribution-NonCommercial-ShareAlike, 264642 faces, 'HDJ100 engine bay. Scanned in Scaniverse app with Ipad pro'."
+  },
+  {
+   "area": "full_vehicle",
+   "title": "2000 Toyota Landcruiser 100 Series (non USDM)",
+   "url": "https://sketchfab.com/3d-models/2000-toyota-landcruiser-100-series-non-usdm-dfa2672cffd1453c82dbd3df4eef44e3",
+   "why": "API: license null, isDownloadable false, 674730 faces, description '2000 Toyota Landcruiser 100 Series'."
+  },
+  {
+   "area": "full_vehicle",
+   "title": "TOYOTA Land Cruser 100",
+   "url": "https://sketchfab.com/3d-models/toyota-land-cruser-100-b734cabaf5184219a701d840d90ad912",
+   "why": "API: license null, isDownloadable false, 875106 faces, tag toyota-land-cruser-100."
+  },
+  {
+   "area": "full_vehicle",
+   "title": "2000 Toyota Land Cruiser VX-R",
+   "url": "https://3dwarehouse.sketchup.com/model/59c43f6b-7648-4bab-bc72-34bdc1fb9770/2000-Toyota-Land-Cruiser-VX-R",
+   "why": "3D Warehouse API /warehouse/v1.0/entities/59c43f6b...: title, description quoted, creator '3DModels by Vehi3d Project', unverified creator. The HTML page did not render content in the headless browser."
+  },
+  {
+   "area": "full_vehicle",
+   "title": "2002 Lexus LX470 SUV",
+   "url": "https://www.cgtrader.com/3d-models/car/suv/2002-lexus-lx470-suv",
+   "why": "Opened page: '2002 Lexus LX470 SUV(Exterior only) This model was designed to scale from blueprints', $41.30 / $59.00, 114272 polygons, published 2019-01-17, Created by HighRock."
+  },
+  {
+   "area": "full_vehicle",
+   "title": "Toyota Land Cruiser 100 v4.50",
+   "url": "https://www.modland.net/beamng.drive-mods/cars/toyota-land-cruiser-113.html",
+   "why": "Opened page: 'Toyota Land Cruiser 100 v4.50', 256.02 MB, by sosi4, features list including 'Custom engine, created specifically for this mod' and 'Detailed undercarriage'."
+  },
+  {
+   "area": "engine_trans",
+   "title": "Toyota 1FZ-FE",
+   "url": "https://grabcad.com/library/toyota-1fz-fe-1",
+   "why": "Opened the page in the headless browser. It reads '1997 head and block with 1993 model year sump, so no crank sensor on this one. Scanned with Einstar', uploaded April 11th 2025, 164 downloads, 4 likes. Software OBJ, one file 1fz_simplified.obj, tags fzj80, land cruiser, 1fz-fe. Opened grabcad.com/terms: the 6.2 Cross License text is 'own benefit and non-commercial, internal use'."
+  },
+  {
+   "area": "engine_trans",
+   "title": "Toyota H151f Transmission for 1HD-T & 1FZ-FE",
+   "url": "https://grabcad.com/library/toyota-h151f-transmission-for-1hd-t-1fz-fe-1",
+   "why": "Page text: 'Scanned with Einstar', April 9th 2025, 128 downloads, 10 likes, category Automotive, tags h151f, fzj80, land cruiser. One file h151f.obj."
+  },
+  {
+   "area": "engine_trans",
+   "title": "HDJ80 Land Cruiser H151f Transmission 3d Scans",
+   "url": "https://grabcad.com/library/hdj80-land-cruiser-h151f-transmission-3d-scans-1",
+   "why": "Page text: 'Quick Einstar scan', April 27th 2024, 56 downloads, 2 likes. One file 'H151f HDJ80.stl'."
+  },
+  {
+   "area": "engine_trans",
+   "title": "FZJ80 HF2AV Transfer Case Scan",
+   "url": "https://grabcad.com/library/fzj80-hf2av-transfer-case-scan-1",
+   "why": "Page text: 'Taken with Einstar. I think it's a 1997 hf2av from a USDM FZJ80.', May 24th 2025, 133 downloads, 7 likes. One file hf2av_aligned.stl."
+  },
+  {
+   "area": "engine_trans",
+   "title": "1fz-fe intake manifold",
+   "url": "https://grabcad.com/library/1fz-fe-intake-manifold-1",
+   "why": "Page text: '3d scan with Einstar', April 19th 2025, 58 downloads, 7 likes. Files (2): 1fz_lower_runner.obj, 1fz_upper_runner.obj."
+  },
+  {
+   "area": "engine_trans",
+   "title": "Toyota Land Cruiser HDJ100 enginebay. Lidar scan",
+   "url": "https://sketchfab.com/3d-models/toyota-land-cruiser-hdj100-enginebay-lidar-scan-0fd7d2e12373494bb77f35a5ea8f5c0f",
+   "why": "Sketchfab API: licence 'CC Attribution-NonCommercial-ShareAlike', 264642 faces, downloadable. Description 'HDJ100 engine bay. Scanned in Scaniverse app with Ipad pro'. Tags include 1hd-fte and noai."
+  },
+  {
+   "area": "engine_trans",
+   "title": "Toyota Land Cruiser 70 Series 2010-2023 with Engine Low-Poly",
+   "url": "https://www.renderhub.com/askobar505usq/toyota-land-cruiser-70-series-2010-2023-with-engine-low-poly",
+   "why": "Page: $69.00, 'Extended Use License (IP Restricted)... subject to an Editorial Use Only Restriction'. Description: 'Full chassis and underbody... Separated parts for easy use'. The licence agreement says Editorial Use Only 'is limited to non-commercial purposes'."
+  },
+  {
+   "area": "engine_trans",
+   "title": "1JZ-GTE Greddy Turbo Inline 6 Engine",
+   "url": "https://www.renderhub.com/impulse99/2jz-gte-turbo-straight-6-engine",
+   "why": "Page: $58.00, $40.60 at 30% off. 'Extended Use License (IP Restricted)', 45,667 polygons."
+  },
+  {
+   "area": "engine_trans",
+   "title": "Toyota 2JZ GTE Engine [FREE]",
+   "url": "https://sketchfab.com/3d-models/toyota-2jz-gte-engine-free-7ebc9741434540c4831453066d7ae057",
+   "why": "Sketchfab API: tags include 'grandtheftauto', 'gameready' and 'hks'. Description: 'Toyota 2JZ GTE Engine low poly ... Hks Filter - https://sketchfab.com/3d-models/hks-mushroom-filter-...'."
+  },
+  {
+   "area": "engine_trans",
+   "title": "Twin Turbo Inline 6 Engine",
+   "url": "https://sketchfab.com/3d-models/twin-turbo-inline-6-engine-eed898bed9b2479e84fdb6f96bae7125",
+   "why": "Sketchfab API description: 'The Engine it self was taken from RB26 Model in FR Legends, and i modified it with some elements in the game'."
+  },
+  {
+   "area": "chassis_susp",
+   "title": "Toyota 37110-6A060",
+   "url": "https://grabcad.com/library/toyota-37110-6a060-1",
+   "why": "Opened in the headless browser: title 'Toyota 37110-6A060', Daniel Klyuev, February 9th 2024, 129 downloads, Software SOLIDWORKS, STEP / IGES. The file list is as above. The page shows no licence field beyond the GrabCAD community disclaimer."
+  },
+  {
+   "area": "chassis_susp",
+   "title": "Trophy Truck Chassis",
+   "url": "https://sketchfab.com/3d-models/trophy-truck-chassis-a743331b146449089cabcea7fbe88bc4",
+   "why": "Checked the Sketchfab API: licence 'Free Standard', 114,610 faces, description 'Bodyless PreRunner/ Trophy Truck / Baja type chassis'. I read the Standard licence clauses on sketchfab.com/licenses."
+  },
+  {
+   "area": "chassis_susp",
+   "title": "Bagged truck frame /chassis with motor and trans",
+   "url": "https://sketchfab.com/3d-models/bagged-truck-frame-chassis-with-motor-and-trans-a741a84713f3448286ee3e7fe609480f",
+   "why": "Checked the Sketchfab API: Free Standard, 126,794 faces, tags chevrolet/v8/airride/lowrider/bagged, description quoted."
+  },
+  {
+   "area": "chassis_susp",
+   "title": "Toyota Land Cruiser 100 And Lexus LX 470",
+   "url": "https://sketchfab.com/3d-models/toyota-land-cruiser-100-and-lexus-lx-470-6c070bc55ed0402d9ab92f6fe666a02f",
+   "why": "Checked the Sketchfab API: CC Attribution, 964,560 faces, published 2026-06-07, description 'Toyota Land Cruiser 100 And Lexus LX 470 in one file'. The thumbnail is the grey Sketchfab placeholder. A search confirmed the uploader's Real Racing 3 title and catalogue."
+  },
+  {
+   "area": "chassis_susp",
+   "title": "2002 Lexus LX470",
+   "url": "https://sketchfab.com/3d-models/2002-lexus-lx470-0828e94759cb4ff084f8f6781a4f10de",
+   "why": "Checked the Sketchfab API: Free Standard, 238,518 faces, tags beamng/beamngmod, description 'some of the textures may be broken... It also has lights.'"
+  },
+  {
+   "area": "chassis_susp",
+   "title": "Toyota Landcruiser 200 Series Stock .FBX",
+   "url": "https://sketchfab.com/3d-models/toyota-landcruiser-200-series-stock-fbx-3020fa24fc0b4f0bbf2b8d79e2a0af8c",
+   "why": "Checked the Sketchfab API: CC Attribution, 1,120,471 faces, description quoted, tags paint3d/landcruiser."
+  },
+  {
+   "area": "chassis_susp",
+   "title": "4x4_independent_rh_front_suspension",
+   "url": "https://sketchfab.com/3d-models/4x4-independent-rh-front-suspension-a3045935c5fb4831b87f038524f29551",
+   "why": "Checked the Sketchfab API: Heer.Bommel CC Attribution 55,713 faces 'free parts'. A search found the UnforgettableName original, 'CC Attribution-NonCommercial', 55,791 faces."
+  },
+  {
+   "area": "chassis_susp",
+   "title": "Car Chassis",
+   "url": "https://sketchfab.com/3d-models/car-chassis-461d16d1a5ac44f58323ac4b7493b043",
+   "why": "Checked the Sketchfab API: CC Attribution, 641,072 faces, description quoted. I saw the thumbnail."
+  },
+  {
+   "area": "chassis_susp",
+   "title": "2022 Toyota Hilux",
+   "url": "https://sketchfab.com/3d-models/2022-toyota-hilux-82bd37c5065040098fb0b86e07fcb959",
+   "why": "Checked the Sketchfab API: the description is quoted verbatim above, tag gta."
+  },
+  {
+   "area": "ancillaries",
+   "title": "Toyota 1FZ-FE",
+   "url": "https://grabcad.com/library/toyota-1fz-fe-1",
+   "why": "Opened the page in the headless browser: '1997 head and block with 1993 model year sump, so no crank sensor on this one. Scanned with Einstar', uploaded April 11th 2025, Software OBJ, 1 file 1fz_simplified.obj, tags fzj80 land cruiser 1fz-fe. No licence field on the page."
+  },
+  {
+   "area": "ancillaries",
+   "title": "1fz-fe intake manifold",
+   "url": "https://grabcad.com/library/1fz-fe-intake-manifold-1",
+   "why": "Page opened: '3d scan with Einstar', April 19th 2025, Files (2): 1fz_lower_runner.obj and 1fz_upper_runner.obj."
+  },
+  {
+   "area": "ancillaries",
+   "title": "1fz-fe Engine Alignment",
+   "url": "https://grabcad.com/library/1fz-fe-engine-alignment-1",
+   "why": "Page opened: 'Rockit scan of an FZJ80 Land Cruiser exhaust manifold and engine bay area for the purpose of aligning my other models', March 2nd 2026, 1 STL file."
+  },
+  {
+   "area": "ancillaries",
+   "title": "Water Pump",
+   "url": "https://sketchfab.com/3d-models/water-pump-76ca12fd7aec4748b96445892b1a5d95",
+   "why": "API: CC Attribution, 150430 faces, tags pump, motor, electrical, electricalmotor, description 'Water pump'."
+  },
+  {
+   "area": "ancillaries",
+   "title": "Fuse Box HighPoly",
+   "url": "https://sketchfab.com/3d-models/fuse-box-highpoly-386c6c83e92b41729064f130e98825db",
+   "why": "API: CC Attribution, 46512 faces, empty description. I viewed the thumbnail: a free standing street cabinet with graffiti and a concrete plinth."
+  },
+  {
+   "area": "ancillaries",
+   "title": "Toyota Land Cruiser J100 GXR 2004 high quality with engine",
+   "url": "https://www.cgtrader.com/3d-models/car/suv/toyota-land-cruiser-j100-gxr-2004-high-quality-with-engine",
+   "why": "Page opened: $28.26, 1694605 polygons. Description: 'high poly and quality full texture 3 rims 3000 twin cam toyota turbo engine high texture uv map for body high interior quality'."
+  },
+  {
+   "area": "cad",
+   "title": "Toyota 1FZ-FE",
+   "url": "https://grabcad.com/library/toyota-1fz-fe-1",
+   "why": "Opened page in headless browser: title, author, date, description, tags fzj80/1fz-fe, Software OBJ. Opened grabcad.com/terms and extracted the Cross License and site License sentences, both 'own benefit and non-commercial, internal use'."
+  },
+  {
+   "area": "cad",
+   "title": "Toyota H151f Transmission for 1HD-T & 1FZ-FE",
+   "url": "https://grabcad.com/library/toyota-h151f-transmission-for-1hd-t-1fz-fe-1",
+   "why": "Both pages opened in headless browser; GrabCAD terms confirmed."
+  },
+  {
+   "area": "cad",
+   "title": "FZJ80 HF2AV Transfer Case Scan",
+   "url": "https://grabcad.com/library/fzj80-hf2av-transfer-case-scan-1",
+   "why": "Page opened in headless browser; terms confirmed."
+  },
+  {
+   "area": "cad",
+   "title": "1fz-fe intake manifold",
+   "url": "https://grabcad.com/library/1fz-fe-intake-manifold-1",
+   "why": "Page opened in headless browser (first load empty, second with 10 s wait loaded)."
+  },
+  {
+   "area": "cad",
+   "title": "Toyota 37110-6A060",
+   "url": "https://grabcad.com/library/toyota-37110-6a060-1",
+   "why": "Page opened in headless browser; description quoted."
+  },
+  {
+   "area": "cad",
+   "title": "1991 FJ80 Engine Bay 3d Scan",
+   "url": "https://grabcad.com/library/1991-fj80-engine-bay-3d-scan-1",
+   "why": "Page opened in headless browser."
+  },
+  {
+   "area": "cad",
+   "title": "3rd gen 4runner front frame suspension scan",
+   "url": "https://grabcad.com/library/3rd-gen-4runner-front-frame-suspension-scan-1",
+   "why": "Page opened in headless browser."
+  },
+  {
+   "area": "cad",
+   "title": "Suspensión Toyota land cruiser",
+   "url": "https://grabcad.com/library/suspension-toyota-land-cruiser-1",
+   "why": "Page opened in headless browser."
+  },
+  {
+   "area": "cad",
+   "title": "LADDER FRAME CHASSIS",
+   "url": "https://grabcad.com/library/ladder-frame-chassis-1",
+   "why": "Page opened in headless browser; description read."
+  },
+  {
+   "area": "cad",
+   "title": "Aisin LSPV valve.",
+   "url": "https://grabcad.com/library/aisin-lspv-valve-1",
+   "why": "Page opened in headless browser."
+  },
+  {
+   "area": "cad",
+   "title": "Toyota Third Member, Open differential scaled working model",
+   "url": "https://www.thingiverse.com/thing:1344716",
+   "why": "Browser hit Cloudflare 429; curl of the page returned JSON-LD with license https://creativecommons.org/licenses/by-nc/4.0/ for 1344716, 1344938 and 644933."
+  },
+  {
+   "area": "cad",
+   "title": "Transfer case",
+   "url": "https://www.printables.com/model/768837-transfer-case",
+   "why": "Printables GraphQL API: summary 'Transfer case for an RC prototype', 4 STL files."
+  },
+  {
+   "area": "cad",
+   "title": "Double Wishbone Suspension",
+   "url": "https://www.printables.com/model/319409-double-wishbone-suspension",
+   "why": "Printables GraphQL API: CC-BY-SA, summary 'small prototyp I did for an university project'."
+  },
+  {
+   "area": "cad",
+   "title": "AMG Brembo Brake Caliper",
+   "url": "https://www.printables.com/model/870861-amg-brembo-brake-caliper",
+   "why": "Printables GraphQL API: CC-BY, summary 'AMG Brembo Brake Caliper for 360mm disc', file names."
+  },
+  {
+   "area": "cad",
+   "title": "Engine Block V6",
+   "url": "https://www.printables.com/model/555441-engine-block-v6",
+   "why": "Printables GraphQL API: GPL 2.0, summary 'Model of the engine block'."
+  },
+  {
+   "area": "game_assets",
+   "title": "Cat 3116 Engine",
+   "url": "https://www.fab.com/listings/b5295c87-2a29-47f3-90d9-bdb5412e1fdb",
+   "why": "Opened Fab listing: description about the Caterpillar 3116 marine diesel, CC BY 4.0, Free, tags Photogrammetry Caterpillar."
+  },
+  {
+   "area": "game_assets",
+   "title": "Toyota Land Cruiser 100 v4.50",
+   "url": "https://www.modland.net/beamng.drive-mods/cars/toyota-land-cruiser-108.html",
+   "why": "Opened page: 'by chivauva', 165.15 MB, 16 configurations, download file kn0z_Land_100.zip; no licence text."
+  },
+  {
+   "area": "game_assets",
+   "title": "Toyota Land Cruiser 100_UKBEAMNG FIX+UPDATE 1.5",
+   "url": "https://www.modland.net/beamng.drive-mods/cars/toyota-land-cruiser-100-ukbeamng-fixupdate.html",
+   "why": "Opened page: 'by UK.Beamng', 166.3 MB, text '4.5L Inline-6 EFI engine', 'Toyota Land Cruiser 100 Series 4500 EFI'; no licence."
+  },
+  {
+   "area": "game_assets",
+   "title": "Toyota Land Cruiser 100 v4.50 (26 configs, detailed undercarriage)",
+   "url": "https://www.modland.net/beamng.drive-mods/cars/toyota-land-cruiser-113.html",
+   "why": "Opened page (second try): 'Mod author: -XxX--M_V', 'Uploaded by sosi4', 256.02 MB; no licence."
+  },
+  {
+   "area": "game_assets",
+   "title": "Toyota Land Cruiser 100 / Lexus LX 470 [PACK] 1.0",
+   "url": "https://www.modland.net/beamng.drive-mods/cars/toyota-land-cruiser-100-lexus-lx-470-pack.html",
+   "why": "Opened page: 'by Kenemation mods', 28 configurations, 'Real brake discs.'; no licence."
+  },
+  {
+   "area": "game_assets",
+   "title": "Toyota Land Cruiser 100 And Lexus LX 470",
+   "url": "https://sketchfab.com/3d-models/6c070bc55ed0402d9ab92f6fe666a02f",
+   "why": "Sketchfab API: licence CC Attribution, faceCount 964560, downloadable, tags gameready; uploader listing via API shows Bentley, CLK GTR, Rolls-Royce, 'Ford Focus 2 RS From Real Racing 3' etc."
+  },
+  {
+   "area": "game_assets",
+   "title": "2002 Lexus LX470",
+   "url": "https://sketchfab.com/3d-models/0828e94759cb4ff084f8f6781a4f10de",
+   "why": "Sketchfab API: Free Standard licence, 238518 faces, tags beamng/beamngmod; uploader listing shows gta/gmod/LittleBigPlanet tagged cars."
+  },
+  {
+   "area": "game_assets",
+   "title": "Toyota Land Cruiser 100 [Add-On | Replace]",
+   "url": "https://www.gta5-mods.com/vehicles/toyota-land-cruiser-100",
+   "why": "Opened page: 30.7 MB, June 04, 2017, author credits quoted; no licence."
+  },
+  {
+   "area": "game_assets",
+   "title": "SD061 1UZ-FE Single Turbo | Low-Poly | Game Ready | Assetto Corsa",
+   "url": "https://simdriver061.gumroad.com/l/1uz_fe",
+   "why": "curl of the Gumroad page: meta description 'Do not share this unencrypted! KN5 and FBX + Textures are included', price 9.0 EUR, attributes Polys 20877, Objects 19, is_licensed false."
+  },
+  {
+   "area": "game_assets",
+   "title": "Lexus LX470 Arab 1.0",
+   "url": "https://www.modland.net/assetto-corsa-mods/cars/lexus-lx470-arab.html",
+   "why": "Opened page: 'by cloviff', 86.65 MB, 'Credits: lew1X', extras list; no licence."
+  },
+  {
+   "area": "game_assets",
+   "title": "Toyota Land Cruiser 105 1.0 Mod",
+   "url": "https://www.modland.net/snowrunner-mods/cars/toyota-land-cruiser-105-1.0-mod.html",
+   "why": "Opened page: 'by kyhk', 190 MB, 'Credits: foresterejoff'; no licence."
+  }
+ ],
+ "missed": [
+  {
+   "area": "full_vehicle",
+   "m": "No better complete LC100 with underbody found. Extra Sketchfab API searches (2uz-fe, uzj100, land cruiser chassis, land cruiser 80 chassis, toyota frame suspension, lexus lx470 engine, landcruiser underbody, toyota inline six, 4x4 chassis independent front suspension, land cruiser 200 frame) returned nothing usable."
+  },
+  {
+   "area": "full_vehicle",
+   "m": "LADDER FRAME CHASSIS WITH MOUNTING (CC BY, 488,810 faces): https://sketchfab.com/3d-models/ladder-frame-chassis-with-mounting-997344d875f446ee9bca883ff381e150"
+  },
+  {
+   "area": "full_vehicle",
+   "m": "Project risk found while checking: the project's own source model (reference/model/lc100_2006_cc_by) is very likely Sketchfab 'Toyota Land Cruiser 2006' by DR1KING100K (https://sketchfab.com/3d-models/toyota-land-cruiser-2006-f7294493dba64692bbe3ef8ab0a0c1af). Its texture names (flakka_*.dds, WINTER TIRE LC100.png, logo skull.png) suggest a game mod origin, so its CC BY claim should be checked."
+  },
+  {
+   "area": "engine_trans",
+   "m": "The CGTrader 'Toyota 2JZ GTE VVTi engine' by DersinStudio (https://www.cgtrader.com/3d-models/vehicle/vehicle-part/toyota-2jz-gte-vvti-engine) also includes an RWD transmission, a cardan shaft and a differential (75 named parts). The sweep only counted the engine."
+  },
+  {
+   "area": "engine_trans",
+   "m": "Sketchfab 'Engine Inline 6 (Motor) Animated' by cachetf (https://sketchfab.com/3d-models/engine-inline-6-motor-animated-80ada65c02654d00ac0fb086500da660). Not downloadable, 107171 faces, and the same text as UlanK's CGTrader listing. It confirms the two are the same asset, but not who owns it."
+  },
+  {
+   "area": "engine_trans",
+   "m": "Low-value CC BY extras on Sketchfab: '2jz Block' (https://sketchfab.com/3d-models/2jz-block-c52cd2e4b44e4e4094d5d4df23e496b5) and '2jz head' (https://sketchfab.com/3d-models/2jz-head-fa4d98084fd043daa9eaed2723ab72f1) by stix3617. The author calls both rough ('isnt perfectly done', 'Not really a 2jz head'). Generic only."
+  },
+  {
+   "area": "chassis_susp",
+   "m": "TORSION BAR by vr.designer_09, CC BY, 38,324 faces, generic torsion bar for the LC100 front IFS: https://sketchfab.com/3d-models/torsion-bar-ec123b7ec46a4dd2b13efec95be8a994"
+  },
+  {
+   "area": "chassis_susp",
+   "m": "NP261 HD Transfer Case by yegorpro, CC BY, 2,000,019 faces, real 3D scan of a GM NP261 HD manual transfer case (not HF2A, but a real cast part look; needs heavy decimation): https://sketchfab.com/3d-models/np261-hd-transfer-case-9cb9935f768741689a8da82a92d7a1c3"
+  },
+  {
+   "area": "chassis_susp",
+   "m": "LADDER FRAME CHASSIS WITH MOUNTING by vr.designer_09, CC BY, 488,810 faces: https://sketchfab.com/3d-models/ladder-frame-chassis-with-mounting-997344d875f446ee9bca883ff381e150"
+  },
+  {
+   "area": "chassis_susp",
+   "m": "COIL SPRING by vr.designer_09, CC BY, 40,376 faces (rear coils): https://sketchfab.com/3d-models/coil-spring-3bf2215ce5f34e83a966c780393956fc"
+  },
+  {
+   "area": "chassis_susp",
+   "m": "Driveshaft with CV-joints by borgs, CGTrader RF, $19.00 list / $9.50 sale, 44,716 polys: https://www.cgtrader.com/3d-models/vehicle/vehicle-part/driveshaft-with-cv-joints"
+  },
+  {
+   "area": "chassis_susp",
+   "m": "Solid Axle Differential and Transfer Case by tuxedocat3, CGTrader RF, $2.00, 10,207 polys, OBJ/FBX/BLEND: https://www.cgtrader.com/3d-models/vehicle/vehicle-part/solid-axle-differential-and-transfer-case"
+  },
+  {
+   "area": "ancillaries",
+   "m": "Fuel Pump - Simplified by reyn.ad (CC BY, 1036 faces, from the same Engine Management System pack): https://sketchfab.com/3d-models/fuel-pump-simplified-f36da5ed8f334b5b8d770a011e95f2f1"
+  },
+  {
+   "area": "ancillaries",
+   "m": "Car Engine (Scan) by Ele.G on Fab (listed under 'More from Ele.G' on the car alternator listing). It may also be on Sketchfab as unrealengine432 CC BY, but I did not find it in that user's first 24 models; not verified"
+  },
+  {
+   "area": "ancillaries",
+   "m": "Car battery scan by unrealengine432 (CC BY, 999940 faces): https://sketchfab.com/3d-models/car-battery-scan-668060da52e549a88f574025961cbb50 The thumbnail shows an 'AAX' branded label, so it needs a repaint like the others"
+  },
+  {
+   "area": "cad",
+   "m": "Toyota/Lexus 2JZ-GTE by Lame3dModels, Sketchfab CC Attribution, 100k faces: https://sketchfab.com/3d-models/670ccab7e4e54e6d83074117bb44586e (Toyota inline 6, closer stand in for the 1FZ-FE than the Printables I6; probably already covered by the Sketchfab area)"
+  },
+  {
+   "area": "cad",
+   "m": "Toyota Land Cruiser Single Cab And Chassis by niev, Sketchfab CC Attribution, 2.16M faces: https://sketchfab.com/3d-models/21593eba3a9f43d8818329a7f488b82a (70 series cab chassis, may include a Toyota ladder frame and solid axles; check for scan or game origin)"
+  },
+  {
+   "area": "cad",
+   "m": "thing:4190752 'Toyota Land Cruiser model' by mshonak on Thingiverse is CC BY 4.0, but it is a body toy without mechanicals (https://www.thingiverse.com/thing:4190752)"
+  }
+ ],
+ "searched": [
+  {
+   "area": "full_vehicle",
+   "searched": [
+    "Sketchfab API search: land cruiser 100, lx470, fzj100 (0 results), uzj100 (0), hdj100, land cruiser 105, landcruiser 100, lexus lx 470, land cruiser amazon (0), 1fz and 1fz-fe (0), land cruiser engine, lc100, toyota land cruiser 100 underbody (0), land cruiser 200 chassis, toyota inline 6 engine, toyota chassis frame, 100 series cruiser, lexus lx470 2005 (0), land cruiser chassis",
+    "Sketchfab API with purchasable=true: land cruiser, lexus lx, toyota chassis, suv chassis",
+    "Sketchfab model details for the two known uids (6c070bc55ed0402d9ab92f6fe666a02f, c8a28ca697ee40129b588b3e297a43b5) plus uploader listings for ZapupaNekra, niev, amirbuilds2000 and DR1KING100K to check provenance",
+    "CGTrader: search URLs (?keywords=, /3d-models/car?keywords=) return 404; tag pages /3d-models/land-cruiser, /landcruiser and /fj100 worked; lx470, lexus-lx-470, land-cruiser-100, lc100, land-cruiser-j100 and 100-series return 410; lexus tag pages 1 and 2 had no LX470 links; model pages opened through the headless browser; full Terms and Conditions read (21A.2 and 21A.3, real time and extraction)",
+    "CGTrader toyota-land-cruiser-100-54108242... (from a search result) returns 410, so it is gone",
+    "TurboSquid: blocked (403) for both the headless browser and WebFetch; WebSearch found 'Toyota Land Cruiser 100' id 1153924 ($149, 400k polys per the snippet), 'Lexus lx 470' id 1169879 and '100 Series Toyota Landcruiser' id 1515059 ($15 low poly per 3dmdb), but none could be opened, so they are not listed as candidates; the TurboSquid Standard licence was read on blog.turbosquid.com (real time allowed only in proprietary formats, WebGL only via Unity/Unreal/Lumberyard exports)",
+    "Hum3D / 3dmodels.org: hum3d.com now redirects to 3dmodels.org, which is behind a Cloudflare challenge (403 in browser and WebFetch); 3dmdb lists a Hum3D 'Lexus LX 2003' ($75) but it could not be opened; humster3d.com redirects to hum2d.com; 3docean copy returns 410",
+    "Squir: squir.com search returns 404; product page squir.com/toyota-land-cruiser-j100-1997-2007.html opened",
+    "3DExport: site search ignores the query; listings reached via the 3dmdb aggregator (SQUIR J100 $159, two old 'toyota land cruiser 2006' at $70 and $9, low detail with no underbody, not listed); Basic/Extended licence page read",
+    "RenderHub: the 'exquisite/toyota-land-cruiser-100' page from search results now returns 404 (search snippet said Personal Use Only licence, 678k polys); the vendor page also returns 404; search URLs tried (/search?q=, /3d-models?q=, /3d-models/search/...) gave nothing",
+    "Fab: search for land cruiser 100 (only spaceships and other cruisers), lx470 (only generic drivable cars), land cruiser chassis (generic truck chassis); listing a3035460... from search results returns 404; Fab EULA read",
+    "Free3D: 100-series-landcruiser-795 (search snippet says 721 polys, low poly) and lexus-lx-470-3506 blocked (403) in both the browser and WebFetch",
+    "3dmdb.com aggregator: landcruiser, land-cruiser-100, lx470, lx-470, land-cruiser-j100, land-cruiser-100-chassis, toyota-land-cruiser-100, lexus-lx-470, landcruiser-100",
+    "3D CAD Browser: toyota-land-cruiser, -59527, -1998 (CAD solid, 2003), -2006 (10,818 polys); none show an underbody; their search URL returns 404",
+    "3D Warehouse: VX-R 2000 model opened; the search page returned no links",
+    "Superhive (Blender Market): only an LC300 style model, not LC100",
+    "Cults3D J100 2002: Cloudflare blocked",
+    "Evermotion and Creative Market: WebSearch only, no LC100 results",
+    "ModLand BeamNG LC100 mod (game mod, out); GTA5-mods LC100 seen in results, not opened (game mod, out)",
+    "WebSearch queries: LC100 3D model with chassis engine underbody; hum3d LC100; squir LC100/LX470; site:turbosquid.com LC100; cgtrader LC100; cgtrader LX470; 'Land Cruiser 100' chassis/underbody/engine on turbosquid/3dexport/cgtrader (extended); renderhub LC100/LX470/J100; fab.com LC100; LC100 undercarriage/chassis/engine bay (extended); site:3dexport.com; site:hum3d.com; site:3dmodels.org; LX470 on turbosquid/cgtrader/hum3d/squir (extended); turbosquid LC100/J100/LC105 (extended); 'Lexus LX J100 2003'; 'Single Cab And Chassis'; evermotion/creativemarket LC100; free CC BY LC100 chassis engine"
+   ]
+  },
+  {
+   "area": "engine_trans",
+   "searched": [
+    "Sketchfab API (api.sketchfab.com/v3/search plus /v3/models/<uid> for licence and faces): 1FZ-FE, 1FZ, 1fzfe, 1FZ engine, land cruiser engine, 1HZ, 1HZ engine, 1HD-FTE, 1HD-T, toyota 1HD, toyota inline 6 engine, toyota engine, inline 6 engine, inline six engine, straight six engine, I6 engine, land cruiser 100, LX470, lexus lx 470, FZJ100, HDJ100, UZJ100, land cruiser 80 engine, FZJ80, fj80, land cruiser 80, lx450, land cruiser chassis, land cruiser drivetrain, transfer case, manual transmission, gearbox, transmission, transmission 4x4, toyota transmission, toyota gearbox, truck transmission, rwd transmission, T5 transmission, NV4500, AX15, R154, R151F, H151F, getrag, 5 speed transmission, bellhousing, transmission scan, gearbox scan, dana 300, NP231, NP241, BW4401, toyota 2F engine, 3F-E, toyota F engine, diesel inline 6, truck engine inline 6, inline 6 diesel engine, 6 cylinder diesel engine, engine and transmission, engine gearbox, engine with gearbox, engine transmission assembly, engine bay scan, engine block inline, car engine, TB48, TB45, nissan patrol engine, jeep 4.0 engine, ford 300 inline, atlas 4.2, RB26 engine, RB25, RB30, L28 engine, cummins 6BT, 12 valve cummins, M54 engine, M52 engine, N52 engine, S54 engine, OM606, barra engine, AMC 258, chevy 250 inline, 1GR-FE, 2UZ-FE. Also listed TomTLC's uploads. Read sketchfab.com/licenses for the Standard and Editorial licence terms.",
+    "CGTrader (www.cgtrader.com/search?keywords=..., read through the headless browser; the /3d-models?keywords= URL gives a 404): 1fz-fe, 1fz, land cruiser engine, 1hz, 1hd-fte (no results), 1hd, hzj, inline 6 engine, straight six engine, transfer case, toyota engine, toyota transmission, manual gearbox rwd, 4x4 drivetrain, fzj80, land cruiser 80, land cruiser 100, lexus lx470. Free-filter searches: inline 6 engine, engine inline 6, transfer case, manual transmission, toyota engine. Opened about 25 product pages and read the full Royalty Free licence (terms section 21A).",
+    "GrabCAD (grabcad.com/library?query=..., browser with 8 to 9 second waits): 1fz, land cruiser engine, 1hz, 1hd, h151f, r151f (none), toyota transfer case (none), 2f engine, 3f engine (none), hf2a (none), fzj80, land cruiser 100, hdj100 (none), lx470, land cruiser transmission, toyota inline 6 (none). Browsed all 39 models by 4AM_Engineering (2 pages). Read grabcad.com/terms (sections 3, 4 and 6 on the non-commercial cross licence).",
+    "TurboSquid: blocked. Search and product pages return 403 in the headless browser and in WebFetch (Search/3D-Models/transfer-case, 3d-toyota-engine-2jz-gte-1274111, es/3d-models/low-poly-car-engine-3d-model/831551). WebSearch queries tried: site:turbosquid.com Land Cruiser engine; site:turbosquid.com inline 6 engine toyota; site:turbosquid.com transfer case 4x4; turbosquid \"transfer case\"; turbosquid inline six engine; turbosquid Toyota Land Cruiser 100 with engine chassis; turbosquid toyota 1HZ/1HD/2F/3F engine (extended). These returned only category pages or non-TurboSquid results, so no TurboSquid candidate could be verified. Bing (headless) returned an empty page; the DuckDuckGo HTML endpoint returned nothing or reset the connection.",
+    "Fab (fab.com): blocked by the Cloudflare 'security check' in the headless browser (inline 6 engine, land cruiser engine, transfer case, toyota engine, manual gearbox), with curl to /i/listings/search, and with WebFetch of /eula. WebSearch site:fab.com inline 6 engine and a fab.com Toyota engine query found nothing.",
+    "3DExport (3dexport.com/search?search_keywords=...): land cruiser engine, inline 6 engine, transfer case, toyota engine, manual transmission, 1fz (no results), land cruiser 100. Opened 5 product pages and read the Basic and Extended licence page.",
+    "RenderHub (extra site; POST search to /3d-models): inline 6 engine, straight six engine, transfer case, manual transmission, toyota engine, land cruiser 100, gearbox, 6 cylinder engine, inline six, l6 engine, car engine, engine with transmission, 4x4 drivetrain, transfer case 4x4, land cruiser engine. Opened 15 product pages and read the 3D Content Licensing Agreement (Extended Use permitted uses, Editorial Use Only restriction meaning 'IP Restricted').",
+    "Free3D: blocked (403 in the headless browser for /3d-models/inline-6-engine, land-cruiser-engine, transfer-case, gearbox, toyota-engine, 6-cylinder-engine; WebFetch 403 on animated-six-cylinder-l6-engine-8128). Its listings (inline 6 drag engine 8025, animated six cylinder L6 engine 8128, 100 series landcruiser 795) could not be opened, so they are not included.",
+    "Thingiverse: the search ran for 1fz, land cruiser engine, inline 6 engine, transfer case and h151f (it returned thing IDs only), then Cloudflare returned 429. WebFetch of thing:5893053 showed it is an 'H151F Clutch Alignment tool', not a gearbox model. Only printable small parts there.",
+    "Printables: the browser is Cloudflare-blocked, so I used the public GraphQL API (api.printables.com/graphql searchPrints2) for: 1fz, land cruiser engine, inline 6 engine, transfer case, h151f, straight six engine. Only hits: '4.5L 1FZ-FE 80 Series Land Cruiser Cylinder Bore Plugs' (CC BY-NC-SA, a tool), 'Inline 6-Cylinder Engine with optional Valvetrain' by BlackSabbath (CC0, but a toy-like printable desktop model, not usable visually), and an RC-scale transfer case (CC BY).",
+    "Cults3D: blocked (403 with curl and Cloudflare in the headless browser for 1fz, land cruiser engine, inline 6 engine, transfer case toyota). WebSearch site:cults3d.com for toyota engine / 1HZ / 1FZ / 2F returned nothing relevant.",
+    "Hum3D: hum3d.com now redirects to 3dmodels.org, which shows a Cloudflare 'Security check' to curl and the headless browser. WebSearch 'site:hum3d.com engine', 'hum3d.com Toyota Land Cruiser 100 / LX 470', '3dmodels.org Toyota Land Cruiser 100' and '3dmodels.org car engine inline six' found no Hum3D pages.",
+    "3D CAD Browser (extra site): opened FZ Engine (it is a sci-fi spaceship engine, irrelevant), Transfer Case 4x4, Toyota Land Cruiser 1998 and 2006 (exterior only), and engine category pages 1 to 5. Read the Terms page, which has no real-time or web clause.",
+    "General WebSearch: '1FZ-FE engine 3D model'; 'thingiverse OR printables OR cults3d 1FZ engine model land cruiser'; '\"1HZ\" engine 3D model download obj OR fbx OR stl'; '\"H151F\" OR \"R151F\" OR \"HF2A\" 3D model scan transmission transfer case' (only forum threads); 'Hum3D engine 3D model inline 6 OR transmission OR transfer case'."
+   ]
+  },
+  {
+   "area": "chassis_susp",
+   "searched": [
+    "Sketchfab API (downloadable and all): land cruiser chassis, land cruiser 100 frame, toyota frame chassis, 4x4 chassis, rolling chassis, solid axle, independent front suspension, double wishbone suspension, toyota caliper, brake caliper rotor, differential, propeller shaft, ladder frame, hilux chassis, land cruiser suspension, torsion bar, rear axle coil, lx470, fzj100 (0 results), tundra suspension, pickup chassis, offroad chassis, land cruiser 100, land cruiser 80 chassis (0), patrol chassis, car chassis suspension, undercarriage car, steering rack, rack and pinion, cv axle (0 relevant), drive shaft car, shock absorber, coil spring shock, brake disc, vented brake disc, rear axle, live axle, truck frame, suspension 4x4, jeep chassis, car underbody, front axle 4x4, wheel hub knuckle, control arm, prado chassis, 4runner chassis, toyota axle, steering knuckle, driveshaft, sway bar, tie rod, car frame chassis, suv chassis, landcruiser, leaf spring axle, truck axle differential, brake caliper",
+    "Sketchfab uploader checks (provenance): ZapupaNekra, niev, amirbuilds2000, UnforgettableName, Heer.Bommel",
+    "Sketchfab licences page (Standard licence extraction clause)",
+    "CGTrader /search: land cruiser chassis, land cruiser 100, lexus lx470, land cruiser 200 chassis, toyota ladder frame, suv chassis suspension, independent front suspension torsion bar, solid rear axle 4 link, tundra chassis, hilux chassis, toyota brake caliper, 4x4 rolling chassis, transfer case, propeller shaft, cv axle, rack and pinion steering, nissan patrol chassis, prado chassis (opened about 18 product pages); CGTrader terms (Royalty Free License sections 21A.1 to 21A.4); note /3d-models?keywords= URLs return 404, /search?keywords= works",
+    "Fab: land cruiser (only ships and bikes), chassis suspension, 4x4 chassis; opened NNAVAS PICKUP TRUCK CHASSIS 4/5/7, BlackWAVE Double Wishbone (free), NoneCG Car Chassis and Engine ($99.99 to $199.99, Standard); Fab EULA (Standard License sections 4c, 6)",
+    "GrabCAD library (browser, wait 8000): land cruiser chassis, land cruiser 100, toyota frame, 4x4 suspension, solid axle 4 link, torsion bar suspension, toyota brake caliper; opened 37110-6A060 LC100 rear prop shaft, 79 Series cab chassis (Inventor), LC300 front chassis scan (STL), Tundra front frame scan, Ultra 4 racer chassis, LC100 tow bar; GrabCAD terms: Cross License is 'own benefit and non-commercial, internal use', so all GrabCAD items are out without a direct author grant",
+    "TurboSquid: WebSearch site:turbosquid.com Toyota Land Cruiser chassis found 2012 Land Cruiser VDJ76L (1965485, 'full chassis, suspension and steering') and 1991 Land Cruiser (1369538), but WebFetch, the headless browser and r.jina.ai all returned 403 or CAPTCHA, so they were not opened and are not listed (LC70/LC80 generation anyway)",
+    "Hum3D / 3dmodels.org: search redirected to 3dmodels.org, Cloudflare 'Just a moment' 403",
+    "Free3D: 403 in the headless browser; the WebSearch result '100 series landcruiser 795' is a 721 poly low poly body with no chassis",
+    "3DExport search 'land cruiser chassis': only 'Toyota Land Cruiser 70 Double Cab Chassis 2024' (an LC70 cab chassis body, not a frame)",
+    "RenderHub: the exquisite LC100 page (678k polys, from search snippets) returns 404; renderhub /search?q= gives no product links; dragosburian FJ40 'with chassis' models appear only in search results (FJ40 leaf spring layout, wrong)",
+    "WebSearch: Toyota Land Cruiser 100 chassis frame 3D model; site:cgtrader.com Land Cruiser chassis suspension; turbosquid Land Cruiser 100 OR LX470 chassis; hum3d OR 3dmodels.org Land Cruiser 100 chassis; squir OR 3dexport Land Cruiser 100 chassis underbody (found squir LC J90 1996 and LC 2021 on RenderHub, body models, not opened)",
+    "Not found anywhere: an LC100/LX470 model with a modelled frame and underbody under a clean licence; any Toyota 4 piston caliper; a torsion bar IFS for a Toyota (Tundra, Sequoia, LC100); an FZJ100 specific rear axle"
+   ]
+  },
+  {
+   "area": "ancillaries",
+   "searched": [
+    "Sketchfab API (q, count 24, some with downloadable=true): alternator, starter motor, ac compressor, denso compressor (0), car radiator, radiator fan, car battery, fuse box car (0), exhaust manifold, catalytic converter, muffler, exhaust system, fuel tank car, air filter box, oil filter, spark plug, ignition coil, water pump, serpentine belt pulley (0), coolant reservoir (0), toyota alternator (0), 1fz-fe (0)",
+    "Sketchfab API second pass: denso, a/c compressor car (0), air conditioning compressor, fan clutch (nothing relevant), engine cooling fan, fuse box, relay box car (0), intake manifold toyota, air box intake, air filter housing, car exhaust pipe, fuel tank, gas tank vehicle, starter, car starter, drive belt, pulley engine, expansion tank coolant (0), radiator overflow (0), land cruiser engine (only HDJ100 engine bay lidar by TomTLC, CC BY-NC-SA, out), toyota inline 6 engine (2JZ models, mostly NC-SA; autoNgraphic 2JZ tagged grandtheftauto, possible rip), 1fz (0), 2uz-fe (0), toyota engine, car undercarriage, engine bay",
+    "Sketchfab API third pass: fzj80 (0), land cruiser 100 (ZapupaNekra 'Toyota Land Cruiser 100 And Lexus LX 470' CC BY 964k: body, tagged gameready, origin unclear, underbody not verified), lx470, landcruiser engine, nippondenso (0), car engine scan, engine parts pack, car parts pack, exhaust manifold inline 6 (0), car fan clutch (0), engine fan, air intake car, automotive fuel tank, car petrol tank, steel fuel tank vehicle (0), engine fuse relay box (0), car condenser, power steering pump, radiator cap coolant tank (0), denso alternator scan (0), alternator scan",
+    "CGTrader (headless browser, /search?keywords=): denso alternator, toyota alternator, denso ac compressor, car ac compressor, toyota radiator, radiator fan clutch, car starter motor, toyota exhaust, catalytic converter, car fuel tank, air filter box car, ignition coil, car battery, engine fuse box, 1fz-fe, land cruiser 100 engine, toyota inline 6 engine, engine accessories pack; opened 8 product pages; licence section 21A.3 read from the saved CGTrader terms",
+    "Fab (headless browser, /search?q=): alternator, car engine parts, ac compressor, car radiator, exhaust muffler, car battery; opened 5 listings; Fab EULA extraction clause read from the saved fabeula.txt",
+    "TurboSquid: WebSearch site:turbosquid.com Denso alternator, Toyota 1FZ-FE engine, Land Cruiser 100 / LX470 chassis engine, engine accessories; found Engine Parts collection 1350214 and engine alternator 1172585, but every page (including /licensing) returns 403 to WebFetch and to the headless browser, so they are not listed as candidates",
+    "Free3D: headless browser search pages and the '100 series landcruiser 795' page all returned 403",
+    "GrabCAD (headless browser, wait 8000): denso alternator, 1fz-fe (found 4AM_Engineering 1FZ-FE scans and an H151F transmission listing), denso 10s17c (0); GrabCAD terms grant only non-commercial internal use",
+    "Poly Haven API (models): nothing automotive besides tyres, rims and a covered car",
+    "WebSearch: site:fab.com engine parts (no Fab results indexed)"
+   ]
+  },
+  {
+   "area": "cad",
+   "searched": [
+    "GrabCAD terms read at https://grabcad.com/terms: users get a non-commercial internal use licence only (Sections 3 and 6.2 Cross License). Section 4 bans distribution, public display and derivative works. So every GrabCAD model is out for a commercial website unless its uploader grants a separate licence.",
+    "GrabCAD library, searched through its JSON API in the headless browser (the plain search page only lazy loads a few results). Queries: land cruiser, land cruiser 100, lc100, uzj100, fzj100, lx470, lexus lx, 1fz, 1fz-fe, h151f, hf2a, fj80, fzj80, land cruiser 80, land cruiser chassis, land cruiser frame, land cruiser engine, land cruiser suspension, land cruiser brake, land cruiser transfer case, toyota transfer case, land cruiser exhaust, land cruiser radiator, toyota frame, prado chassis, hilux chassis, toyota axle, toyota differential, 9.5 differential, front differential ifs, toyota caliper, toyota caliper 4 piston, vented brake disc, 4 link rear suspension, torsion bar suspension, toyota steering rack, toyota inline 6, inline 6 engine, straight six engine, 1hz, 1hd, 2uz, 4runner, tundra, toyota 4x4, toyota alternator, denso alternator, denso starter, aisin, koyo, toyota radiator, toyota fuel tank, suv chassis, pickup frame",
+    "Thingiverse search pages via the headless browser: land cruiser 100, 1fz, lx470, land cruiser engine, toyota differential, fzj100, land cruiser frame, toyota 4 piston caliper. Results were mostly interior clips and cupholders. Mechanical hits were all CC BY-NC (ericthepoolboy, Intashu, PF_Creates). The Land Cruiser parts item (thing:3780420, 1/72 scale) is CC BY-SA. Later page loads hit a Cloudflare 429, so the licences of thing:644933 (22RE engine, 4 cylinder, wrong engine anyway) and thing:4190752 were not read. WebFetch of thing:644933 did not show a licence either.",
+    "Printables, searched through its public GraphQL API (curl works): land cruiser, land cruiser 100, land cruiser 100 series, 100 series, lc100, lx470, 1fz, 1fz-fe, fzj80, h151f, toyota, toyota engine, toyota 22RE, toyota hilux, land cruiser engine, inline 6 engine, engine block, car engine model, toyota differential, differential, differential housing, axle housing, transfer case, brake caliper, brake caliper 4 piston, double wishbone suspension, ladder frame chassis, 4x4 chassis, solid axle, rack and pinion, steering knuckle, shock absorber, coil spring suspension, drive shaft, alternator, radiator car, exhaust manifold, fuel tank car, gearbox manual transmission. LC100 hits were only interior accessories. The one 1FZ-FE item is bore plugs (CC BY-NC-SA). 'Toyota land-cruiser 2005' by Motti Shonak (CC0) turned out to be a KDJ120 / GX470 printable toy.",
+    "Cults3D: blocked. Cloudflare challenge in the headless browser even with a 20 s wait, and WebFetch gets 403. WebSearch site:cults3d.com found only a 'Toyota Land Cruiser J100' design 4040122 (STL, the listing says it was made with AI help, a body print) and RC bodies. None could be opened to read the licence.",
+    "MyMiniFactory: the API needs authentication (401). The search page in the headless browser defaults to premium only and showed no results for land cruiser. WebSearch site:myminifactory.com found nothing relevant.",
+    "MakerWorld (extra): curl gets a Cloudflare page, but the headless browser search works. Queries: land cruiser 100, 1fz, land cruiser engine. Only interior accessories, RC parts and fidget engines, no mechanical LC100 parts.",
+    "Onshape public documents: the API returns 401 'Unauthenticated API request' and public search needs a login, which is not allowed. WebSearch for Onshape Land Cruiser, 1FZ, solid axle and ladder frame found nothing.",
+    "TraceParts: searches for denso, aisin, koyo and toyota. Toyota and Aisin give no results. Koyo only matches AutomationDirect encoders, Denso only Phoenix Contact connectors. There are no automotive OEM catalogues. The General Terms of Use (info.traceparts.com/ja/general-terms-of-use, English text) say: 'The commercial utilization of this web site is specifically prohibited in terms of Duplication, utilization, distribution, or other use of data...' and 'The commercial use is only authorized with the express written consent of TraceParts.'",
+    "3D ContentCentral (3dcontentcentral.com): unreachable. Curl times out with status 000 and the headless browser gets 502 upstream failed on every search (toyota, land cruiser, denso, brake caliper).",
+    "Instructables: WebSearch 'instructables Land Cruiser 100 OR 1FZ-FE OR LX470 3D model' returned no Instructables pages, only marketplace models (RenderHub, Free3D, 3D Warehouse, Fab, Superhive), which belong to other search areas.",
+    "General WebSearch: '1FZ-FE engine 3D model STEP OR STL OR CAD download' and '1FZ OR 1FZ-FE 3D scan STL engine free download Land Cruiser' only point back to the GrabCAD 4AM_Engineering scans. 3dcadbrowser 'FZ Engine' turned out to be a sci-fi spaceship part.",
+    "Conclusion for this area: the only exact 1FZ-FE, H151F, HF2A family and LC100 propeller shaft models are on GrabCAD (mostly 4AM_Engineering scans, plus one STEP propeller shaft). GrabCAD terms forbid commercial use and redistribution, so the only route is written permission from the uploaders. Commercially clean (CC0/CC BY) items from the print sites are generic or toy grade."
+   ]
+  },
+  {
+   "area": "game_assets",
+   "searched": [
+    "WebSearch: BeamNG Land Cruiser 100 mod",
+    "WebSearch: beamng.com resources Land Cruiser 100 OR LX470 OR FZJ100 OR UZJ100 (only modland results)",
+    "WebSearch: beamng forum Land Cruiser 100 mod ripped model source forza (no provenance info found)",
+    "beamng.com/resources/search?q=land+cruiser+100 via headless browser: 404, the official repository search needs a different URL or login; not pursued further",
+    "modland.net BeamNG pages opened in headless browser (curl got a Cloudflare challenge): toyota-land-cruiser-108, -113, -107, ukbeamng-fixupdate, lexus-lx-470-pack, mod-car-toyota-land-cruiser-100-for-beamngdrive",
+    "WebSearch: SnowRunner Land Cruiser 100 mod; Land Cruiser 105/100 Spintires MudRunner SnowRunner (only LC70, Prado, LC105, LC200, J40)",
+    "modland.net snowrunner-mods/search/land-cruiser (J40, LC200, LC105 only)",
+    "WebSearch: Assetto Corsa Toyota Land Cruiser 100 mod; Land Cruiser 100 Assetto Corsa LX470 (found only LX470 Arab)",
+    "gta5-mods.com toyota-land-cruiser-100 page",
+    "WebSearch: assetstore.unity.com Toyota Land Cruiser 100 (only a deprecated Military SUVs pack)",
+    "Unity Asset Store search via browser: land cruiser, toyota, car chassis, car engine, suv offroad, suv suspension",
+    "Unity Asset Store EULA (unity.com/legal/as-terms) read, section 2.2.1",
+    "WebSearch: fab.com Land Cruiser 100 OR LX470 vehicle (nothing)",
+    "Fab search via browser: land cruiser, toyota land cruiser, lx470, toyota, inline 6 engine, straight six engine, car engine block, ladder frame chassis, 4x4 chassis, rolling chassis, car suspension, solid axle, off road suv chassis, manual gearbox, brake caliper, car radiator, transfer case, car exhaust, alternator",
+    "Fab EULA (fab.com/eula) read: Standard License sections 3 to 6",
+    "ArtStation marketplace search via browser: 404 for search; the marketplace API returned 'product not found' (the marketplace has largely moved to Fab)",
+    "WebSearch: site:artstation.com Land Cruiser 100 engine OR chassis OR underbody (no ArtStation results)",
+    "WebSearch: gumroad Land Cruiser 100 3D model blender (only a Prado and a Defender)",
+    "WebSearch: 1FZ-FE engine 3D model (Gumroad 1UZ-FE AC asset; the 3dcadbrowser 'FZ Engine' turned out to be a sci-fi spaceship engine)",
+    "Sketchfab API: land cruiser 100, lx470, land cruiser 100 beamng, land cruiser 100 chassis, 1fz, toyota inline 6 engine, 4x4 chassis frame, solid axle coil",
+    "Sketchfab API model detail and uploader listing for ZapupaNekra (game rip check)"
+   ]
+  }
+ ],
+ "failedAreas": []
+}
