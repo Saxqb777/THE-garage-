@@ -178,11 +178,12 @@ def hinge_pivots():
     z_mid = 0.95
     if SOURCE == "model":
         from blender.parts import source_regions as R
-        piv = {"BODY_5353_hood": (0.0, R.HOOD_REAR_Y, 1.26)}
+        # hinge axes sit a little inside the skin and just behind the cut line, like the real hinges
+        piv = {"BODY_5353_hood": (0.0, R.HOOD_REAR_Y + 0.02, 1.215)}
         for side, sgn in (("L", 1.0), ("R", -1.0)):
-            piv[f"DOOR_6751_front_door_{side}"] = (sgn * 0.985, R.A_LINE[0][0], z_mid)
-            piv[f"DOOR_6755_rear_door_{side}"] = (sgn * 0.985, R.B_LINE[0][0], z_mid)
-            piv[f"DOOR_6761_back_door_{side}"] = (sgn * 0.80, 2.40, 1.2)
+            piv[f"DOOR_6751_front_door_{side}"] = (sgn * 0.955, R.A_LINE[0][0] + 0.012, z_mid)
+            piv[f"DOOR_6755_rear_door_{side}"] = (sgn * 0.955, R.B_LINE[0][0] + 0.012, z_mid)
+            piv[f"DOOR_6761_back_door_{side}"] = (sgn * 0.775, 2.43, 1.2)
         return piv
     piv = {
         "BODY_5353_hood": (0.0, 0.45 - HALF_WB, 1.245),

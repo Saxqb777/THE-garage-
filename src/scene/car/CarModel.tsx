@@ -5,7 +5,8 @@ import { Euler, Group, Quaternion, Vector3, type Object3D, type SpotLight } from
 import { useFrame, type ThreeEvent } from '@react-three/fiber';
 import { Bvh, useGLTF } from '@react-three/drei';
 import gsap from 'gsap';
-import { engine, setGear } from '@/engine/sim';
+import { engineAudio } from '@/engine/audio';
+import { engine, kickBody, setGear } from '@/engine/sim';
 import { carLift } from '../liftState';
 import { childrenOf } from '../explode/rig';
 import { explodeRig, frameParts } from '../explode/Explode';
@@ -71,13 +72,20 @@ export default function CarModel({ url }: { url: string }) {
     order.forEach((r, i) => {
       const target = open[r.key] ? 1 : 0;
       tweened.current.set(r, target);
+      // opening swings out and settles against the check with a small bounce; closing
+      // accelerates home and lands with a thud the body absorbs
       gsap.to(r, {
         t: target,
-        duration: 1.2,
-        ease: 'power2.inOut',
-        delay: i * 0.08,
+        duration: target ? 1.0 : 0.7,
+        ease: target ? 'back.out(1.25)' : 'power2.in',
+        delay: i * 0.1,
         overwrite: true,
         onUpdate: () => poseHinges([r]),
+        onComplete: () => {
+          if (target) return;
+          engineAudio.click(0.45);
+          kickBody(0.025, r.key.endsWith('_L') ? 0.02 : r.key.endsWith('_R') ? -0.02 : 0);
+        },
       });
     });
   }, [open, rigs]);

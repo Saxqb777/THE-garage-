@@ -180,9 +180,9 @@ def classify(src, smat, c, n, island=10**9):
     # VXR extras and mod leftovers
     if src in CLADDING:
         # the running board stays (set 2 reference car has it); the two tone door band above it goes
-        if ax > R.CLADDING_STEP_X or z < 0.52:
+        if z < 0.56:
             return f"BODY_0000_side_step_{s}", "tex_side_step"
-        return None
+        return None  # the two tone band with the VX.R text sat on the door skin above the step
     if src == TRIMS and (inbox(c, R.REAR_WIPER) or inbox(c, R.FRONT_WIPERS)):
         return None
     exterior = src not in INTERIOR
@@ -204,8 +204,8 @@ def classify(src, smat, c, n, island=10**9):
 
     # lamps
     if exterior and inbox(c, R.HEADLAMP, sg):
-        if src == PAINT and n[2] > 0.3 and z > 0.985:
-            return f"BODY_5353_front_fender_{s}", "paint_white"  # painted lip above the lamp, not housing
+        if src == PAINT and z > 0.975:
+            return f"BODY_5353_front_fender_{s}", "paint_white"  # painted lip above the lamp (the dark eyebrow was texture)
         if src == GLASS_OUT:
             mk = "lamp_lens_clear"
         elif src == PAINT or src == BLACK:
@@ -325,12 +325,14 @@ def classify(src, smat, c, n, island=10**9):
         a = line_y(R.A_LINE, z)
         b = line_y(R.B_LINE, z)
         r = line_y(R.REAR_DOOR_LINE, z)
+        if src == PAINT and (z < 0.86 or inbox(c, R.HANDLE_FRONT, sg) or inbox(c, R.HANDLE_REAR, sg)):
+            base = "paint_white"  # plain paint: the texture carries the VXR two tone band, decal text and handle shadow
         if a <= y < b:
             return f"DOOR_6751_front_door_{s}", base
         if b <= y < r:
             return f"DOOR_6755_rear_door_{s}", base
         if src == PAINT and y < a and z > 0.70 and ax > 0.44 and y > -2.6:
-            return f"BODY_5353_front_fender_{s}", "tex_paint_white"
+            return f"BODY_5353_front_fender_{s}", "paint_white" if z < 0.86 else "tex_paint_white"
     if src in INTERIOR_DASH:
         return "INT_5551_instrument_panel", base
     if src == "flakka.2006.22":

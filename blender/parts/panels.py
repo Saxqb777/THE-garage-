@@ -106,6 +106,27 @@ def heightfield(obj, panel):
     return A, B, T, ~np.isnan(T)
 
 
+def skin_depth(obj, panel, A, B):
+    """Outer surface depth of obj on an existing grid, same rules as heightfield (outward faces only)."""
+    co, polys = world_polygons(obj)
+    rot = obj.matrix_world.to_3x3()
+    polys = [p for p, f in zip(polys, obj.data.polygons) if abs((rot @ f.normal)[panel.axis]) >= 0.6]
+    tree = BVHTree.FromPolygons(co, polys)
+    ia, ib = panel.ab
+    lo, hi = bounds_of(obj)
+    far = (hi if panel.sign > 0 else lo)[panel.axis] + panel.sign * 0.3
+    d = -panel.sign * AXES[panel.axis]
+    T = np.full((len(A), len(B)), np.nan)
+    org = [0.0, 0.0, 0.0]
+    for i, a in enumerate(A):
+        for j, b in enumerate(B):
+            org[ia], org[ib], org[panel.axis] = a, b, far
+            hit = tree.ray_cast(Vector(org), d, 3.0)
+            if hit[0] is not None and abs(hit[1].dot(d)) > 0.35:
+                T[i, j] = panel.sign * hit[0][panel.axis]
+    return T
+
+
 def fill_nearest(T, mask):
     """T with every cell outside mask replaced by the value of the nearest cell inside it."""
     if mask.all():
@@ -383,12 +404,20 @@ def belt_of(objs, keys, panel):
 
 
 def thicken(objs, log=print):
+    shell = objs.get("BODY_0000_body_shell")
+    shell_pieces = []
+    shell_keep = np.ones(len(shell.data.polygons), bool) if shell is not None else None
     for panel in panels_for(objs):
         obj = objs[panel.key]
         A, B, T, hit = heightfield(obj, panel)
         S, outer = footprints(panel, objs, A, B, hit, silhouette(obj, panel, A, B))
         belt_keys = panel.glass_keys or ((panel.top_band,) if panel.top_band else ())
         belt = belt_of(objs, belt_keys, panel)
+        if shell is not None:
+            Tf = ndimage.gaussian_filter(ndimage.grey_erosion(fill_nearest(T, ~np.isnan(T)), size=5), 1.0)
+            op, keep_s = opening_pieces(panel, A, B, Tf, outer, shell, log)
+            shell_pieces += op
+            shell_keep &= keep_s
         pieces, keep = build_solid(panel, A, B, T, S, outer, belt, obj)
         glass = glass_pieces(objs, panel.glass_keys)
         if not pieces:
@@ -405,4 +434,127 @@ def thicken(objs, log=print):
                 bpy.data.meshes.remove(me)
         n = sum(len(p[1]) for p in pieces)
         log(f"panels: {panel.key}: {int(S.sum() * GRID * GRID * 1e4)} dm2 of skin, {n} faces added, {dropped} lip faces dropped, belt {belt}, glass merged {len(panel.glass_keys)}")
+    if shell is not None:
+        shell_pieces += arch_liner_pieces()
+        M.append_geometry(shell, to_local(shell, shell_pieces), shell_keep)
+        log(f"body: {len(shell_pieces)} opening and liner pieces added, {int((~shell_keep).sum())} lip faces dropped")
     return objs
+
+# ---------------------------------------------------------------------------
+# the body side: door frames, sills, engine bay tub, wheel arch liners (step 2)
+
+JAMB_DEPTH = {"DOOR": 0.12, "BACK": 0.14, "HOOD": 0.30}
+JAMB_GAP = 0.008     # between the door skin edge and the frame wall
+JAMB_WALL = 0.022
+
+
+def opening_pieces(panel, A, B, Tf, outer, shell, log):
+    """A frame wall round the opening, going inward from the body skin, plus the engine bay
+    floor under the hood. Returns (pieces, keep) for the body shell: its own ragged lips round
+    the opening (steep faces) are dropped."""
+    ia, ib = panel.ab
+    ax = panel.axis
+    kind = "HOOD" if panel.key.startswith("BODY_5353") else ("BACK" if "back_door" in panel.key else "DOOR")
+    depth = JAMB_DEPTH[kind]
+    sd_o = sdf2d(outer)
+    mat = "underbody_black" if kind == "HOOD" else "paint_white"
+    # the frame starts at the body skin round the opening (roof, pillars, fenders), which curves
+    # away from the door skin: following the door depth would poke the frame out of the roof
+    Tb = skin_depth(shell, panel, A, B)
+    seen = ~np.isnan(Tb)
+    Tb = ndimage.gaussian_filter(ndimage.median_filter(fill_nearest(Tb, seen), size=3), 0.7)
+    Top = np.minimum(Tb, Tf)
+    # no frame where the body skin could not be measured from outside (the roof curving away,
+    # the cowl under the windshield): a frame there would stand proud of the body
+    sd_seen = sdf2d(ndimage.binary_dilation(seen, iterations=2))
+
+    def pick(X, Y, Z):
+        P = (X, Y, Z)
+        return P[ia], P[ib], panel.sign * P[ax]
+
+    def wall(X, Y, Z):
+        a, b, t = pick(X, Y, Z)
+        ts = sample2(Top, A, B, a, b) - GAP
+        s2 = sample2(sd_o, A, B, a, b)
+        ring = np.abs(s2 + JAMB_GAP + 0.5 * JAMB_WALL) - 0.5 * JAMB_WALL
+        f = np.maximum(ring, np.maximum(t - (ts - 0.004), (ts - depth) - t))
+        f = np.maximum(f, -sample2(sd_seen, A, B, a, b))
+        if kind == "BACK":
+            # the two barn doors meet in the middle: no wall there
+            f = np.maximum(f, 0.045 - np.abs(X))
+        return f
+
+    def floor(X, Y, Z):
+        a, b, t = pick(X, Y, Z)
+        ts = sample2(Tf, A, B, a, b) - GAP
+        s2 = sample2(sd_o, A, B, a, b)
+        return np.maximum(0.02 - s2, np.maximum(t - (ts - 0.44), (ts - 0.46) - t))
+
+    inside = np.argwhere(outer)
+    lo = np.zeros(3)
+    hi = np.zeros(3)
+    a0, a1 = A[inside[:, 0].min()], A[inside[:, 0].max()]
+    b0, b1 = B[inside[:, 1].min()], B[inside[:, 1].max()]
+    tmin, tmax = float(np.nanmin(Tf[outer])), float(np.nanmax(Tf[outer]))
+    pad = JAMB_GAP + JAMB_WALL + 3 * H
+    lo[ia], hi[ia] = a0 - pad, a1 + pad
+    lo[ib], hi[ib] = b0 - pad, b1 + pad
+    t_lo, t_hi = tmin - (0.47 if kind == "HOOD" else depth) - 3 * H, tmax + 3 * H
+    if panel.sign > 0:
+        lo[ax], hi[ax] = t_lo, t_hi
+    else:
+        lo[ax], hi[ax] = -t_hi, -t_lo
+    pieces = []
+    for fn, target in ((wall, 7000), (floor, 1500)) if kind == "HOOD" else ((wall, 6000),):
+        co, tri = mesh_field(fn, lo, hi, H)
+        if len(tri) == 0:
+            continue
+        co, tri = M.decimate_arrays(co, tri, target)
+        tri = fix_winding(co, tri, fn)
+        pieces.append((co, tri, mat, gradient_normals(fn, co)))
+    # the shell's own lips round the opening
+    me = shell.data
+    mw = shell.matrix_world
+    cent = np.array([(mw @ p.center)[:] for p in me.polygons])
+    nrm = np.array([(mw.to_3x3() @ p.normal)[:] for p in me.polygons])
+    a, b, t = pick(cent[:, 0], cent[:, 1], cent[:, 2])
+    tb = sample2(Tb, A, B, a, b)
+    s2 = sample2(sd_o, A, B, a, b)
+    seen_here = sample2(sd_seen, A, B, a, b) > 0
+    # never above the opening: the roof beside a door top is deeper than the drip rail and would go
+    near = (s2 > -0.05) & (s2 < 0.02) & (a > a0 - 0.05) & (a < a1 + 0.05) & (b > b0 - 0.05) & (b < b1 - 0.02)
+    steep = np.abs(nrm[:, ax]) < 0.75
+    # a lip turns inward from the skin: steep and deeper than the body skin measured here. The
+    # pillars and sills are the skin itself (same depth) and stay.
+    drop = near & steep & seen_here & (t < tb - 0.012) & (t > tb - 0.10)
+    log(f"opening: {panel.key}: {kind} frame {depth} m deep, {int(drop.sum())} shell lip faces dropped")
+    return pieces, ~drop
+
+
+WHEEL_CENTRES = [(0.81, -1.425, 0.385), (-0.81, -1.425, 0.385), (0.81, 1.425, 0.385), (-0.81, 1.425, 0.385)]
+
+
+def arch_liner_pieces():
+    """Black wheel arch liners: a half cylinder round each wheel plus an inner wall, so the arch
+    never shows the floor or the cabin behind the tyre."""
+    pieces = []
+    for cx, cy, cz in WHEEL_CENTRES:
+        sg = 1.0 if cx > 0 else -1.0
+
+        def fn(X, Y, Z, cx=cx, cy=cy, cz=cz, sg=sg):
+            rho = np.hypot(Y - cy, Z - cz)
+            xs = sg * X
+            shell = np.maximum(np.abs(rho - 0.50) - 0.010, np.maximum(0.62 - xs, xs - 0.90))
+            inner = np.maximum(np.abs(xs - 0.62) - 0.010, rho - 0.51)
+            f = np.minimum(shell, inner)
+            return np.maximum(f, (cz + 0.03) - Z)
+
+        lo = (min(sg * 0.60, sg * 0.92), cy - 0.54, cz)
+        hi = (max(sg * 0.60, sg * 0.92), cy + 0.54, cz + 0.54)
+        co, tri = mesh_field(fn, np.array(lo), np.array(hi), H)
+        if len(tri) == 0:
+            continue
+        co, tri = M.decimate_arrays(co, tri, 1200)
+        tri = fix_winding(co, tri, fn)
+        pieces.append((co, tri, "underbody_black", gradient_normals(fn, co)))
+    return pieces
