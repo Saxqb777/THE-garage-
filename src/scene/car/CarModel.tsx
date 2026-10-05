@@ -2,12 +2,13 @@
 
 import { useEffect, useMemo, useRef } from 'react';
 import type { Object3D, SpotLight } from 'three';
-import { useGLTF } from '@react-three/drei';
+import type { ThreeEvent } from '@react-three/fiber';
+import { Bvh, useGLTF } from '@react-three/drei';
 import gsap from 'gsap';
 import { useGarage } from '../store';
-import { closeHinges, poseHinges, rigHinges } from './hinges';
-import { applyLook, setLights } from './look';
-import { enableShadows, inspectModel, logModel } from './parts';
+import { closeHinges, poseHinges, rigHinges, type HingeRig } from './hinges';
+import { applyLook, applyModes } from './look';
+import { CONTRACT_PARTS, enableShadows, inspectModel, logModel, partKeyOf, partNodes } from './parts';
 
 // Self hosted decoder (copied from three/examples/jsm/libs/draco/gltf), no CDN.
 const DRACO_PATH = '/draco/';
@@ -18,8 +19,9 @@ gsap.ticker.lagSmoothing(0);
 
 export default function CarModel({ url }: { url: string }) {
   const { scene } = useGLTF(url, DRACO_PATH);
-  const hingesOpen = useGarage((s) => s.hingesOpen);
+  const open = useGarage((s) => s.open);
   const lightsOn = useGarage((s) => s.lightsOn);
+  const xray = useGarage((s) => s.xray);
   const info = useMemo(() => inspectModel(scene), [scene]);
   const rigs = useMemo(() => rigHinges(scene, info.parts.values()), [scene, info]);
 
@@ -27,6 +29,9 @@ export default function CarModel({ url }: { url: string }) {
     applyLook(scene);
     enableShadows(scene);
     logModel(url, scene, info);
+    partNodes.clear();
+    for (const [key, part] of info.parts) partNodes.set(key, part.object);
+    useGarage.getState().setHingeKeys(rigs.map((r) => r.key));
     useGarage.setState({
       modelError: null,
       model: {
@@ -37,38 +42,76 @@ export default function CarModel({ url }: { url: string }) {
         missingKeys: info.missingKeys,
       },
     });
-    return () => useGarage.setState({ model: null, loaded: false });
-  }, [scene, url, info]);
+    return () => {
+      partNodes.clear();
+      useGarage.setState({ model: null, loaded: false, hovered: null });
+    };
+  }, [scene, url, info, rigs]);
 
   useEffect(() => {
-    setLights(scene, lightsOn);
-    return () => setLights(scene, false);
-  }, [scene, lightsOn]);
+    applyModes(scene, { lightsOn, xray });
+    return () => applyModes(scene, { lightsOn: false, xray: false });
+  }, [scene, lightsOn, xray]);
 
   // Back to the rest pose when unmounted, since useGLTF hands the same scene to the next mount.
   useEffect(() => () => closeHinges(rigs), [rigs]);
 
+  // Each hinged part tweens on its own; parts that change together (Open all) are staggered.
+  const tweened = useRef(new Map<HingeRig, number>());
   useEffect(() => {
-    if (!rigs.length) return;
-    const tween = gsap.to(rigs, {
-      t: hingesOpen ? 1 : 0,
-      duration: 1.2,
-      ease: 'power2.inOut',
-      stagger: { each: 0.08, from: hingesOpen ? 'start' : 'end' },
-      overwrite: true,
-      onUpdate: () => poseHinges(rigs),
+    const changed = rigs.filter((r) => (open[r.key] ? 1 : 0) !== tweened.current.get(r));
+    const opening = changed.some((r) => open[r.key]);
+    const order = opening ? changed : [...changed].reverse();
+    order.forEach((r, i) => {
+      const target = open[r.key] ? 1 : 0;
+      tweened.current.set(r, target);
+      gsap.to(r, {
+        t: target,
+        duration: 1.2,
+        ease: 'power2.inOut',
+        delay: i * 0.08,
+        overwrite: true,
+        onUpdate: () => poseHinges([r]),
+      });
     });
-    return () => {
-      tween.kill();
-    };
-  }, [hingesOpen, rigs]);
+  }, [open, rigs]);
+  useEffect(() => () => gsap.killTweensOf(rigs), [rigs]);
 
   return (
     <>
-      <primitive object={scene} />
+      <Bvh firstHitOnly>
+        <primitive object={scene} onPointerMove={onPointerMove} onPointerOut={onPointerOut} onClick={onClick} />
+      </Bvh>
       {lightsOn && <Headlights />}
     </>
   );
+}
+
+// Picking. Ghosted (X Ray) meshes let the event through to whatever is behind them, and a
+// click that was really the end of an orbit drag is ignored.
+function onPointerMove(e: ThreeEvent<PointerEvent>) {
+  if (e.object.userData.ghost) return;
+  e.stopPropagation();
+  const key = partKeyOf(e.object);
+  const s = useGarage.getState();
+  if (key !== s.hovered) s.setHovered(key);
+  document.body.style.cursor = key ? 'pointer' : '';
+}
+
+function onPointerOut(e: ThreeEvent<PointerEvent>) {
+  const s = useGarage.getState();
+  if (s.hovered && partKeyOf(e.object) === s.hovered) s.setHovered(null);
+  document.body.style.cursor = '';
+}
+
+function onClick(e: ThreeEvent<MouseEvent>) {
+  if (e.object.userData.ghost || e.delta > 6) return;
+  e.stopPropagation();
+  const key = partKeyOf(e.object);
+  if (!key) return;
+  const s = useGarage.getState();
+  s.select(key);
+  if (CONTRACT_PARTS.get(key)?.hinge) s.togglePart(key);
 }
 
 // Low beams: two spots from the lamp centres (three.js space, car faces +Z), aimed down the road.

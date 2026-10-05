@@ -27,6 +27,8 @@ export default function Hud() {
   const setTimeOfDay = useGarage((s) => s.setTimeOfDay);
   const lightsOn = useGarage((s) => s.lightsOn);
   const setLightsOn = useGarage((s) => s.setLightsOn);
+  const xray = useGarage((s) => s.xray);
+  const setXray = useGarage((s) => s.setXray);
   const scene = SCENES[sceneKey];
 
   useEffect(() => {
@@ -34,12 +36,13 @@ export default function Hud() {
       if (e.repeat || e.metaKey || e.ctrlKey || e.altKey) return;
       if (e.key === 'h' || e.key === 'H') toggleHinges();
       if (e.key === 'l' || e.key === 'L') setLightsOn(!useGarage.getState().lightsOn);
+      if (e.key === 'x' || e.key === 'X') setXray(!useGarage.getState().xray);
       const n = Number(e.key);
       if (n >= 1 && n <= SCENE_ORDER.length) setScene(SCENE_ORDER[n - 1]);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [toggleHinges, setLightsOn, setScene]);
+  }, [toggleHinges, setLightsOn, setXray, setScene]);
 
   return (
     <aside className={styles.hud}>
@@ -118,9 +121,13 @@ export default function Hud() {
           <input type="checkbox" checked={lightsOn} onChange={(e) => setLightsOn(e.target.checked)} />
           <span>Lights</span>
         </label>
+        <label className={styles.toggle}>
+          <input type="checkbox" checked={xray} onChange={(e) => setXray(e.target.checked)} />
+          <span>X Ray</span>
+        </label>
       </div>
 
-      <p className={styles.hint}>Drag to orbit · scroll to zoom · H doors · L lights · 1 to 5 scenes</p>
+      <p className={styles.hint}>Click a part for its card · click doors to open · drag to orbit · H all doors · L lights · X x ray · 1 to 5 scenes</p>
       {url === PLACEHOLDER_URL && <p className={styles.badge}>placeholder blockout</p>}
 
       <details className={styles.credits}>

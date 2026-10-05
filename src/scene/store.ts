@@ -22,7 +22,21 @@ type GarageState = {
   drawCalls: number;
   /** Model indexed and rendered at least once. */
   loaded: boolean;
+  /** Any hinged part open (drives the Open all / Close all buttons). */
   hingesOpen: boolean;
+  /** Hinged parts in the model on screen, and which of them are open. */
+  hingeKeys: string[];
+  open: Record<string, boolean>;
+  setHingeKeys: (keys: string[]) => void;
+  togglePart: (key: string) => void;
+  /** Part under the pointer, and the part whose card is open. */
+  hovered: string | null;
+  setHovered: (key: string | null) => void;
+  selected: string | null;
+  select: (key: string | null) => void;
+  /** X Ray: body, doors, glass and lamps turn to ghost glass. */
+  xray: boolean;
+  setXray: (on: boolean) => void;
   /** The scene on screen. */
   scene: SceneKey;
   /** The scene asked for; it replaces `scene` once its sky has loaded (SceneSwap). */
@@ -49,7 +63,18 @@ export const useGarage = create<GarageState>()((set) => ({
   triangles: 0,
   drawCalls: 0,
   loaded: false,
-  hingesOpen: query.get('hinges') === 'open',
+  hingesOpen: false,
+  hingeKeys: [],
+  open: {},
+  // ?hinges=open opens everything as soon as the model reports its hinges
+  setHingeKeys: (hingeKeys) => set(() => withOpen(hingeKeys, Object.fromEntries(hingeKeys.map((k) => [k, query.get('hinges') === 'open'])))),
+  togglePart: (key) => set((s) => withOpen(s.hingeKeys, { ...s.open, [key]: !s.open[key] })),
+  hovered: null,
+  setHovered: (hovered) => set({ hovered }),
+  selected: query.get('part'),
+  select: (selected) => set({ selected }),
+  xray: query.get('xray') === '1',
+  setXray: (xray) => set({ xray }),
   scene: initialScene,
   targetScene: initialScene,
   setScene: (targetScene) => set({ targetScene }),
@@ -58,9 +83,13 @@ export const useGarage = create<GarageState>()((set) => ({
   setTimeOfDay: (timeOfDay) => set({ timeOfDay }),
   lightsOn: query.get('lights') ? query.get('lights') === 'on' : SCENES[initialScene].night,
   setLightsOn: (lightsOn) => set({ lightsOn }),
-  setHingesOpen: (hingesOpen) => set({ hingesOpen }),
-  toggleHinges: () => set((s) => ({ hingesOpen: !s.hingesOpen })),
+  setHingesOpen: (all) => set((s) => withOpen(s.hingeKeys, Object.fromEntries(s.hingeKeys.map((k) => [k, all])))),
+  toggleHinges: () => set((s) => withOpen(s.hingeKeys, Object.fromEntries(s.hingeKeys.map((k) => [k, !s.hingesOpen])))),
 }));
+
+function withOpen(hingeKeys: string[], open: Record<string, boolean>) {
+  return { hingeKeys, open, hingesOpen: hingeKeys.some((k) => open[k]) };
+}
 
 // window.__garage is the read only view that scripts/screenshot.mjs and tests poll.
 export type GarageDebug = ModelInfo & {
@@ -70,6 +99,9 @@ export type GarageDebug = ModelInfo & {
   triangles: number;
   drawCalls: number;
   hingesOpen: boolean;
+  open: string[];
+  selected: string | null;
+  xray: boolean;
   scene: SceneKey;
   targetScene: SceneKey;
   timeOfDay: number;
@@ -96,6 +128,9 @@ if (typeof window !== 'undefined') {
       unknownKeys: s.model?.unknownKeys ?? [],
       missingKeys: s.model?.missingKeys ?? [],
       hingesOpen: s.hingesOpen,
+      open: Object.keys(s.open).filter((k) => s.open[k]),
+      selected: s.selected,
+      xray: s.xray,
       scene: s.scene,
       targetScene: s.targetScene,
       timeOfDay: s.timeOfDay,

@@ -1,0 +1,32 @@
+.label {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 10px;
+  border: 1px solid rgba(242, 195, 107, 0.35);
+  border-radius: 8px;
+  background: rgba(14, 16, 20, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--fg);
+  font-size: 12px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.label[hidden] {
+  display: none;
+}
+
+.name {
+  font-weight: 500;
+}
+
+.action {
+  color: var(--accent);
+  font-size: 11px;
+}

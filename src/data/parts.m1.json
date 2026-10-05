@@ -670,7 +670,7 @@
       "system": "INT",
       "groupCode": "0000",
       "groupStatus": "unknown",
-      "nameEn": "Instrument panel (placeholder)",
+      "nameEn": "Instrument panel",
       "parent": null,
       "kind": "mesh"
     },
@@ -679,7 +679,7 @@
       "system": "INT",
       "groupCode": "0000",
       "groupStatus": "unknown",
-      "nameEn": "Steering wheel (placeholder)",
+      "nameEn": "Steering wheel",
       "parent": null,
       "kind": "mesh"
     },
@@ -688,7 +688,7 @@
       "system": "INT",
       "groupCode": "0000",
       "groupStatus": "unknown",
-      "nameEn": "Front seat, left (placeholder)",
+      "nameEn": "Front seat, left",
       "parent": null,
       "kind": "mesh"
     },
@@ -697,7 +697,7 @@
       "system": "INT",
       "groupCode": "0000",
       "groupStatus": "unknown",
-      "nameEn": "Front seat, right (placeholder)",
+      "nameEn": "Front seat, right",
       "parent": null,
       "kind": "mesh"
     },
@@ -706,7 +706,7 @@
       "system": "INT",
       "groupCode": "0000",
       "groupStatus": "unknown",
-      "nameEn": "Rear seat (placeholder)",
+      "nameEn": "Rear seat",
       "parent": null,
       "kind": "mesh"
     },
@@ -715,7 +715,7 @@
       "system": "INT",
       "groupCode": "0000",
       "groupStatus": "unknown",
-      "nameEn": "Floor carpet (placeholder)",
+      "nameEn": "Floor carpet",
       "parent": null,
       "kind": "mesh"
     },

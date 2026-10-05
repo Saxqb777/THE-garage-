@@ -161,3 +161,28 @@ export function enableShadows(root: Object3D) {
     if (isMesh(o)) o.castShadow = o.receiveShadow = true;
   });
 }
+
+/** The part a three.js object belongs to: the nearest ancestor (or itself) named with a part key. */
+export function partKeyOf(o: Object3D | null): string | null {
+  for (let p = o; p; p = p.parent) {
+    const name = p.userData.name;
+    if (typeof name === 'string' && PART_KEY_RE.test(name)) return name;
+  }
+  return null;
+}
+
+/**
+ * Part key to node for the model on screen, so UI and effects (outline, part card) can reach
+ * the objects without passing the scene around. CarModel fills it on load.
+ */
+export const partNodes = new Map<string, Object3D>();
+
+/** The meshes that belong to a part itself, not to its child parts (a door, without its glass). */
+export function meshesOf(key: string): Mesh[] {
+  const node = partNodes.get(key);
+  const out: Mesh[] = [];
+  node?.traverse((o) => {
+    if (isMesh(o) && partKeyOf(o) === key) out.push(o);
+  });
+  return out;
+}

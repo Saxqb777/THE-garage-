@@ -3,10 +3,11 @@
 import { Component, Suspense, useEffect, useMemo, type ReactNode } from 'react';
 import { Canvas, addAfterEffect, addEffect, useThree } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
-import { Bloom, EffectComposer, SMAA, ToneMapping, Vignette } from '@react-three/postprocessing';
+import { Bloom, EffectComposer, Outline, SMAA, ToneMapping, Vignette } from '@react-three/postprocessing';
 import { ToneMappingMode } from 'postprocessing';
 import { NoToneMapping, SRGBColorSpace } from 'three';
 import CarModel from './car/CarModel';
+import { meshesOf } from './car/parts';
 import Ground from './Ground';
 import Lighting, { SceneSwap } from './Lighting';
 import { SCENES, timeOfDayLook } from './scenes';
@@ -24,10 +25,20 @@ const CAMERA_POSITION = vec3('cam', [5.5, 1.6, 6.0]);
 const CAMERA_TARGET = vec3('look', [0, 0.8, 0.2]);
 const CAMERA_FOV = Number(query.get('fov')) || 35;
 
+let downAt: [number, number] = [0, 0];
+
 export default function Experience() {
   const url = useGarage((s) => s.modelUrl);
   return (
     <Canvas
+      onPointerDown={(e) => {
+        downAt = [e.clientX, e.clientY];
+      }}
+      onPointerMissed={(e) => {
+        // a click on empty space closes the part card; the end of an orbit drag does not
+        const moved = Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]);
+        if (e.type === 'click' && moved < 6) useGarage.getState().select(null);
+      }}
       shadows
       dpr={[1, 2]}
       camera={{ fov: CAMERA_FOV, near: 0.1, far: 100, position: CAMERA_POSITION }}
@@ -71,13 +82,35 @@ function PostFX() {
     [],
   );
   return (
-    <EffectComposer multisampling={0}>
+    <EffectComposer multisampling={0} autoClear={false}>
       <Bloom mipmapBlur intensity={scene.bloom.intensity} luminanceThreshold={scene.bloom.threshold} luminanceSmoothing={0.2} />
       <primitive object={warmth} />
       <ToneMapping mode={ToneMappingMode.ACES_FILMIC} />
       <Vignette eskil={false} offset={0.25} darkness={0.55} />
+      <PartOutline />
       <SMAA />
     </EffectComposer>
+  );
+}
+
+/** Gold outline on the part under the pointer and on the part whose card is open. */
+function PartOutline() {
+  const hovered = useGarage((s) => s.hovered);
+  const selected = useGarage((s) => s.selected);
+  const loaded = useGarage((s) => s.model !== null);
+  const selection = useMemo(
+    () => (loaded ? [...new Set([hovered, selected])].filter((k): k is string => !!k).flatMap(meshesOf) : []),
+    [hovered, selected, loaded],
+  );
+  return (
+    <Outline
+      selection={selection}
+      visibleEdgeColor={0xf2c36b}
+      hiddenEdgeColor={0x6b5530}
+      edgeStrength={3.5}
+      blur
+      xRay
+    />
   );
 }
 

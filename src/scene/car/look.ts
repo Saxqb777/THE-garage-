@@ -4,12 +4,14 @@ import {
   FrontSide,
   MeshPhysicalMaterial,
   MeshStandardMaterial,
+  ShaderMaterial,
   type Material,
   type Mesh,
   type Object3D,
   type Texture,
   type WebGLProgramParametersWithUniforms,
 } from 'three';
+import { partKeyOf } from './parts';
 
 /**
  * The look pass (M2): swaps every GLB material for a tuned MeshPhysicalMaterial, by material
@@ -231,17 +233,6 @@ const NIGHT_BY_PART: { part: RegExp; glow: Record<string, Glow> }[] = [
   { part: /.*/, glow: { tex_cluster: { emissive: '#ffd8a6', intensity: 1.4, useMap: true } } },
 ];
 
-// SYSTEM_GROUPCODE_part_name_side, e.g. LIGHT_8105_rear_combination_lamp_L
-const PART_NAME = /^[A-Z]+_\d{4}_[A-Za-z0-9_]+$/;
-
-function partKeyOf(o: Object3D): string {
-  for (let p: Object3D | null = o; p; p = p.parent) {
-    const name = p.userData.name;
-    if (typeof name === 'string' && PART_NAME.test(name)) return name;
-  }
-  return '';
-}
-
 function glowFor(part: string): Record<string, Glow> {
   const out: Record<string, Glow> = {};
   // first matching rule wins per material
@@ -268,47 +259,84 @@ function redOnly(m: MeshPhysicalMaterial) {
   m.customProgramCacheKey = () => 'redOnlyEmissive';
 }
 
-const nightMade = new WeakMap<Object3D, Map<string, Material>>();
+const nightMade = new Map<string, Material>();
 
-export function setLights(root: Object3D, on: boolean) {
-  let made = nightMade.get(root);
-  if (!made) {
-    made = new Map();
-    nightMade.set(root, made);
-  }
+/** Body systems that turn to ghost glass in X Ray; wheels and the interior stay solid. */
+const GHOST_SYSTEMS = new Set(['BODY', 'DOOR', 'GLASS', 'LIGHT', 'TRIM']);
+
+let ghostMaterial: ShaderMaterial | null = null;
+
+/** Fresnel ghost: nearly clear face on, a cool rim at grazing angles. */
+function ghost() {
+  ghostMaterial ??= new ShaderMaterial({
+    name: 'xray_ghost',
+    uniforms: { color: { value: new Color('#7cc8ff') } },
+    vertexShader: /* glsl */ `
+      varying vec3 vNormal;
+      varying vec3 vView;
+      void main() {
+        vec4 mv = modelViewMatrix * vec4(position, 1.0);
+        vNormal = normalize(normalMatrix * normal);
+        vView = -mv.xyz;
+        gl_Position = projectionMatrix * mv;
+      }`,
+    fragmentShader: /* glsl */ `
+      uniform vec3 color;
+      varying vec3 vNormal;
+      varying vec3 vView;
+      void main() {
+        float f = pow(1.0 - abs(dot(normalize(vNormal), normalize(vView))), 2.5);
+        gl_FragColor = vec4(color * (0.25 + 1.2 * f), 0.04 + 0.55 * f);
+      }`,
+    transparent: true,
+    depthWrite: false,
+    side: DoubleSide,
+  });
+  return ghostMaterial;
+}
+
+export type MaterialModes = { lightsOn: boolean; xray: boolean };
+
+/**
+ * Night glow and X Ray on top of the look pass. Every mesh remembers its day material the
+ * first time it is touched, and each call rebuilds from it, so the modes combine and undo
+ * cleanly. Ghosted meshes are flagged (userData.ghost) so picking can see through them.
+ */
+export function applyModes(root: Object3D, { lightsOn, xray }: MaterialModes) {
   root.traverse((o) => {
     const mesh = o as Mesh;
     if (!mesh.isMesh) return;
-    const day = (mesh.userData.dayMaterial ?? mesh.material) as Material | Material[];
-    if (!on) {
-      if (mesh.userData.dayMaterial) {
-        mesh.material = day;
-        delete mesh.userData.dayMaterial;
-      }
+    mesh.userData.baseMaterial ??= mesh.material;
+    const base = mesh.userData.baseMaterial as Material | Material[];
+    const key = partKeyOf(mesh) ?? '';
+    const ghosted = xray && GHOST_SYSTEMS.has(key.split('_')[0]);
+    mesh.userData.ghost = ghosted;
+    mesh.castShadow = !ghosted;
+    if (ghosted) {
+      mesh.material = ghost();
       return;
     }
-    const glow = glowFor(partKeyOf(mesh));
-    let changed = false;
-    const next = ([] as Material[]).concat(day).map((m) => {
+    if (!lightsOn) {
+      mesh.material = base;
+      return;
+    }
+    const glow = glowFor(key);
+    const next = ([] as Material[]).concat(base).map((m) => {
       const g = glow[m.name];
       if (!g) return m;
-      changed = true;
       const id = `${m.name}|${g.emissive}|${g.intensity}`;
-      let n = made.get(id);
+      let n = nightMade.get(id);
       if (!n) {
         const lit = (m as MeshPhysicalMaterial).clone();
         lit.emissive.set(g.emissive);
         lit.emissiveIntensity = g.intensity;
         if (g.useMap && lit.map) lit.emissiveMap = lit.map;
         if (g.redOnly && lit.emissiveMap) redOnly(lit);
-        made.set(id, lit);
+        nightMade.set(id, lit);
         n = lit;
       }
       return n;
     });
-    if (changed) {
-      mesh.userData.dayMaterial = day;
-      mesh.material = Array.isArray(day) ? next : next[0];
-    }
+    mesh.material = Array.isArray(base) ? next : next[0];
   });
 }
