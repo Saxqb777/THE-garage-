@@ -46,4 +46,5 @@ Read this first in every session. Keep it current: when a decision is made, log 
 
 ## Current state
 
-* M1 (pipeline) in progress: no free LC100 shell was supplied and download sites are blocked, so the shell is a procedural stand in built in Blender from the blueprint and photos. Phase 2 swaps in a paid model through the same contract.
+* M1 (pipeline) nearly done. The car is Saaqib's CC BY 4.0 LC100 2006 model (reference/model/lc100_2006_cc_by, licence note there, artist name still to come), converted to GXR spec by blender/parts/source_convert.py: VXR steps, spoiler, stripes and mod junk removed, tailgate split into barn doors, our wheels, black grille and mirrors, grey cloth interior. The procedural stand in (blender/parts/body*.py) stays as a fallback: `python3 blender/build_lc100.py --source procedural`.
+* Source model facts: wheelbase 2.902 scaled to 2.85, 345k triangles, body is one triangle soup so parts are cut along measured gap lines (blender/parts/source_regions.py). Inventory and scan tools: blender/inspect_source.py, blender/lib/scan.py.

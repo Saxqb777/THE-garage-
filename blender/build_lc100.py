@@ -51,10 +51,100 @@ def skin_x(u, z):
 # Step 1: shell
 
 
+SOURCE = "model"  # "model": the CC BY LC100 2006 conversion; "procedural": the SDF stand in
+
+
 def step_shell():
-    objs = BODY.build(log=log)
-    objs.update(BODY.build_bumpers(log=log))
-    return objs
+    if SOURCE == "procedural":
+        objs = BODY.build(log=log)
+        objs.update(BODY.build_bumpers(log=log))
+        return objs
+    from blender.parts import source_convert
+    return source_convert.convert(log=log)
+
+
+def surface_hit(objs, origin, direction, max_dist=9.0):
+    """First hit of a ray against the given objects: (location, normal) or (None, None)."""
+    from mathutils.bvhtree import BVHTree
+    import bmesh
+    bm = bmesh.new()
+    for o in objs:
+        tmp = bmesh.new()
+        tmp.from_mesh(o.data)
+        tmp.transform(o.matrix_world)
+        me = o.data.copy()
+        tmp.to_mesh(me)
+        tmp.free()
+        bm.from_mesh(me)
+        bpy.data.meshes.remove(me)
+    tree = BVHTree.FromBMesh(bm)
+    loc, nrm, _, _ = tree.ray_cast(Vector(origin), Vector(direction), max_dist)
+    bm.free()
+    return loc, nrm
+
+
+def place_on_source(objs):
+    """Our own parts the source model lacks: name plate, four wipers."""
+    from mathutils import Matrix
+    from blender.parts import details as D
+    from blender.parts import placement as PL
+    out = {}
+    door_l = objs.get("DOOR_6703_back_door_L")
+    if door_l is not None:
+        badges = D.build_badges()
+        for key, (x, z) in {"TRIM_0000_back_door_name_plate": (0.41, 1.165)}.items():
+            loc, nrm = surface_hit([door_l], (x, 4.0, z), (0, -1, 0))
+            if loc is not None:
+                PL.place(badges[key], loc, PL.basis("+Y", nrm))
+                out[key] = badges[key]
+        for key in ("TRIM_0000_back_door_emblem", "TRIM_0000_grade_badge", "TRIM_0000_quarter_badge_L", "TRIM_0000_quarter_badge_R"):
+            if key in badges and key not in objs:
+                if key.startswith("TRIM_0000_quarter"):
+                    sg = 1.0 if key.endswith("L") else -1.0
+                    loc, nrm = surface_hit([objs["BODY_0000_body_shell"]], (sg * 2.0, 2.06, 1.31), (-sg, 0, 0))
+                    if loc is not None:
+                        PL.place(badges[key], loc, PL.basis("+X" if sg > 0 else "-X", nrm))
+                        out[key] = badges[key]
+                        continue
+                bpy.data.objects.remove(badges[key])
+            elif key in badges:
+                bpy.data.objects.remove(badges[key])
+    ws = objs.get("GLASS_5601_windshield_glass")
+    if ws is not None:
+        for side, x in (("L", 0.55), ("R", -0.05)):
+            loc, nrm = surface_hit([ws], (x, -4.0, 1.28), (0, 1, 0))
+            if loc is None:
+                continue
+            arm = D.build_wiper("front", side)
+            zv = Vector(nrm).normalized()
+            xv = Vector((1.0, 0.0, 0.0))
+            xv = (xv - xv.dot(zv) * zv).normalized()
+            yv = zv.cross(xv)
+            PL.place(arm, loc + zv * 0.004, Matrix((xv, yv, zv)).transposed().to_4x4())
+            out[arm.name] = arm
+            for c in arm.children:
+                out[c.name] = c
+    for side, sg in (("L", 1.0), ("R", -1.0)):
+        glass = objs.get(f"GLASS_6703_back_door_glass_{side}")
+        if glass is None:
+            continue
+        loc, nrm = surface_hit([glass], (sg * 0.09, 4.0, 1.345), (0, -1, 0))
+        if loc is None:
+            continue
+        arm = D.build_wiper("rear", side)
+        zv = Vector(nrm).normalized()
+        up = Vector((0, 0, 1.0))
+        up_g = (up - up.dot(zv) * zv).normalized()
+        across = Vector((1.0, 0, 0))
+        across = (across - across.dot(zv) * zv).normalized()
+        tilt = np.radians(16.0)
+        xv = (across * np.cos(tilt) + up_g * (sg * np.sin(tilt))).normalized()
+        yv = zv.cross(xv)
+        PL.place(arm, loc + zv * 0.004, Matrix((xv, yv, zv)).transposed().to_4x4())
+        out[arm.name] = arm
+        for c in arm.children:
+            out[c.name] = c
+    return out
 
 
 # ---------------------------------------------------------------------------
@@ -68,14 +158,13 @@ def step_parts(objs):
         objs[empty.name] = empty
         for child in empty.children:
             objs[child.name] = child
-    from blender.parts import interior
-    objs.update(interior.build())
-    try:
+    if SOURCE == "procedural":
+        from blender.parts import interior
+        objs.update(interior.build())
         from blender.parts import placement
-    except ImportError:
-        log("parts: blender/parts/placement.py not present yet, skipping small parts")
-        return objs
-    objs.update(placement.place_all(objs, skin_x))
+        objs.update(placement.place_all(objs, skin_x))
+    else:
+        objs.update(place_on_source(objs))
     return objs
 
 
@@ -86,6 +175,14 @@ def step_parts(objs):
 def hinge_pivots():
     """Blender space pivot point for every hinged part (left side, mirrored for right)."""
     z_mid = 0.95
+    if SOURCE == "model":
+        from blender.parts import source_regions as R
+        piv = {"BODY_5301_hood": (0.0, R.HOOD_REAR_Y, 1.26)}
+        for side, sgn in (("L", 1.0), ("R", -1.0)):
+            piv[f"DOOR_6701_front_door_{side}"] = (sgn * 0.985, R.A_LINE[0][0], z_mid)
+            piv[f"DOOR_6702_rear_door_{side}"] = (sgn * 0.985, R.B_LINE[0][0], z_mid)
+            piv[f"DOOR_6703_back_door_{side}"] = (sgn * 0.80, 2.40, 1.2)
+        return piv
     piv = {
         "BODY_5301_hood": (0.0, 0.45 - HALF_WB, 1.245),
     }
@@ -207,7 +304,10 @@ def step_export(path=OUT_GLB):
 
 
 def main():
+    global SOURCE
     args = sys.argv[1:]
+    if "--source" in args:
+        SOURCE = args[args.index("--source") + 1]
     t0 = time.time()
     bpy.ops.wm.read_factory_settings(use_empty=True)
     contract = naming.load_contract()
