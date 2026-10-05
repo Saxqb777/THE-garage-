@@ -91,4 +91,7 @@ scripts/reference/rectify_side.py maps the photo onto the car's side plane with 
 
 ## Parts data sources (for M7)
 
-* toyotapartsdeal.com, 2005 Land Cruiser parts catalogue (shared by Saaqib): https://www.toyotapartsdeal.com/2005-toyota-land_cruiser-parts.html. Candidate source for OEM numbers, diagram groups and list prices. Blocked by the environment network policy until Saaqib adds the domain. Its prices are US dealer prices, so UAE prices still come from Saaqib.
+* toyotapartsdeal.com, 2005 Land Cruiser parts catalogue (shared by Saaqib): https://www.toyotapartsdeal.com/2005-toyota-land_cruiser-parts.html. Reachable since Saaqib allowed the domain. Plain requests get a 403 from the site's own server; a normal browser user agent gets the page.
+* Structure: about 150 diagram groups under Body, Electrical, Engine/Fuel/Tool and Power Train/Chassis, each at /parts-list/2005-toyota-land_cruiser/<category>/<group>.html. Every group page embeds its data as JSON (window.__INITIAL_STORE__, a JavaScript literal with undefined values) with, per part: part number, PNC (Toyota part name code, e.g. 81110 headlamp), description, required quantity, notes, USD price and retail, photo URLs.
+* Example, Headlamp group: Unit Assy Headlamp LH 81170-60B10 ($267.95) and 81059-60071 ($227.35), RH 81130-60B20 and 81019-60071, Headlamp Assy W/Clearance 81010-60071 (RH) and 81050-60071 (LH), plus bulbs and sockets.
+* Caveats: it is the US market catalogue for the year, with no trim or market filter, so several numbers per part appear without saying which fits a GCC GXR. Engine groups will be the 2UZ-FE V8, not the 1FZ-FE. Prices are US dealer prices. GCC fitment and UAE prices still need Saaqib or a GCC source (VIN lookup).
