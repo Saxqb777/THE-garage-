@@ -29,6 +29,9 @@ type Row = {
   service_interval_km: number | null;
 };
 
+// Neon's HTTP endpoint renders an empty text[] as [''], so drop empty entries.
+const list = (a: string[] | null) => (a ?? []).filter((x) => x !== '');
+
 const toPart = (r: Row): CatalogPart => ({
   key: r.key,
   system: r.system,
@@ -37,9 +40,9 @@ const toPart = (r: Row): CatalogPart => ({
   category: r.category,
   nameEn: r.name_en,
   nameAr: r.name_ar,
-  aliases: r.aliases ?? [],
+  aliases: list(r.aliases),
   oemNumber: r.oem_number,
-  altOemNumbers: r.alt_oem_numbers ?? [],
+  altOemNumbers: list(r.alt_oem_numbers),
   oemStatus: r.oem_status,
   fitsGxr: r.fits_gxr,
   hotspot: r.hotspot_position && r.hotspot_position.length === 3 ? [r.hotspot_position[0], r.hotspot_position[1], r.hotspot_position[2]] : null,
