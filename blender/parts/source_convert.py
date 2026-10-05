@@ -169,7 +169,8 @@ def material_for(key):
 # ---------------------------------------------------------------------------
 # classification: returns (part key, material key) or None to delete the face
 
-def classify(src, smat, c, n):
+def classify(src, smat, c, n, island=10**9):
+    """island: triangle count of the connected island this face belongs to (paint body only)."""
     x, y, z = c
     ax = abs(x)
     s = side_of(c)
@@ -185,6 +186,11 @@ def classify(src, smat, c, n):
     if src == TRIMS and (inbox(c, R.REAR_WIPER) or inbox(c, R.FRONT_WIPERS)):
         return None
     exterior = src not in INTERIOR
+    if y < -1.9 and 0.40 < ax < 0.97 and 1.0 < z < 1.14:
+        if src == BLACK:
+            return None  # aftermarket black headlamp eyebrows glued on the hood lip
+        if src == PAINT:
+            base = "paint_white"  # hood lip over the lamps: the source texture is dark there, the real car is white
     if src == "gnh":
         return "BODY_0000_body_shell", "tex_paint_white"  # rear lip spoiler, as on the set 2 reference car
     if src == PAINT and 0.28 < z < 0.52 and ax > 0.80 and -1.0 < y < 0.98:
@@ -242,11 +248,15 @@ def classify(src, smat, c, n):
 
     # small parts on the sides
     if exterior and inbox(c, R.MIRROR, sg) and src in (PAINT, BLACK, "mirror2", "mirror3", GREY):
-        return f"BODY_0000_outer_mirror_{s}", "chrome" if src in ("mirror2", "mirror3") else "plastic_black_gloss"
-    if src in (PAINT, CHROME) and inbox(c, R.HANDLE_FRONT, sg):
-        return f"DOOR_0000_front_door_outside_handle_{s}", "chrome"
-    if src in (PAINT, CHROME) and inbox(c, R.HANDLE_REAR, sg):
-        return f"DOOR_0000_rear_door_outside_handle_{s}", "chrome"
+        # set 2 car: body colour housings; the sail base stays black
+        mk = "chrome" if src in ("mirror2", "mirror3") else ("plastic_black_matte" if (src == BLACK or ax < 0.93) else "paint_white")
+        return f"BODY_0000_outer_mirror_{s}", mk
+    small = island < 3000  # the door skin is one big island, handles and badges are small ones
+    if (src == CHROME or (src == PAINT and small)) and (inbox(c, R.HANDLE_FRONT, sg) or inbox(c, R.HANDLE_REAR, sg)):
+        if src == CHROME and ax < 0.992:
+            return None  # flat chrome backing plate behind the grip; the door skin is intact underneath
+        which = "front" if inbox(c, R.HANDLE_FRONT, sg) else "rear"
+        return f"DOOR_0000_{which}_door_outside_handle_{s}", "chrome"
     if src == PAINT and inbox(c, R.FUEL_LID):
         return "BODY_0000_fuel_filler_lid", "tex_paint_white"
     if src == PAINT and inbox(c, R.QUARTER_BADGE, sg):
@@ -304,7 +314,7 @@ def classify(src, smat, c, n):
 
     # hood
     if src == PAINT and y < R.HOOD_REAR_Y and ax < R.HOOD_SIDE_X and z > R.HOOD_FRONT_Z:
-        return "BODY_5301_hood", "tex_paint_white"
+        return "BODY_5301_hood", base
 
     # side doors: anything outboard of the drip rail between the gap lines
     if ax > R.DOOR_SIDE_X and R.DOOR_BOTTOM < z < 1.95 and src not in (SEATS, CARPET):
@@ -326,6 +336,33 @@ def classify(src, smat, c, n):
     if src == "flakka.2006.10":
         return "BODY_0000_body_shell", "rubber_tire"
     return "BODY_0000_body_shell", base
+
+
+def island_sizes(bm):
+    """Triangle count of the connected island of every face, indexed by face index."""
+    bm.faces.ensure_lookup_table()
+    n = len(bm.faces)
+    parent = list(range(n))
+
+    def find(a):
+        while parent[a] != a:
+            parent[a] = parent[parent[a]]
+            a = parent[a]
+        return a
+
+    for e in bm.edges:
+        lf = e.link_faces
+        if len(lf) > 1:
+            r0 = find(lf[0].index)
+            for f in lf[1:]:
+                r = find(f.index)
+                if r != r0:
+                    parent[r] = r0
+    counts = {}
+    roots = [find(i) for i in range(n)]
+    for i, r in enumerate(roots):
+        counts[r] = counts.get(r, 0) + len(bm.faces[i].verts) - 2
+    return [counts[r] for r in roots]
 
 
 # ---------------------------------------------------------------------------
@@ -465,10 +502,11 @@ def convert(log=lambda *a: print(*a, flush=True)):
         if o.name in SIDE_CUT_OBJECTS or o.name in (GLASS_TINT, GLASS_OUT, "flakka.2006.18", "flakka.2006.19", "boz7fa_land2004.017"):
             plane_cuts(bm)
         bm.normal_update()
+        islands = island_sizes(bm) if o.name == PAINT else None
         groups = {}
         for f in bm.faces:
             smat = o.data.materials[f.material_index].name if o.data.materials and f.material_index < len(o.data.materials) and o.data.materials[f.material_index] else ""
-            res = classify(o.name, smat, f.calc_center_median(), f.normal)
+            res = classify(o.name, smat, f.calc_center_median(), f.normal, islands[f.index] if islands else 10**9)
             if res is None:
                 continue
             key, mk = res

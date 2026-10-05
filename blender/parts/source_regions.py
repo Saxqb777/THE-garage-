@@ -20,7 +20,7 @@ HOOD_SIDE_X = 0.845
 HOOD_FRONT_Z = 1.06
 
 # Boxes: (x0, x1, y0, y1, z0, z1), left side where it matters; mirrored for the right
-HEADLAMP = (0.45, 0.98, -2.60, -1.94, 0.85, 1.075)
+HEADLAMP = (0.45, 0.98, -2.60, -1.94, 0.85, 1.025)   # the hood lip over the lamps starts at about z 1.03
 TAILLAMP = (0.60, 1.00, 2.24, 2.65, 0.77, 1.225)
 GRILLE = (-0.62, 0.62, -2.60, -2.05, 0.84, 1.16)
 FRONT_BUMPER_Y1 = -1.84
