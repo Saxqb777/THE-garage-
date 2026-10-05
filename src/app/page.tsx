@@ -8,6 +8,7 @@ const Hud = dynamic(() => import('@/ui/Hud'), { ssr: false });
 const HoverLabel = dynamic(() => import('@/ui/HoverLabel'), { ssr: false });
 const PartCard = dynamic(() => import('@/ui/PartCard'), { ssr: false });
 const Dash = dynamic(() => import('@/ui/Dash'), { ssr: false });
+const ExplodeBar = dynamic(() => import('@/ui/ExplodeBar'), { ssr: false });
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <Hud />
       <PartCard />
       <Dash />
+      <ExplodeBar />
       <HoverLabel />
     </main>
   );

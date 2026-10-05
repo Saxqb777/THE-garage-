@@ -46,10 +46,19 @@ export default function Hud() {
   const lift = useGarage((s) => s.lift);
   const setLift = useGarage((s) => s.setLift);
   const inGarage = shownKey === 'garage';
+  const exploded = useGarage((s) => s.explode.level > 0);
+  const explodeAll = useGarage((s) => s.explodeAll);
+  const assemble = useGarage((s) => s.assemble);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.repeat || e.metaKey || e.ctrlKey || e.altKey) return;
+      if (e.key === 'Escape') {
+        const st = useGarage.getState();
+        if (st.selected) st.select(null);
+        else if (st.explode.level > 0) st.explodeUp();
+        return;
+      }
       if (e.key === 'h' || e.key === 'H') toggleHinges();
       if (e.key === 'l' || e.key === 'L') setLightsOn(!useGarage.getState().lightsOn);
       if (e.key === 'x' || e.key === 'X') setXray(!useGarage.getState().xray);
@@ -109,13 +118,16 @@ export default function Hud() {
         <button
           type="button"
           className={styles.primary}
-          disabled={!model || camBusy}
+          disabled={!model || camBusy || exploded}
           onClick={() => requestCam(view === 'cabin' ? { action: 'getOut' } : { action: 'getIn', seat: 'driver' })}
         >
           {view === 'cabin' ? 'Get out' : 'Get in'}
         </button>
-        <button type="button" disabled={!model || camBusy || !inGarage || view === 'cabin'} onClick={() => setLift(!lift)} title="Two post lift, Garage only">
+        <button type="button" disabled={!model || camBusy || !inGarage || view === 'cabin' || exploded} onClick={() => setLift(!lift)} title="Two post lift, Garage only">
           {lift ? 'Lower lift' : 'Lift'}
+        </button>
+        <button type="button" className={exploded ? styles.primary : undefined} disabled={!model || camBusy} onClick={() => (exploded ? assemble() : explodeAll())}>
+          {exploded ? 'Assemble' : 'Explode'}
         </button>
       </div>
       <div className={styles.presets} aria-label="Camera">
@@ -168,7 +180,7 @@ export default function Hud() {
         </label>
       </div>
 
-      <p className={styles.hint}>Click a part for its card · click doors to open · drag to orbit · G get in · H all doors · L lights · X x ray · 1 to 5 scenes</p>
+      <p className={styles.hint}>Click a part for its card · click doors to open · drag to orbit · G get in · H all doors · L lights · X x ray · 1 to 5 scenes · Esc back</p>
       {url === PLACEHOLDER_URL && <p className={styles.badge}>placeholder blockout</p>}
 
       <details className={styles.credits}>

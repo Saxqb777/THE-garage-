@@ -34,7 +34,9 @@ class EngineAudio {
     return this.loading;
   }
 
-  private async setup() {
+  /** The context and master bus alone (cheap, for one shot sounds); call from a gesture. */
+  ensure() {
+    if (this.ctx) return this.ctx;
     const ctx = new AudioContext();
     this.ctx = ctx;
     this.master = ctx.createGain();
@@ -43,6 +45,42 @@ class EngineAudio {
     comp.threshold.value = -14;
     comp.ratio.value = 3;
     this.master.connect(comp).connect(ctx.destination);
+    return ctx;
+  }
+
+  /** A short mechanical clack: parts snapping home. strength 0..1. */
+  click(strength = 1) {
+    const ctx = this.ensure();
+    if (ctx.state === 'suspended') void ctx.resume();
+    const now = ctx.currentTime;
+    const len = Math.floor(ctx.sampleRate * 0.12);
+    const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.012));
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    const bp = ctx.createBiquadFilter();
+    bp.type = 'bandpass';
+    bp.frequency.value = 1900;
+    bp.Q.value = 1.2;
+    const g = ctx.createGain();
+    g.gain.value = 0.5 * strength;
+    src.connect(bp).connect(g).connect(this.master);
+    // and a low thump under it
+    const osc = ctx.createOscillator();
+    osc.frequency.setValueAtTime(140, now);
+    osc.frequency.exponentialRampToValueAtTime(55, now + 0.09);
+    const og = ctx.createGain();
+    og.gain.setValueAtTime(0.35 * strength, now);
+    og.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+    osc.connect(og).connect(this.master);
+    src.start(now);
+    osc.start(now);
+    osc.stop(now + 0.16);
+  }
+
+  private async setup() {
+    const ctx = this.ensure();
 
     this.filter = ctx.createBiquadFilter();
     this.filter.type = 'lowpass';

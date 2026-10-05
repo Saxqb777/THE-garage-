@@ -107,6 +107,12 @@ export function setGear(g: 'N' | '1') {
   engine.gear = g;
 }
 
+/** A knock on the body: the suspension takes it (parts snapping home when the car assembles). */
+export function kickBody(pitchVel: number, rollVel: number) {
+  body.pitchV += pitchVel;
+  body.rollV += rollVel;
+}
+
 // body springs: natural frequency and damping of the sprung mass on its suspension (approx)
 const ROLL_W = 2 * Math.PI * 1.5;
 const ROLL_Z = 0.28;

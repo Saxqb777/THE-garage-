@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import gsap from 'gsap';
-import { MathUtils, PerspectiveCamera, Spherical, Vector3 } from 'three';
+import { Box3, MathUtils, PerspectiveCamera, Spherical, Vector3 } from 'three';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import { carLift } from '../liftState';
 import { useGarage, type CamRequest, type Seat } from '../store';
@@ -62,8 +62,8 @@ function keepAboveFloor(c: Controls, camera: PerspectiveCamera) {
 function configure(c: Controls, view: 'exterior' | 'cabin') {
   if (view === 'exterior') {
     c.enableZoom = true;
-    c.minDistance = 2.5;
-    c.maxDistance = 14;
+    c.minDistance = 0.6;
+    c.maxDistance = 32;
     c.rotateSpeed = 1;
     c.minPolarAngle = 0;
   } else {
@@ -85,6 +85,9 @@ async function run(r: CamRequest, camera: PerspectiveCamera, controls: Controls)
       await enterCabin(r.seat, camera, controls);
     } else if (r.action === 'getOut') {
       if (s.view === 'cabin') await leaveCabin(camera, controls, true);
+    } else if (r.action === 'frame') {
+      if (s.view === 'cabin') await leaveCabin(camera, controls, false);
+      await frameBox(new Box3(new Vector3(...r.min), new Vector3(...r.max)), camera, controls);
     } else if (r.preset === 'interior') {
       if (s.view === 'cabin' && s.seat === 'rear') return;
       if (s.view === 'cabin') await leaveCabin(camera, controls, false);
@@ -108,6 +111,48 @@ async function run(r: CamRequest, camera: PerspectiveCamera, controls: Controls)
   } finally {
     useGarage.setState({ camBusy: false });
   }
+}
+
+/**
+ * Fit a box in view from the current direction: the target moves to the box centre and the
+ * camera backs off until the box's corners fit the view with a margin, projected on the real
+ * screen axes (a bounding sphere would leave a long car small in frame). The subject sits a
+ * little above centre, clear of the instrument cluster. Used by the explode stages and the zoom
+ * to a part.
+ */
+function frameBox(box: Box3, camera: PerspectiveCamera, controls: Controls) {
+  const center = box.getCenter(new Vector3());
+  const dir = camera.position.clone().sub(controls.target);
+  if (dir.lengthSq() < 1e-6) dir.set(1, 0.4, 1);
+  dir.normalize();
+  // never frame from below the floor line, and keep a little height so the floor reads
+  dir.y = Math.max(dir.y, 0.18);
+  dir.normalize();
+  const forward = dir.clone().negate();
+  const right = new Vector3().crossVectors(forward, new Vector3(0, 1, 0)).normalize();
+  const up = new Vector3().crossVectors(right, forward);
+  let halfW = 0;
+  let halfH = 0;
+  let halfD = 0;
+  const corner = new Vector3();
+  for (let i = 0; i < 8; i++) {
+    corner.set(i & 1 ? box.max.x : box.min.x, i & 2 ? box.max.y : box.min.y, i & 4 ? box.max.z : box.min.z).sub(center);
+    halfW = Math.max(halfW, Math.abs(corner.dot(right)));
+    halfH = Math.max(halfH, Math.abs(corner.dot(up)));
+    halfD = Math.max(halfD, Math.abs(corner.dot(forward)));
+  }
+  const vHalf = MathUtils.degToRad(camera.fov) / 2;
+  const hHalf = Math.atan(Math.tan(vHalf) * camera.aspect);
+  const margin = 1.12;
+  const dist = MathUtils.clamp(Math.max((halfW * margin) / Math.tan(hHalf), (halfH * margin) / Math.tan(vHalf)) + halfD, 0.8, 40);
+  // lift the subject by 9 percent of the frame, so the dash at the bottom does not cover it
+  const lift = up.clone().multiplyScalar(-0.09 * 2 * dist * Math.tan(vHalf));
+  const target = center.clone().add(lift);
+  const position = target.clone().addScaledVector(dir, dist);
+  position.y = Math.max(position.y, FLOOR + 0.2);
+  return dolly({ position: position.toArray() as [number, number, number], target: target.toArray() as [number, number, number], fov: camera.fov }, camera, controls, 1.15).then(() =>
+    finish(controls, 'exterior', null),
+  );
 }
 
 /** A shot raised with the car on the lift. */

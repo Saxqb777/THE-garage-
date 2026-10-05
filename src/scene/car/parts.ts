@@ -186,3 +186,22 @@ export function meshesOf(key: string): Mesh[] {
   });
   return out;
 }
+
+export const SYSTEM_NAMES: Record<string, string> = {
+  BODY: 'Body',
+  DOOR: 'Doors',
+  GLASS: 'Glass',
+  WHEEL: 'Wheels and tires',
+  SUSP: 'Suspension',
+  BRAKE: 'Brakes',
+  ENG: 'Engine',
+  COOL: 'Cooling',
+  EXH: 'Exhaust',
+  TRANS: 'Gearbox',
+  DRIVE: 'Driveline',
+  ELEC: 'Electrical',
+  INT: 'Interior',
+  AC: 'Air conditioning',
+  LIGHT: 'Lights',
+  TRIM: 'Trim',
+};

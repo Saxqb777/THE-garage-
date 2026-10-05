@@ -1,29 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { CONTRACT_PARTS, contract } from '@/scene/car/parts';
+import { useState } from 'react';
+import { CONTRACT_PARTS, SYSTEM_NAMES, contract } from '@/scene/car/parts';
+import { childrenOf } from '@/scene/explode/rig';
+import { explodeRig } from '@/scene/explode/Explode';
 import { HOTSPOTS, shortRef } from '@/scene/Hotspots';
 import { useGarage } from '@/scene/store';
 import styles from './PartCard.module.css';
 
-const SYSTEM_NAMES: Record<string, string> = {
-  BODY: 'Body',
-  DOOR: 'Doors',
-  GLASS: 'Glass',
-  WHEEL: 'Wheels and tires',
-  SUSP: 'Suspension',
-  BRAKE: 'Brakes',
-  ENG: 'Engine',
-  COOL: 'Cooling',
-  EXH: 'Exhaust',
-  TRANS: 'Gearbox',
-  DRIVE: 'Driveline',
-  ELEC: 'Electrical',
-  INT: 'Interior',
-  AC: 'Air conditioning',
-  LIGHT: 'Lights',
-  TRIM: 'Trim',
-};
 
 const SIDES: Record<string, string> = { L: 'Left', R: 'Right', F: 'Front', RR: 'Rear' };
 
@@ -38,16 +22,9 @@ export default function PartCard() {
   const select = useGarage((s) => s.select);
   const isOpen = useGarage((s) => (key ? !!s.open[key] : false));
   const togglePart = useGarage((s) => s.togglePart);
+  useGarage((s) => s.rigVersion); // sub parts come from the explode rig
   // remembers which part's link was copied, so the label resets when another part opens
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') select(null);
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [select]);
 
   if (!key) return null;
   if (key.startsWith('hotspot:')) return <HotspotCard id={key.slice('hotspot:'.length)} onClose={() => select(null)} onPart={select} />;
@@ -57,12 +34,10 @@ export default function PartCard() {
   const parent = part?.parent ? CONTRACT_PARTS.get(part.parent) : undefined;
   const v = contract.vehicle as { name: string; engine?: string; transmission?: string };
 
-  const link = () => {
-    const url = new URL(window.location.href);
-    url.search = '';
-    url.searchParams.set('part', key);
-    return url.toString();
-  };
+  // the address bar already carries scene, explode stage and part (store syncUrl)
+  const link = () => window.location.href;
+  const children = childrenOf(explodeRig.current, key);
+  const x = useGarage.getState().explode;
 
   return (
     <aside className={styles.card} aria-label="Part card">
@@ -107,6 +82,17 @@ export default function PartCard() {
         <dd>
           {v.name}, GXR{v.engine ? `, ${v.engine}` : ''}
           {v.transmission ? `, ${v.transmission}` : ''}
+        </dd>
+        <dt>Sub parts</dt>
+        <dd>
+          {children.length ? (
+            <>
+              {children.length} in the model
+              {x.level > 0 && x.assembly !== key && <span className={styles.muted}>, click the part to explode it</span>}
+            </>
+          ) : (
+            <span className={styles.muted}>none in the model yet, the Toyota diagram comes with M7</span>
+          )}
         </dd>
       </dl>
 

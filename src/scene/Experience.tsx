@@ -9,6 +9,7 @@ import { NoToneMapping, SRGBColorSpace } from 'three';
 import CarModel from './car/CarModel';
 import { meshesOf } from './car/parts';
 import CameraRig from './camera/CameraRig';
+import Explode from './explode/Explode';
 import Ground from './Ground';
 import Hotspots from './Hotspots';
 import Lift from './Lift';
@@ -57,6 +58,7 @@ export default function Experience() {
       </ModelBoundary>
       <OrbitControls makeDefault target={CAMERA_TARGET} enablePan={false} enableDamping dampingFactor={0.08} />
       <CameraRig />
+      <Explode />
       <Lift />
       <Hotspots />
       <PostFX />

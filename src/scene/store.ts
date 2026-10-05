@@ -48,6 +48,19 @@ type GarageState = {
   /** X Ray: body, doors, glass and lamps turn to ghost glass. */
   xray: boolean;
   setXray: (on: boolean) => void;
+  /**
+   * Explode (M6). Level 1: the systems separate. Level 2: one system's assemblies spread.
+   * Level 3: one assembly's parts spread. Serialised in the URL as ?x=all, ?x=SYSTEM or
+   * ?x=ASSEMBLY_KEY, so a link can open the car already apart.
+   */
+  explode: ExplodeState;
+  /** Bumps when the explode rig is (re)built, so UI that reads it re-renders. */
+  rigVersion: number;
+  explodeAll: () => void;
+  focusSystem: (system: string) => void;
+  focusAssembly: (key: string) => void;
+  explodeUp: () => void;
+  assemble: () => void;
   /** The scene on screen. */
   scene: SceneKey;
   /** The scene asked for; it replaces `scene` once its sky has loaded (SceneSwap). */
@@ -64,9 +77,16 @@ type GarageState = {
   toggleHinges: () => void;
 };
 
+export type ExplodeState = { level: 0 | 1 | 2 | 3; system: string | null; assembly: string | null };
+
 export type Seat = 'driver' | 'rear';
 export type PresetKey = 'hero' | 'front' | 'rear' | 'side' | 'engine' | 'interior' | 'underside';
-export type CamRequest = { id: number; action: 'preset'; preset: PresetKey } | { id: number; action: 'getIn'; seat: Seat } | { id: number; action: 'getOut' };
+export type CamRequest =
+  | { id: number; action: 'preset'; preset: PresetKey }
+  | { id: number; action: 'getIn'; seat: Seat }
+  | { id: number; action: 'getOut' }
+  /** Fit a world space box (three.js metres) in view, keeping the current direction. */
+  | { id: number; action: 'frame'; min: [number, number, number]; max: [number, number, number] };
 
 // without the id, per variant (a plain Omit would collapse the union)
 export type CamRequestInput = CamRequest extends infer R ? (R extends CamRequest ? Omit<R, 'id'> : never) : never;
@@ -75,6 +95,21 @@ let camRequestId = 0;
 
 const query = new URLSearchParams(typeof window === 'undefined' ? '' : window.location.search);
 const initialScene: SceneKey = isSceneKey(query.get('scene')) ? (query.get('scene') as SceneKey) : 'garage';
+
+const ASSEMBLED: ExplodeState = { level: 0, system: null, assembly: null };
+
+/** ?x=all, ?x=DOOR or ?x=DOOR_6701_front_door_L */
+function explodeFromParam(x: string | null): ExplodeState {
+  if (!x) return ASSEMBLED;
+  if (x === 'all') return { level: 1, system: null, assembly: null };
+  if (/^[A-Z]+$/.test(x)) return { level: 2, system: x, assembly: null };
+  if (/^[A-Z]+_\d{4}_/.test(x)) return { level: 3, system: x.split('_')[0], assembly: x };
+  return ASSEMBLED;
+}
+
+export function explodeParam(x: ExplodeState) {
+  return x.level === 0 ? null : x.level === 1 ? 'all' : x.level === 2 ? x.system : x.assembly;
+}
 
 export const useGarage = create<GarageState>()((set) => ({
   modelUrl: query.get('model') === 'placeholder' ? PLACEHOLDER_URL : MODEL_URL,
@@ -103,6 +138,24 @@ export const useGarage = create<GarageState>()((set) => ({
   select: (selected) => set({ selected }),
   xray: query.get('xray') === '1',
   setXray: (xray) => set({ xray }),
+  explode: explodeFromParam(query.get('x')),
+  rigVersion: 0,
+  // flying apart happens with the doors shut, the car on the ground and nobody inside
+  explodeAll: () =>
+    set((s) => {
+      if (s.view === 'cabin') s.requestCam({ action: 'getOut' });
+      return { explode: { level: 1, system: null, assembly: null }, lift: false, ...withOpen(s.hingeKeys, Object.fromEntries(s.hingeKeys.map((k) => [k, false]))) };
+    }),
+  focusSystem: (system) => set((s) => ({ explode: { level: 2, system, assembly: null }, lift: false, ...(s.explode.level === 0 ? withOpen(s.hingeKeys, {}) : {}) })),
+  focusAssembly: (key) => set((s) => ({ explode: { level: 3, system: key.split('_')[0], assembly: key }, lift: false, ...(s.explode.level === 0 ? withOpen(s.hingeKeys, {}) : {}) })),
+  explodeUp: () =>
+    set((s) => {
+      const x = s.explode;
+      if (x.level === 3) return { explode: { level: 2, system: x.system, assembly: null } };
+      if (x.level === 2) return { explode: { level: 1, system: null, assembly: null } };
+      return { explode: ASSEMBLED };
+    }),
+  assemble: () => set({ explode: ASSEMBLED }),
   scene: initialScene,
   targetScene: initialScene,
   setScene: (targetScene) => set({ targetScene }),
@@ -131,6 +184,7 @@ export type GarageDebug = ModelInfo & {
   open: string[];
   selected: string | null;
   xray: boolean;
+  explode: ExplodeState;
   view: 'exterior' | 'cabin';
   lift: boolean;
   camBusy: boolean;
@@ -163,6 +217,7 @@ if (typeof window !== 'undefined') {
       open: Object.keys(s.open).filter((k) => s.open[k]),
       selected: s.selected,
       xray: s.xray,
+      explode: s.explode,
       view: s.view,
       lift: s.lift,
       camBusy: s.camBusy,
@@ -174,4 +229,20 @@ if (typeof window !== 'undefined') {
   };
   publish(useGarage.getState());
   useGarage.subscribe(publish);
+
+  // The address bar follows the state that is worth sharing (scene, explode, part, x ray), so
+  // the current URL is always a deep link. Other params (camera overrides, debug) are kept.
+  const syncUrl = (s: GarageState) => {
+    const url = new URL(window.location.href);
+    const p = url.searchParams;
+    const put = (k: string, v: string | null) => (v ? p.set(k, v) : p.delete(k));
+    put('scene', s.targetScene === 'garage' ? null : s.targetScene);
+    put('x', explodeParam(s.explode));
+    put('part', s.selected);
+    put('xray', s.xray ? '1' : null);
+    const q = p.toString();
+    const next = `${url.pathname}${q ? `?${q}` : ''}${url.hash}`;
+    if (next !== `${window.location.pathname}${window.location.search}${window.location.hash}`) window.history.replaceState(null, '', next);
+  };
+  useGarage.subscribe(syncUrl);
 }

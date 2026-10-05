@@ -7,6 +7,8 @@ import { Bvh, useGLTF } from '@react-three/drei';
 import gsap from 'gsap';
 import { engine, setGear } from '@/engine/sim';
 import { carLift } from '../liftState';
+import { childrenOf } from '../explode/rig';
+import { explodeRig, frameParts } from '../explode/Explode';
 import { useGarage } from '../store';
 import { closeHinges, poseHinges, rigHinges, type HingeRig } from './hinges';
 import { applyLook, applyModes } from './look';
@@ -151,6 +153,17 @@ function onClick(e: ThreeEvent<MouseEvent>) {
   const key = partKeyOf(e.object);
   if (!key) return;
   const s = useGarage.getState();
+  // exploded: a click drills in (system, then assembly) or zooms to the part
+  if (s.explode.level > 0) {
+    const x = s.explode;
+    const system = key.split('_')[0];
+    const hasChildren = childrenOf(explodeRig.current, key).length > 0;
+    s.select(key);
+    if (x.level === 1 || x.system !== system) s.focusSystem(system);
+    else if (hasChildren && x.assembly !== key) s.focusAssembly(key);
+    else if (!s.camBusy) frameParts([key]);
+    return;
+  }
   // the driver's seat is the way in
   if (key === 'INT_0000_front_seat_L' && s.view === 'exterior' && !s.camBusy) {
     s.requestCam({ action: 'getIn', seat: 'driver' });

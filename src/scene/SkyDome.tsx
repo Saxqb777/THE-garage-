@@ -118,11 +118,13 @@ const FRAGMENT = /* glsl */ `
     // with a dome far larger than the camera's far plane allows)
     vec3 p = normalize(vWorldPosition - cameraPosition);
     vec3 camPos = cameraPosition - vec3(offset.x, height, offset.y);
-    float intersection = sphereIntersect(camPos, p, vec3(0.0), radius);
+    // the camera must stay inside the projection sphere, or the sky mirrors (zoomed out, exploded car)
+    float r = max(radius, length(camPos) + 1.0);
+    float intersection = sphereIntersect(camPos, p, vec3(0.0), r);
     if (intersection > 0.0) {
       vec3 h = vec3(0.0, -height, 0.0);
-      float intersection2 = diskIntersectWithBackFaceCulling(camPos, p, h, vec3(0.0, 1.0, 0.0), radius);
-      p = (camPos + min(intersection, intersection2) * p) / radius;
+      float intersection2 = diskIntersectWithBackFaceCulling(camPos, p, h, vec3(0.0, 1.0, 0.0), r);
+      p = (camPos + min(intersection, intersection2) * p) / r;
     } else {
       p = vec3(0.0, 1.0, 0.0);
     }
