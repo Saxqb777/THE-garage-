@@ -34,7 +34,6 @@ GLASS_TINT = "flakka.2006.14"       # side glass, rear glass, sunroof
 CLADDING_PAINT = "vehicle_generic_smallspecmap__PAINT_3_"
 
 DELETE_OBJECTS = {
-    "flakka.2006.13", "flakka_12",  # VXR side steps and lower door cladding; clean lower skins are rebuilt
     "TextPlus001",  # the modder's signature under the GXR badge
     "gnh", "Phoneee", "sticker", "Plane.0012", "asciii", "asciidd", "Box001", "flashcube", "TASK_FLASH",
     "flakka.2006.25", "flakka_sh3artoyota", "Plane001", "GEO_Mirror",
@@ -55,7 +54,7 @@ BACK_DOOR_GAP = 0.003
 
 # source material name -> our material key (region rules below can override)
 MATERIAL_MAP = {
-    "Material #32": "paint_white", "Material #41": "paint_white", "SABA_2179": "paint_white",
+    "Material #32": "tex_paint_white", "Material #41": "tex_paint_white", "SABA_2179": "tex_side_step",
     CLADDING_PAINT: "plastic_trim_grey", "grey": "plastic_trim_grey", "cromo": "plastic_trim_grey",
     "black.001": "plastic_black_matte", "Material.001": "plastic_black_matte", "Material.002": "plastic_black_matte",
     "tire69": "plastic_black_matte", "rimmidle": "plastic_black_matte", "Material.006": "plastic_black_matte",
@@ -73,7 +72,7 @@ MATERIAL_MAP = {
     "LCX100DOLMATKOZHAZ.001": "tex_dash", "LCX100DOLMATTXT.001": "tex_interior_detail",
     "vehicle_generic_smallspecmap.001": "tex_cluster",
 }
-TEXTURED = {"tex_lamp_front": ("ligh", None), "tex_lamp_rear": ("vehiclelights128", None),
+TEXTURED = {"tex_paint_white": ("Material #32", None), "tex_side_step": ("SABA_2179", None), "tex_lamp_front": ("ligh", None), "tex_lamp_rear": ("vehiclelights128", None),
             "tex_seat_cloth": ("LCX100LeatherSeats", "grey_cloth"), "tex_dash": ("LCX100DOLMATKOZHAZ.001", None),
             "tex_interior_detail": ("LCX100DOLMATTXT.001", None), "tex_cluster": ("vehicle_generic_smallspecmap.001", None)}
 
@@ -138,6 +137,10 @@ def textured_material(key):
     if bsdf is not None:
         bsdf.inputs["Metallic"].default_value = 0.0
         bsdf.inputs["Roughness"].default_value = 0.9 if key in ("tex_seat_cloth", "tex_interior_detail") else 0.45
+        if key == "tex_paint_white":
+            bsdf.inputs["Roughness"].default_value = 0.3
+            bsdf.inputs["Coat Weight"].default_value = 1.0
+            bsdf.inputs["Coat Roughness"].default_value = 0.04
         bsdf.inputs["Specular IOR Level"].default_value = 0.3
         for inp in ("Emission Strength",):
             if inp in bsdf.inputs:
@@ -175,22 +178,21 @@ def classify(src, smat, c, n):
 
     # VXR extras and mod leftovers
     if src in CLADDING:
-        if ax > R.CLADDING_STEP_X or z < 0.40:
-            return None
-        base = "paint_white"
+        # the running board stays (set 2 reference car has it); the two tone door band above it goes
+        if ax > R.CLADDING_STEP_X or z < 0.52:
+            return f"BODY_0000_side_step_{s}", "tex_side_step"
+        return None
     if src == TRIMS and (inbox(c, R.REAR_WIPER) or inbox(c, R.FRONT_WIPERS)):
         return None
-    if src == "flakka.2006.18" and z > 1.85:
-        return None  # third brake light on the deleted spoiler
     exterior = src not in INTERIOR
-    if exterior and z > 1.88 and y > 1.9:
-        return None  # spoiler mounts on the roof
+    if src == "gnh":
+        return "BODY_0000_body_shell", "tex_paint_white"  # rear lip spoiler, as on the set 2 reference car
     if src == PAINT and 0.28 < z < 0.52 and ax > 0.80 and -1.0 < y < 0.98:
-        return None  # running board, replaced by a rocker strip
+        return f"BODY_0000_side_step_{s}", "tex_paint_white"  # painted step board under the doors
     if src == GREY and ax > 0.95 and 0.64 < z < 0.74 and -1.0 < y < 1.3:
         return None  # VXR lower door mouldings
-    if src in (GREY, CHROME) and inbox(c, R.REAR_GARNISH):
-        return None  # VXR tailgate garnish panel and its lettering; a flush paint patch goes over the skin
+    if src == CHROME and inbox(c, R.REAR_GARNISH):
+        base = "chrome"  # the tailgate garnish with its LAND CRUISER lettering stays, as on the set 2 car
     if exterior and src != PAINT and ax > 0.95 and 0.73 < z < 0.79 and -1.05 < y < 1.1:
         return None  # top strip of the VXR lower mouldings
 
@@ -246,7 +248,7 @@ def classify(src, smat, c, n):
     if src in (PAINT, CHROME) and inbox(c, R.HANDLE_REAR, sg):
         return f"DOOR_0000_rear_door_outside_handle_{s}", "chrome"
     if src == PAINT and inbox(c, R.FUEL_LID):
-        return "BODY_0000_fuel_filler_lid", "paint_white"
+        return "BODY_0000_fuel_filler_lid", "tex_paint_white"
     if src == PAINT and inbox(c, R.QUARTER_BADGE, sg):
         return f"TRIM_0000_quarter_badge_{s}", "chrome"
     if src in ("logogxr1", "TextPlus001"):
@@ -268,6 +270,8 @@ def classify(src, smat, c, n):
             if ax < BACK_DOOR_GAP:
                 return None
             return f"GLASS_6703_back_door_glass_{s}", "glass_privacy"
+        if src == GLASS_TINT and z > 1.85 and y > 2.0:
+            return "LIGHT_8105_rear_combination_lamp_L" if x >= 0 else "LIGHT_8105_rear_combination_lamp_R", "lamp_lens_red"
         if ax > R.DOOR_SIDE_X and z > 1.15:
             if y < line_y(R.B_LINE, z):
                 return f"GLASS_6701_front_door_glass_{s}", "glass_clear"
@@ -300,7 +304,7 @@ def classify(src, smat, c, n):
 
     # hood
     if src == PAINT and y < R.HOOD_REAR_Y and ax < R.HOOD_SIDE_X and z > R.HOOD_FRONT_Z:
-        return "BODY_5301_hood", "paint_white"
+        return "BODY_5301_hood", "tex_paint_white"
 
     # side doors: anything outboard of the drip rail between the gap lines
     if ax > R.DOOR_SIDE_X and R.DOOR_BOTTOM < z < 1.95 and src not in (SEATS, CARPET):
@@ -314,7 +318,7 @@ def classify(src, smat, c, n):
         if b <= y < r:
             return f"DOOR_6702_rear_door_{s}", base
         if src == PAINT and y < a and z > 0.70 and ax > 0.44 and y > -2.6:
-            return f"BODY_5301_front_fender_{s}", "paint_white"
+            return f"BODY_5301_front_fender_{s}", "tex_paint_white"
     if src in INTERIOR_DASH:
         return "INT_0000_instrument_panel", base
     if src == "flakka.2006.22":

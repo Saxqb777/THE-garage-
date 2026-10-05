@@ -92,11 +92,10 @@ def place_on_source(objs):
     door_l = objs.get("DOOR_6703_back_door_L")
     if door_l is not None:
         badges = D.build_badges()
-        for key, (x, z) in {"TRIM_0000_back_door_name_plate": (0.41, 1.165)}.items():
-            loc, nrm = surface_hit([door_l], (x, 4.0, z), (0, -1, 0))
-            if loc is not None:
-                PL.place(badges[key], loc, PL.basis("+Y", nrm))
-                out[key] = badges[key]
+        # the source model carries its own chrome LAND CRUISER garnish, so our plate is not placed
+        for key in ("TRIM_0000_back_door_name_plate",):
+            if key in badges:
+                bpy.data.objects.remove(badges[key])
         for key in ("TRIM_0000_back_door_emblem", "TRIM_0000_grade_badge", "TRIM_0000_quarter_badge_L", "TRIM_0000_quarter_badge_R"):
             if key in badges and key not in objs:
                 if key.startswith("TRIM_0000_quarter"):

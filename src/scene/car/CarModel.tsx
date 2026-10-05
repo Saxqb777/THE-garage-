@@ -5,6 +5,7 @@ import { useGLTF } from '@react-three/drei';
 import gsap from 'gsap';
 import { useGarage } from '../store';
 import { closeHinges, poseHinges, rigHinges } from './hinges';
+import { applyLook } from './look';
 import { enableShadows, inspectModel, logModel } from './parts';
 
 // Self hosted decoder (copied from three/examples/jsm/libs/draco/gltf), no CDN.
@@ -21,6 +22,7 @@ export default function CarModel({ url }: { url: string }) {
   const rigs = useMemo(() => rigHinges(scene, info.parts.values()), [scene, info]);
 
   useEffect(() => {
+    applyLook(scene);
     enableShadows(scene);
     logModel(url, scene, info);
     useGarage.setState({

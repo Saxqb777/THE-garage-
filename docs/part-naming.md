@@ -45,11 +45,11 @@ Recalled codes in use: 5201 front bumper, 5202 rear bumper, 5301 hood and front 
 
 ## M1 part list
 
-The authoritative list is src/data/parts.m1.json (73 entries). Summary:
+The authoritative list is src/data/parts.m1.json (75 entries). Summary:
 
 | System | Parts |
 | --- | --- |
-| BODY | body shell, hood, front fenders L R, front bumper, rear bumper, radiator grille, outer mirrors L R, fuel filler lid, mudguards front and rear L R |
+| BODY | body shell, hood, front fenders L R, front bumper, rear bumper, radiator grille, outer mirrors L R, fuel filler lid, mudguards front and rear L R, side steps L R |
 | DOOR | front doors L R, rear doors L R, back (barn) doors L R, outside handles front and rear L R |
 | GLASS | windshield, front door glass L R, rear door glass L R, rear door quarter glass L R, quarter window glass L R, back door glass L R |
 | LIGHT | headlamps L R, rear combination lamps L R, side turn signal lamps L R |

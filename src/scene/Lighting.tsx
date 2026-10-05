@@ -16,7 +16,7 @@ export const GARAGE_HDRI = lowRes ? '/hdri/autoshop_01_1k.hdr' : '/hdri/autoshop
 export default function Lighting() {
   return (
     <>
-      <Environment files={GARAGE_HDRI} background="only" ground={{ height: 1.7, radius: 42, scale: 100 }} />
+      <Environment files={GARAGE_HDRI} background="only" ground={{ height: 1.7, radius: 60, scale: 1000 }} />
       <Environment files={GARAGE_HDRI} resolution={512} environmentIntensity={1}>
         {/* softbox strips along the car, overhead */}
         {[-2.4, 0, 2.4].map((x) => (

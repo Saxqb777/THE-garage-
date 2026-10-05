@@ -1,9 +1,11 @@
 'use client';
 
 import { Component, Suspense, useEffect, type ReactNode } from 'react';
-import { Canvas, addAfterEffect, useThree } from '@react-three/fiber';
+import { Canvas, addAfterEffect, addEffect, useThree } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
-import { ACESFilmicToneMapping, SRGBColorSpace } from 'three';
+import { Bloom, EffectComposer, SMAA, ToneMapping, Vignette } from '@react-three/postprocessing';
+import { ToneMappingMode } from 'postprocessing';
+import { NoToneMapping, SRGBColorSpace } from 'three';
 import CarModel from './car/CarModel';
 import Ground from './Ground';
 import Lighting from './Lighting';
@@ -20,7 +22,7 @@ export default function Experience() {
       shadows
       dpr={[1, 2]}
       camera={{ fov: 35, near: 0.1, far: 100, position: CAMERA_POSITION }}
-      gl={{ antialias: true, toneMapping: ACESFilmicToneMapping, outputColorSpace: SRGBColorSpace }}
+      gl={{ antialias: false, toneMapping: NoToneMapping, outputColorSpace: SRGBColorSpace }}
     >
       <Lighting />
       <Ground />
@@ -39,14 +41,35 @@ export default function Experience() {
         maxDistance={14}
         maxPolarAngle={Math.PI / 2 - 0.04}
       />
+      <PostFX />
       <RenderStats />
     </Canvas>
   );
 }
 
-/** gl.info resets on every render call, so after the frame it holds the main pass. */
+/** ACES in the composer (the canvas renders linear), a whisper of bloom on the highlights, SMAA, soft vignette. */
+function PostFX() {
+  return (
+    <EffectComposer multisampling={0}>
+      <Bloom mipmapBlur intensity={0.35} luminanceThreshold={1.0} luminanceSmoothing={0.2} />
+      <ToneMapping mode={ToneMappingMode.ACES_FILMIC} />
+      <Vignette eskil={false} offset={0.25} darkness={0.55} />
+      <SMAA />
+    </EffectComposer>
+  );
+}
+
+/** gl.info is reset once per frame here (not per render call), so the composer passes add up. */
 function RenderStats() {
   const gl = useThree((s) => s.gl);
+  useEffect(() => {
+    gl.info.autoReset = false;
+    const stop = addEffect(() => gl.info.reset());
+    return () => {
+      stop();
+      gl.info.autoReset = true;
+    };
+  }, [gl]);
   useEffect(
     () =>
       addAfterEffect(() => {
