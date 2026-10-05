@@ -359,6 +359,21 @@ def build_solid(panel, A, B, T, S, outer, belt, obj=None):
     return pieces, keep
 
 
+def handle_cups(panel):
+    """A painted cup behind each outside handle opening, so the hole in the skin shows a recess
+    and not the inside of the door."""
+    from blender.parts import source_regions as R
+    if panel.axis != 0:
+        return []
+    box = R.HANDLE_FRONT if "front_door" in panel.key else R.HANDLE_REAR if "rear_door" in panel.key else None
+    if box is None:
+        return []
+    x0, x1, y0, y1, z0, z1 = box
+    sg = panel.sign
+    co, polys = M.box_arrays((sg * 0.95, 0.5 * (y0 + y1), 0.5 * (z0 + z1)), (0.03, (y1 - y0) + 0.03, (z1 - z0) + 0.025), bevel=0.004)
+    return [(co, polys, "paint_white")]
+
+
 def glass_pieces(objs, keys):
     pieces = []
     for k in keys:
@@ -419,6 +434,7 @@ def thicken(objs, log=print):
             shell_pieces += op
             shell_keep &= keep_s
         pieces, keep = build_solid(panel, A, B, T, S, outer, belt, obj)
+        pieces += handle_cups(panel)
         glass = glass_pieces(objs, panel.glass_keys)
         if not pieces:
             log(f"panels: {panel.key}: no solid built")

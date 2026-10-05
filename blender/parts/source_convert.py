@@ -180,9 +180,9 @@ def classify(src, smat, c, n, island=10**9):
     # VXR extras and mod leftovers
     if src in CLADDING:
         # the running board stays (set 2 reference car has it); the two tone door band above it goes
-        if z < 0.56:
-            return f"BODY_0000_side_step_{s}", "tex_side_step"
-        return None  # the two tone band with the VX.R text sat on the door skin above the step
+        if z < 0.52:
+            return f"BODY_0000_side_step_{s}", "tex_side_step"  # the running board only
+        return None  # the two tone band above it sat over the door skin; the GXR doors are plain
     if src == TRIMS and (inbox(c, R.REAR_WIPER) or inbox(c, R.FRONT_WIPERS)):
         return None
     exterior = src not in INTERIOR
@@ -204,7 +204,7 @@ def classify(src, smat, c, n, island=10**9):
 
     # lamps
     if exterior and inbox(c, R.HEADLAMP, sg):
-        if src == PAINT and z > 0.975:
+        if src == PAINT:
             return f"BODY_5353_front_fender_{s}", "paint_white"  # painted lip above the lamp (the dark eyebrow was texture)
         if src == GLASS_OUT:
             mk = "lamp_lens_clear"
@@ -542,8 +542,9 @@ def convert(log=lambda *a: print(*a, flush=True)):
 # ---------------------------------------------------------------------------
 # geometry the GXR needs that the VXR source does not have
 
-def append_mesh(obj, co, polys, mat_key):
-    """Add polygons (world space) to an object under the given material key."""
+def append_mesh(obj, co, polys, mat_key, outward=None):
+    """Add polygons (world space) to an object under the given material key. outward: a direction
+    the new faces must face (they are flipped if not)."""
     me = obj.data
     names = [m.name for m in me.materials]
     if mat_key not in names:
@@ -554,6 +555,7 @@ def append_mesh(obj, co, polys, mat_key):
     bm.from_mesh(me)
     uv = bm.loops.layers.uv.active or bm.loops.layers.uv.new("UVMap")
     vs = [bm.verts.new(Vector(c)) for c in co]
+    new_faces = []
     for poly in polys:
         try:
             f = bm.faces.new([vs[i] for i in poly])
@@ -561,7 +563,14 @@ def append_mesh(obj, co, polys, mat_key):
             continue
         f.material_index = mi
         f.smooth = True
+        new_faces.append(f)
     bm.normal_update()
+    if outward is not None:
+        # the app culls back faces: every new face must look out of the car
+        ow = Vector(outward)
+        flip = [f for f in new_faces if f.normal.dot(ow) < 0]
+        if flip:
+            bmesh.ops.reverse_faces(bm, faces=flip)
     bm.to_mesh(me)
     bm.free()
 
@@ -580,7 +589,7 @@ def strip_surface(rows):
 
 
 LOWER_SKIN_PROFILE = [(0.742, 1.004), (0.68, 1.000), (0.60, 0.990), (0.52, 0.980), (0.42, 0.955), (0.40, 0.900)]  # (z, |x|)
-ROCKER = (0.86, 0.905, 0.29, 0.43)  # |x| range and z range
+ROCKER = (0.90, 0.945, 0.27, 0.50)  # |x| range and z range: the body colour sill under the doors
 
 
 def lower_door_skin(door_key, side, y_from, y_to):
@@ -604,14 +613,14 @@ def gxr_additions(out, log):
         rd = out.get(f"DOOR_6755_rear_door_{side}")
         if fd is not None:
             co, polys = lower_door_skin(fd.name, side, lambda z: line_y(R.A_LINE, max(z, 0.42)) + gap, lambda z: R.B_LINE[0][0] - gap)
-            append_mesh(fd, co, polys, "paint_white")
+            append_mesh(fd, co, polys, "paint_white", outward=(1.0 if side == "L" else -1.0, 0.0, 0.3))
         if rd is not None:
             co, polys = lower_door_skin(rd.name, side, lambda z: R.B_LINE[0][0] + gap, lambda z: line_y(R.REAR_DOOR_LINE, max(z, 0.42)) - gap)
-            append_mesh(rd, co, polys, "paint_white")
+            append_mesh(rd, co, polys, "paint_white", outward=(1.0 if side == "L" else -1.0, 0.0, 0.3))
         shell = out.get("BODY_0000_body_shell")
         if shell is not None:
             sg = 1.0 if side == "L" else -1.0
             x0, x1, z0, z1 = ROCKER
             co, polys = M.box_arrays((sg * 0.5 * (x0 + x1), 0.0, 0.5 * (z0 + z1)), (x1 - x0, 2.05, z1 - z0), bevel=0.008)
-            append_mesh(shell, co, polys, "plastic_black_matte")
-    log("gxr additions: lower door skins and rocker strips")
+            append_mesh(shell, co, polys, "paint_white")
+    log("gxr additions: lower door skins and sill panels")
