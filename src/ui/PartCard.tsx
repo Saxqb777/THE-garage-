@@ -49,7 +49,7 @@ export default function PartCard() {
   const wa = row && typeof window !== 'undefined' ? whatsappLink(row, window.location.href) : null;
 
   return (
-    <aside className={styles.card} aria-label="Part card">
+    <aside className={`${styles.card} panel`} aria-label="Part card">
       <header className={styles.head}>
         <div>
           <p className={styles.system}>
@@ -131,9 +131,9 @@ export default function PartCard() {
             </dd>
           </>
         )}
-        <dt>Part code</dt>
-        <dd className={styles.mono}>{key}</dd>
       </dl>
+      <Barcode code={key} />
+      <p className={styles.code}>{key}</p>
 
       <div className={styles.actions}>
         {wa ? (
@@ -148,12 +148,13 @@ export default function PartCard() {
       </div>
       <div className={styles.actions}>
         {part?.hinge && (
-          <button type="button" onClick={() => togglePart(key)}>
+          <button type="button" className="btn" onClick={() => togglePart(key)}>
             {isOpen ? 'Close' : 'Open'}
           </button>
         )}
         <button
           type="button"
+          className="btn"
           onClick={async () => {
             try {
               await navigator.clipboard.writeText(link());
@@ -171,13 +172,30 @@ export default function PartCard() {
   );
 }
 
+/** Bars from the part key, like the label on a parts bin: the same key always draws the same bars. */
+function Barcode({ code }: { code: string }) {
+  const bars: number[] = [];
+  let h = 2166136261;
+  for (let i = 0; i < 46; i++) {
+    h = Math.imul(h ^ code.charCodeAt(i % code.length), 16777619) >>> 0;
+    bars.push(1 + (h % 3));
+  }
+  return (
+    <div className={styles.barcode} aria-hidden>
+      {bars.map((w, i) => (
+        <i key={i} style={{ width: w, marginRight: i % 2 ? 1 : 0, height: i % 11 === 0 ? '100%' : '82%' }} />
+      ))}
+    </div>
+  );
+}
+
 /** Card for a cabin control from the owner's manual (no mesh of its own yet). */
 function HotspotCard({ id, onClose, onPart }: { id: string; onClose: () => void; onPart: (key: string) => void }) {
   const h = HOTSPOTS.get(id);
   if (!h) return null;
   const part = h.partKey ? CONTRACT_PARTS.get(h.partKey) : undefined;
   return (
-    <aside className={styles.card} aria-label="Control card">
+    <aside className={`${styles.card} panel`} aria-label="Control card">
       <header className={styles.head}>
         <div>
           <p className={styles.system}>

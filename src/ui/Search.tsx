@@ -40,14 +40,19 @@ export default function Search() {
   };
 
   return (
-    <div className={styles.wrap} role="search">
+    <div className={`${styles.wrap} boot`} style={{ '--boot': '0.15s' } as React.CSSProperties} role="search">
+      <svg className={styles.glyph} viewBox="0 0 24 24" aria-hidden>
+        <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="2" />
+        <path d="M15.5 15.5 21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      </svg>
+      <kbd className={`key ${styles.slash}`}>/</kbd>
       <input
         ref={input}
         className={styles.input}
         type="search"
         role="combobox"
         aria-autocomplete="list"
-        placeholder={catalog ? 'Search parts: alternator, دينمو, 90915…' : 'Loading parts…'}
+        placeholder={catalog ? 'Find a part: alternator, دينمو, 90915' : 'Loading parts'}
         value={q}
         disabled={!catalog}
         aria-label="Search parts"
@@ -96,11 +101,11 @@ export default function Search() {
                   </span>
                 )}
                 <span className={styles.meta}>
-                  {SYSTEM_NAMES[p.system] ?? p.system}
-                  {' · '}
+                  <span className={styles.sys}>{SYSTEM_NAMES[p.system] ?? p.system}</span>
                   {p.meshPresent ? 'on the car' : 'not on the car yet'}
                   {p.oemNumber ? ` · ${p.oemNumber}` : ''}
                   {!p.fitsGxr && ' · not on the GXR'}
+                  <span className={styles.codeCol}>{p.groupCode}</span>
                 </span>
               </button>
             </li>

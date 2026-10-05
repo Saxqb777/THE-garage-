@@ -1,3 +1,4 @@
+/* reticle: name next to the pointer with corner brackets */
 .label {
   position: fixed;
   top: 0;
@@ -5,17 +6,27 @@
   z-index: 20;
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  padding: 6px 10px;
-  border: 1px solid rgba(242, 195, 107, 0.35);
-  border-radius: 8px;
-  background: rgba(14, 16, 20, 0.72);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  gap: 1px;
+  padding: 5px 10px 5px 12px;
+  border-left: 2px solid var(--accent);
+  background: rgba(14, 15, 17, 0.92);
   color: var(--fg);
-  font-size: 12px;
+  font: 600 13px var(--sans);
+  letter-spacing: 0.02em;
   pointer-events: none;
   white-space: nowrap;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+}
+
+.label::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: 7px;
+  height: 7px;
+  border-top: 2px solid var(--accent);
+  border-right: 2px solid var(--accent);
 }
 
 .label[hidden] {
@@ -23,12 +34,14 @@
 }
 
 .name {
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .action {
   color: var(--accent);
-  font-size: 11px;
+  font: 500 10px var(--mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .ar {

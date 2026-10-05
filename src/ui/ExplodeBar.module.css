@@ -1,20 +1,14 @@
 .bar {
   position: fixed;
-  top: 66px;
+  top: 64px;
   left: 50%;
   z-index: 9;
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 6px 8px 6px 14px;
-  border: 1px solid rgba(242, 195, 107, 0.3);
-  border-radius: 999px;
-  background: rgba(14, 16, 20, 0.66);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(12px) saturate(140%);
-  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  padding: 5px 6px 5px 12px;
   color: var(--fg);
-  font-size: 12px;
+  font: 500 13px var(--sans);
   transform: translateX(-50%);
   white-space: nowrap;
   animation: in 0.2s ease-out;
@@ -45,53 +39,33 @@
   border: 0;
   background: none;
   color: var(--muted);
-  font: inherit;
+  font: 600 12px var(--sans);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   cursor: pointer;
 }
 
 .crumbs button:hover:not(:disabled) {
   color: var(--fg);
-  text-decoration: underline;
 }
 
 .crumbs .current {
   color: var(--accent);
-  font-weight: 600;
   cursor: default;
 }
 
 .sep {
-  color: var(--muted);
+  color: var(--dim);
 }
 
 .actions {
   display: flex;
-  gap: 6px;
+  gap: 5px;
 }
 
 .actions button {
-  padding: 6px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  color: inherit;
-  font: inherit;
+  padding: 5px 10px;
   font-size: 12px;
-  cursor: pointer;
-}
-
-.actions button:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.13);
-}
-
-.actions button:disabled {
-  opacity: 0.45;
-  cursor: default;
-}
-
-.assemble {
-  border-color: var(--accent) !important;
-  background: rgba(242, 195, 107, 0.16) !important;
 }
 
 @media (max-width: 700px) {

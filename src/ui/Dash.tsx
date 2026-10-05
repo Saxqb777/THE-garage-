@@ -49,18 +49,22 @@ function Gauge({ max, step, label, unit, redFrom, needle }: { max: number; step:
       );
   }
   return (
-    <svg viewBox="0 0 100 100" className={styles.gauge} aria-hidden>
-      <circle cx="50" cy="50" r="48" className={styles.face} />
-      {redFrom !== undefined && <path d={arc(42, START + (redFrom / max) * SWEEP, START + SWEEP)} className={styles.redArc} />}
-      {ticks}
-      <text x="50" y="72" className={styles.unit} textAnchor="middle">
-        {unit}
-      </text>
-      <g ref={needle} style={{ transformOrigin: '50px 50px' }}>
-        <line x1="50" y1="56" x2="50" y2="12" className={styles.needle} />
-      </g>
-      <circle cx="50" cy="50" r="4" className={styles.hub} />
-    </svg>
+    <div className={styles.bezel}>
+      <svg viewBox="0 0 100 100" className={styles.gauge} aria-hidden>
+        <circle cx="50" cy="50" r="48" className={styles.face} />
+        {redFrom !== undefined && <path d={arc(42, START + (redFrom / max) * SWEEP, START + SWEEP)} className={styles.redArc} />}
+        {ticks}
+        <text x="50" y="72" className={styles.unit} textAnchor="middle">
+          {unit}
+        </text>
+        <g ref={needle} style={{ transformOrigin: '50px 50px' }}>
+          <line x1="50" y1="58" x2="50" y2="50" className={styles.needleTail} />
+          <line x1="50" y1="50" x2="50" y2="11" className={styles.needle} />
+        </g>
+        <circle cx="50" cy="50" r="5" className={styles.hub} />
+      </svg>
+      <div className={styles.glow} />
+    </div>
   );
 }
 
@@ -84,6 +88,7 @@ export default function Dash() {
   useEffect(() => {
     const n = { tach: { a: START, v: 0 }, speed: { a: START, v: 0 } };
     let last = performance.now();
+    const sweepUntil = last + 900; // power up: needles sweep to full scale and fall back
     let raf = 0;
     const springTo = (s: { a: number; v: number }, target: number, dt: number) => {
       s.v += (K * (target - s.a) - C * s.v) * dt;
@@ -92,8 +97,9 @@ export default function Dash() {
     const tick = (now: number) => {
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
-      springTo(n.tach, START + (Math.min(engine.rpm, TACH_MAX) / TACH_MAX) * SWEEP, dt);
-      springTo(n.speed, START + (Math.min(engine.speedKmh, SPEED_MAX) / SPEED_MAX) * SWEEP, dt);
+      const sweep = now < sweepUntil;
+      springTo(n.tach, sweep ? START + SWEEP : START + (Math.min(engine.rpm, TACH_MAX) / TACH_MAX) * SWEEP, dt);
+      springTo(n.speed, sweep ? START + SWEEP : START + (Math.min(engine.speedKmh, SPEED_MAX) / SPEED_MAX) * SWEEP, dt);
       if (tach.current) tach.current.style.transform = `rotate(${n.tach.a}deg)`;
       if (speedo.current) speedo.current.style.transform = `rotate(${n.speed.a}deg)`;
       if (rpmText.current) rpmText.current.textContent = String(Math.round(engine.rpm / 10) * 10).padStart(4, ' ');
@@ -152,11 +158,11 @@ export default function Dash() {
 
   const on = phase === 'running' || phase === 'cranking';
   return (
-    <section className={styles.dash} aria-label="Instrument cluster">
+    <section className={`${styles.dash} panel boot`} style={{ '--boot': '0.25s' } as React.CSSProperties} aria-label="Instrument cluster">
       <Gauge max={TACH_MAX} step={1000} label={(v) => String(v / 1000)} unit="x1000 r/min" redFrom={REDLINE_RPM} needle={tach} />
       <div className={styles.center}>
         <p className={styles.scene}>{SCENES[sceneKey].label}</p>
-        <div className={styles.gearRow}>
+        <div className={styles.lcd}>
           <span ref={gearText} className={styles.gear}>
             N
           </span>
@@ -190,8 +196,8 @@ export default function Dash() {
           ODO <span ref={odoText}>000000</span> km
         </p>
         <div className={styles.buttons}>
-          <button type="button" className={on ? styles.stop : styles.start} onClick={() => void toggleEngine()} disabled={loading || phase === 'stopping'}>
-            {loading ? 'Loading' : on ? 'Stop engine' : 'Start engine'}
+          <button type="button" className={on ? styles.stop : styles.start} onClick={() => void toggleEngine()} disabled={loading || phase === 'stopping'} aria-label={on ? 'Stop engine' : 'Start engine'}>
+            {loading ? 'wait' : on ? 'engine stop' : 'engine start'}
           </button>
           <button
             type="button"
@@ -210,7 +216,15 @@ export default function Dash() {
         </div>
       </div>
       <Gauge max={SPEED_MAX} step={40} label={(v) => String(v)} unit="km/h" needle={speedo} />
-      <p className={styles.hint}>Space revs · E starts · limiter at {Math.round(LIMIT_RPM / 10) * 10}</p>
+      <p className={styles.hint}>
+        <span>
+          <kbd className="key">E</kbd> engine
+        </span>
+        <span>
+          <kbd className="key">Space</kbd> rev
+        </span>
+        <span>limiter {Math.round(LIMIT_RPM / 10) * 10}</span>
+      </p>
     </section>
   );
 }

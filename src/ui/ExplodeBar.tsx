@@ -17,7 +17,7 @@ export default function ExplodeBar() {
   if (x.system) crumbs.push({ label: SYSTEM_NAMES[x.system] ?? x.system, go: () => focusSystem(x.system!), current: x.level === 2 });
   if (x.assembly) crumbs.push({ label: CONTRACT_PARTS.get(x.assembly)?.nameEn ?? x.assembly, go: () => {}, current: true });
   return (
-    <nav className={styles.bar} aria-label="Explode stages">
+    <nav className={`${styles.bar} panel`} aria-label="Explode stages">
       <ol className={styles.crumbs}>
         {crumbs.map((c, i) => (
           <li key={c.label}>
@@ -29,10 +29,10 @@ export default function ExplodeBar() {
         ))}
       </ol>
       <div className={styles.actions}>
-        <button type="button" onClick={explodeUp} disabled={busy} title="Esc">
+        <button type="button" className="btn" onClick={explodeUp} disabled={busy} title="Esc">
           Back
         </button>
-        <button type="button" className={styles.assemble} onClick={assemble} disabled={busy}>
+        <button type="button" className="btn btnOn" onClick={assemble} disabled={busy}>
           Assemble
         </button>
       </div>

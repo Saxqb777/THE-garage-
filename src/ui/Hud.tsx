@@ -18,10 +18,15 @@ const PRESETS: [PresetKey, string][] = [
   ['rear', 'Rear'],
   ['side', 'Side'],
   ['engine', 'Engine'],
-  ['interior', 'Interior'],
+  ['interior', 'Cabin'],
   ['underside', 'Under'],
 ];
 
+const SCENE_TAGS: Record<string, string> = { garage: 'WORKSHOP', dunes: 'LIWA', corniche_night: 'NIGHT', highway: 'E11', desert_road: 'E66' };
+
+const Key = ({ k }: { k: string }) => <kbd className="key">{k}</kbd>;
+
+/** The job card: vehicle, doors, camera, scene, light, service. Left side of the screen. */
 export default function Hud() {
   const { progress } = useProgress();
   const url = useGarage((s) => s.modelUrl);
@@ -55,6 +60,8 @@ export default function Hud() {
   const due = service && catalog ? dueAt([...catalog.values()], service).sort((a, b) => a.nameEn.localeCompare(b.nameEn)) : [];
   const explodeAll = useGarage((s) => s.explodeAll);
   const assemble = useGarage((s) => s.assemble);
+  const debug = typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('debug');
+  const v = contract.vehicle as { name: string; key: string; engine?: string; transmission?: string; drive?: string };
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -82,19 +89,22 @@ export default function Hud() {
   }, [toggleHinges, setLightsOn, setXray, setScene]);
 
   return (
-    <aside className={styles.hud}>
-      <h1 className={styles.title}>The Garage</h1>
-      <p className={styles.vehicle}>{contract.vehicle.name}</p>
-      <p className={styles.file}>{url.split('/').pop()}</p>
-
-      {!model && !error && (
-        <div className={styles.progress} aria-label="Loading model">
-          <div className={styles.track}>
-            <div className={styles.bar} style={{ transform: `scaleX(${progress / 100})` }} />
+    <aside className={`${styles.hud} panel boot`} style={{ '--boot': '0.05s' } as React.CSSProperties}>
+      <header className={styles.head}>
+        <span className="stamp">The Garage</span>
+        <h1 className={styles.vehicle}>{v.name}</h1>
+        <p className={styles.spec}>
+          <b>FZJ100</b> · {v.engine ?? '1FZ-FE'} · {v.transmission ?? '5MT'} · {v.drive ?? 'LHD'} · GXR
+        </p>
+        {!model && !error && (
+          <div className={styles.progress} aria-label="Loading model">
+            <div className={styles.track}>
+              <div className={styles.bar} style={{ transform: `scaleX(${progress / 100})` }} />
+            </div>
+            <span>{progress.toFixed(0)}%</span>
           </div>
-          <span>{progress.toFixed(0)}%</span>
-        </div>
-      )}
+        )}
+      </header>
       {error && (
         <div className={styles.error}>
           <p>{error}</p>
@@ -104,92 +114,116 @@ export default function Hud() {
         </div>
       )}
 
-      <dl className={styles.stats}>
-        <dt>Parts</dt>
-        <dd>{model ? num.format(model.partKeys.length) : '...'}</dd>
-        <dt>Triangles</dt>
-        <dd>{num.format(triangles)}</dd>
-        <dt>Draw calls</dt>
-        <dd>{num.format(drawCalls)}</dd>
-      </dl>
-
-      <div className={styles.actions}>
-        <button type="button" onClick={() => setHingesOpen(true)} disabled={!model || hingesOpen}>
-          Open all
-        </button>
-        <button type="button" onClick={() => setHingesOpen(false)} disabled={!model || !hingesOpen}>
-          Close all
-        </button>
-      </div>
-
-      <div className={styles.camera}>
-        <button
-          type="button"
-          className={styles.primary}
-          disabled={!model || camBusy || exploded}
-          onClick={() => requestCam(view === 'cabin' ? { action: 'getOut' } : { action: 'getIn', seat: 'driver' })}
-        >
-          {view === 'cabin' ? 'Get out' : 'Get in'}
-        </button>
-        <button type="button" disabled={!model || camBusy || !inGarage || view === 'cabin' || exploded} onClick={() => setLift(!lift)} title="Two post lift, Garage only">
-          {lift ? 'Lower lift' : 'Lift'}
-        </button>
-        <button type="button" className={exploded ? styles.primary : undefined} disabled={!model || camBusy} onClick={() => (exploded ? assemble() : explodeAll())}>
-          {exploded ? 'Assemble' : 'Explode'}
-        </button>
-      </div>
-      <div className={styles.presets} aria-label="Camera">
-        {PRESETS.map(([k, label]) => (
-          <button key={k} type="button" disabled={!model || camBusy} onClick={() => requestCam({ action: 'preset', preset: k })}>
-            {label}
+      <section className={styles.section}>
+        <div className={styles.sectionHead}>
+          <span className="label">Doors</span>
+          <span>
+            <Key k="H" />
+          </span>
+        </div>
+        <div className={styles.seg} role="group" aria-label="Doors">
+          <button type="button" onClick={() => setHingesOpen(true)} disabled={!model || hingesOpen}>
+            Open all
           </button>
-        ))}
-      </div>
+          <button type="button" onClick={() => setHingesOpen(false)} disabled={!model || !hingesOpen}>
+            Close all
+          </button>
+        </div>
+      </section>
 
-      <div className={styles.scenes} role="radiogroup" aria-label="Scene">
-        {SCENE_ORDER.map((k, i) => (
+      <section className={styles.section}>
+        <div className={styles.sectionHead}>
+          <span className="label">Camera</span>
+          <span>
+            <Key k="G" />
+          </span>
+        </div>
+        <div className={styles.row}>
           <button
-            key={k}
             type="button"
-            role="radio"
-            aria-checked={k === sceneKey}
-            aria-busy={k === sceneKey && k !== shownKey}
-            className={k === sceneKey ? styles.sceneOn : undefined}
-            title={`${SCENES[k].hint} (${i + 1})`}
-            onPointerEnter={() => useEnvironment.preload({ files: hdriUrl(SCENES[k]) })}
-            onFocus={() => useEnvironment.preload({ files: hdriUrl(SCENES[k]) })}
-            onClick={() => setScene(k)}
+            className={`btn ${view === 'cabin' ? 'btnOn' : ''}`}
+            disabled={!model || camBusy || exploded}
+            onClick={() => requestCam(view === 'cabin' ? { action: 'getOut' } : { action: 'getIn', seat: 'driver' })}
           >
-            {SCENES[k].label}
+            {view === 'cabin' ? 'Get out' : 'Get in'}
           </button>
-        ))}
-      </div>
+          <button type="button" className={`btn ${lift ? 'btnOn' : ''}`} disabled={!model || camBusy || !inGarage || view === 'cabin' || exploded} onClick={() => setLift(!lift)} title="Two post lift, Garage only">
+            {lift ? 'Lower' : 'Lift'}
+          </button>
+          <button type="button" className={`btn ${exploded ? 'btnOn' : ''}`} disabled={!model || camBusy} onClick={() => (exploded ? assemble() : explodeAll())}>
+            {exploded ? 'Assemble' : 'Explode'}
+          </button>
+        </div>
+        <div className={styles.presets} aria-label="Views" style={{ marginTop: 6 }}>
+          {PRESETS.map(([k, label]) => (
+            <button key={k} type="button" disabled={!model || camBusy} onClick={() => requestCam({ action: 'preset', preset: k })}>
+              {label}
+            </button>
+          ))}
+        </div>
+      </section>
 
-      <div className={styles.controls}>
-        <label className={styles.slider} aria-disabled={!scene.timeOfDay}>
-          <span>Time of day</span>
-          <input
-            type="range"
-            min={0}
-            max={1}
-            step={0.01}
-            value={timeOfDay}
-            disabled={!scene.timeOfDay}
-            onChange={(e) => setTimeOfDay(Number(e.target.value))}
-          />
-        </label>
-        <label className={styles.toggle}>
-          <input type="checkbox" checked={lightsOn} onChange={(e) => setLightsOn(e.target.checked)} />
-          <span>Lights</span>
-        </label>
-        <label className={styles.toggle}>
-          <input type="checkbox" checked={xray} onChange={(e) => setXray(e.target.checked)} />
-          <span>X Ray</span>
-        </label>
-      </div>
+      <section className={styles.section}>
+        <div className={styles.sectionHead}>
+          <span className="label">Location</span>
+          <span>
+            <Key k="1" />
+            <Key k="5" />
+          </span>
+        </div>
+        <div className={styles.scenes} role="radiogroup" aria-label="Scene">
+          {SCENE_ORDER.map((k, i) => (
+            <button
+              key={k}
+              type="button"
+              role="radio"
+              aria-checked={k === sceneKey}
+              aria-busy={k === sceneKey && k !== shownKey}
+              className={k === sceneKey ? styles.sceneOn : undefined}
+              title={SCENES[k].hint}
+              onPointerEnter={() => useEnvironment.preload({ files: hdriUrl(SCENES[k]) })}
+              onFocus={() => useEnvironment.preload({ files: hdriUrl(SCENES[k]) })}
+              onClick={() => setScene(k)}
+            >
+              <kbd className="key">{i + 1}</kbd>
+              {SCENES[k].label}
+              <small>{SCENE_TAGS[k] ?? ''}</small>
+            </button>
+          ))}
+        </div>
+      </section>
 
-      <div className={styles.service}>
-        <p className={styles.sectionTitle}>Service</p>
+      <section className={styles.section}>
+        <div className={styles.sectionHead}>
+          <span className="label">Light</span>
+          <span>
+            <Key k="L" />
+            <Key k="X" />
+          </span>
+        </div>
+        <div className={styles.controls}>
+          <label className={styles.slider} aria-disabled={!scene.timeOfDay}>
+            <span>Sun</span>
+            <input type="range" min={0} max={1} step={0.01} value={timeOfDay} disabled={!scene.timeOfDay} onChange={(e) => setTimeOfDay(Number(e.target.value))} />
+          </label>
+          <label className={styles.switch}>
+            <input type="checkbox" checked={lightsOn} onChange={(e) => setLightsOn(e.target.checked)} />
+            <i />
+            <span style={{ marginRight: 'auto' }}>Lamps</span>
+          </label>
+          <label className={styles.switch}>
+            <input type="checkbox" checked={xray} onChange={(e) => setXray(e.target.checked)} />
+            <i />
+            <span style={{ marginRight: 'auto' }}>X Ray</span>
+          </label>
+        </div>
+      </section>
+
+      <section className={styles.section}>
+        <div className={styles.sectionHead}>
+          <span className="label">Service</span>
+          <span className={styles.spec}>km</span>
+        </div>
         <div className={styles.chips} role="radiogroup" aria-label="Service interval">
           {[5000, 10000, 40000, 80000].map((km) => (
             <button key={km} type="button" role="radio" aria-checked={service === km} className={service === km ? styles.sceneOn : undefined} disabled={!catalog} onClick={() => setService(service === km ? null : km)}>
@@ -210,10 +244,34 @@ export default function Hud() {
             ))}
           </ul>
         )}
-      </div>
+      </section>
 
-      <p className={styles.hint}>Click a part for its card · click doors to open · drag to orbit · G get in · H all doors · L lights · X x ray · 1 to 5 scenes · Esc back</p>
+      <div className={styles.keys}>
+        <span>
+          <Key k="/" /> search
+        </span>
+        <span>
+          <Key k="E" /> engine
+        </span>
+        <span>
+          <Key k="Space" /> rev
+        </span>
+        <span>
+          <Key k="Esc" /> back
+        </span>
+        <span>drag to orbit · click a part</span>
+      </div>
       {url === PLACEHOLDER_URL && <p className={styles.badge}>placeholder blockout</p>}
+      {debug && (
+        <dl className={styles.debug}>
+          <dt>parts</dt>
+          <dd>{model ? num.format(model.partKeys.length) : '...'}</dd>
+          <dt>triangles</dt>
+          <dd>{num.format(triangles)}</dd>
+          <dt>draw calls</dt>
+          <dd>{num.format(drawCalls)}</dd>
+        </dl>
+      )}
 
       <details className={styles.credits}>
         <summary>Credits</summary>
