@@ -8,7 +8,10 @@ import { ToneMappingMode } from 'postprocessing';
 import { NoToneMapping, SRGBColorSpace } from 'three';
 import CarModel from './car/CarModel';
 import { meshesOf } from './car/parts';
+import CameraRig from './camera/CameraRig';
 import Ground from './Ground';
+import Hotspots from './Hotspots';
+import Lift from './Lift';
 import Lighting, { SceneSwap } from './Lighting';
 import { SCENES, timeOfDayLook } from './scenes';
 import { useGarage } from './store';
@@ -52,16 +55,10 @@ export default function Experience() {
           <CarModel url={url} />
         </Suspense>
       </ModelBoundary>
-      <OrbitControls
-        makeDefault
-        target={CAMERA_TARGET}
-        enablePan={false}
-        enableDamping
-        dampingFactor={0.08}
-        minDistance={2.5}
-        maxDistance={14}
-        maxPolarAngle={Math.PI / 2 - 0.04}
-      />
+      <OrbitControls makeDefault target={CAMERA_TARGET} enablePan={false} enableDamping dampingFactor={0.08} />
+      <CameraRig />
+      <Lift />
+      <Hotspots />
       <PostFX />
       <RenderStats />
       {query.has('debug') && <DevHandle />}

@@ -88,3 +88,7 @@ Rear view (photo, lateral positions from the centre line, positive is the vehicl
 ## How the side photo was rectified
 
 scripts/reference/rectify_side.py maps the photo onto the car's side plane with a homography from the two rims (rim flange 0.44 m, hub 0.38 m up, axles 2.85 m apart). Rectified image: 4 mm per pixel, u from minus 1.25 to 4.25, z from minus 0.05 to 2.05.
+
+## Parts data sources (for M7)
+
+* toyotapartsdeal.com, 2005 Land Cruiser parts catalogue (shared by Saaqib): https://www.toyotapartsdeal.com/2005-toyota-land_cruiser-parts.html. Candidate source for OEM numbers, diagram groups and list prices. Blocked by the environment network policy until Saaqib adds the domain. Its prices are US dealer prices, so UAE prices still come from Saaqib.

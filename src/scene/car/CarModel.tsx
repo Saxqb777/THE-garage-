@@ -1,10 +1,11 @@
 'use client';
 
 import { useEffect, useMemo, useRef } from 'react';
-import type { Object3D, SpotLight } from 'three';
-import type { ThreeEvent } from '@react-three/fiber';
+import type { Group, Object3D, SpotLight } from 'three';
+import { useFrame, type ThreeEvent } from '@react-three/fiber';
 import { Bvh, useGLTF } from '@react-three/drei';
 import gsap from 'gsap';
+import { carLift } from '../liftState';
 import { useGarage } from '../store';
 import { closeHinges, poseHinges, rigHinges, type HingeRig } from './hinges';
 import { applyLook, applyModes } from './look';
@@ -77,13 +78,19 @@ export default function CarModel({ url }: { url: string }) {
   }, [open, rigs]);
   useEffect(() => () => gsap.killTweensOf(rigs), [rigs]);
 
+  // the car rides the lift
+  const body = useRef<Group>(null);
+  useFrame(() => {
+    if (body.current) body.current.position.y = carLift.y;
+  });
+
   return (
-    <>
+    <group ref={body}>
       <Bvh firstHitOnly>
         <primitive object={scene} onPointerMove={onPointerMove} onPointerOut={onPointerOut} onClick={onClick} />
       </Bvh>
       {lightsOn && <Headlights />}
-    </>
+    </group>
   );
 }
 
@@ -110,8 +117,13 @@ function onClick(e: ThreeEvent<MouseEvent>) {
   const key = partKeyOf(e.object);
   if (!key) return;
   const s = useGarage.getState();
+  // the driver's seat is the way in
+  if (key === 'INT_0000_front_seat_L' && s.view === 'exterior' && !s.camBusy) {
+    s.requestCam({ action: 'getIn', seat: 'driver' });
+    return;
+  }
   s.select(key);
-  if (CONTRACT_PARTS.get(key)?.hinge) s.togglePart(key);
+  if (CONTRACT_PARTS.get(key)?.hinge && !s.camBusy) s.togglePart(key);
 }
 
 // Low beams: two spots from the lamp centres (three.js space, car faces +Z), aimed down the road.

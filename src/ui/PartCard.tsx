@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { CONTRACT_PARTS, contract } from '@/scene/car/parts';
+import { HOTSPOTS, shortRef } from '@/scene/Hotspots';
 import { useGarage } from '@/scene/store';
 import styles from './PartCard.module.css';
 
@@ -49,6 +50,7 @@ export default function PartCard() {
   }, [select]);
 
   if (!key) return null;
+  if (key.startsWith('hotspot:')) return <HotspotCard id={key.slice('hotspot:'.length)} onClose={() => select(null)} onPart={select} />;
   const copied = copiedKey === key;
   const part = CONTRACT_PARTS.get(key);
   const side = key.match(/_(L|R|F|RR)$/)?.[1];
@@ -130,6 +132,47 @@ export default function PartCard() {
       </div>
 
       <p className={styles.pending}>OEM number, price, stock and WhatsApp ordering arrive with the parts database (M7).</p>
+    </aside>
+  );
+}
+
+/** Card for a cabin control from the owner's manual (no mesh of its own yet). */
+function HotspotCard({ id, onClose, onPart }: { id: string; onClose: () => void; onPart: (key: string) => void }) {
+  const h = HOTSPOTS.get(id);
+  if (!h) return null;
+  const part = h.partKey ? CONTRACT_PARTS.get(h.partKey) : undefined;
+  return (
+    <aside className={styles.card} aria-label="Control card">
+      <header className={styles.head}>
+        <div>
+          <p className={styles.system}>
+            Cabin control · <span className={styles.mono}>{shortRef(h.ref)}</span>
+          </p>
+          <h2 className={styles.name}>{h.label}</h2>
+        </div>
+        <button type="button" className={styles.close} onClick={onClose} aria-label="Close card">
+          ×
+        </button>
+      </header>
+      <dl className={styles.facts}>
+        <dt>Owner&apos;s manual</dt>
+        <dd>
+          {h.ref}, pages 2 to 6
+        </dd>
+        {part && (
+          <>
+            <dt>Sits on</dt>
+            <dd>
+              <button type="button" className={styles.link} onClick={() => onPart(part.key)}>
+                {part.nameEn}
+              </button>
+            </dd>
+          </>
+        )}
+        <dt>Position</dt>
+        <dd>{h.placement === 'raycast' ? 'picked on the model' : 'approximate, the control is hidden or not modelled'}</dd>
+      </dl>
+      <p className={styles.pending}>Part number, price and WhatsApp ordering arrive with the parts database (M7).</p>
     </aside>
   );
 }

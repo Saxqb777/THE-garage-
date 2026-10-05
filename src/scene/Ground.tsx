@@ -1,7 +1,10 @@
 'use client';
 
+import { useRef } from 'react';
+import { useFrame } from '@react-three/fiber';
 import { useTexture, MeshReflectorMaterial } from '@react-three/drei';
-import { NoColorSpace } from 'three';
+import { NoColorSpace, type MeshBasicMaterial } from 'three';
+import { carLift } from './liftState';
 import shadow from '@/data/groundShadow.json';
 import { SCENES } from './scenes';
 import { useGarage } from './store';
@@ -38,10 +41,15 @@ function ParkedShadow({ color, opacity }: { color: string; opacity: number }) {
   const map = useTexture(shadow.texture, (t) => {
     t.colorSpace = NoColorSpace;
   });
+  // the parked shadow fades as the car goes up the lift
+  const mat = useRef<MeshBasicMaterial>(null);
+  useFrame(() => {
+    if (mat.current) mat.current.opacity = opacity * (1 - 0.75 * Math.min(1, carLift.y / 1.2));
+  });
   return (
     <mesh rotation-x={-Math.PI / 2} position={[shadow.center[0], 0.002, shadow.center[2]]} renderOrder={1}>
       <planeGeometry args={[shadow.size[0], shadow.size[1]]} />
-      <meshBasicMaterial color={color} alphaMap={map} opacity={opacity} transparent depthWrite={false} toneMapped={false} />
+      <meshBasicMaterial ref={mat} color={color} alphaMap={map} opacity={opacity} transparent depthWrite={false} toneMapped={false} />
     </mesh>
   );
 }

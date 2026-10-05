@@ -34,6 +34,17 @@ type GarageState = {
   setHovered: (key: string | null) => void;
   selected: string | null;
   select: (key: string | null) => void;
+  /** Set one hinged part open or closed (camera presets use it). */
+  setPartOpen: (key: string, open: boolean) => void;
+  /** Camera: outside orbiting the car, or seated in the cabin. Requests are queued for CameraRig. */
+  view: 'exterior' | 'cabin';
+  seat: Seat | null;
+  camBusy: boolean;
+  camRequest: CamRequest | null;
+  requestCam: (r: CamRequestInput) => void;
+  /** Two post lift (Garage only). */
+  lift: boolean;
+  setLift: (on: boolean) => void;
   /** X Ray: body, doors, glass and lamps turn to ghost glass. */
   xray: boolean;
   setXray: (on: boolean) => void;
@@ -53,6 +64,15 @@ type GarageState = {
   toggleHinges: () => void;
 };
 
+export type Seat = 'driver' | 'rear';
+export type PresetKey = 'hero' | 'front' | 'rear' | 'side' | 'engine' | 'interior' | 'underside';
+export type CamRequest = { id: number; action: 'preset'; preset: PresetKey } | { id: number; action: 'getIn'; seat: Seat } | { id: number; action: 'getOut' };
+
+// without the id, per variant (a plain Omit would collapse the union)
+export type CamRequestInput = CamRequest extends infer R ? (R extends CamRequest ? Omit<R, 'id'> : never) : never;
+
+let camRequestId = 0;
+
 const query = new URLSearchParams(typeof window === 'undefined' ? '' : window.location.search);
 const initialScene: SceneKey = isSceneKey(query.get('scene')) ? (query.get('scene') as SceneKey) : 'garage';
 
@@ -69,6 +89,14 @@ export const useGarage = create<GarageState>()((set) => ({
   // ?hinges=open opens everything as soon as the model reports its hinges
   setHingeKeys: (hingeKeys) => set(() => withOpen(hingeKeys, Object.fromEntries(hingeKeys.map((k) => [k, query.get('hinges') === 'open'])))),
   togglePart: (key) => set((s) => withOpen(s.hingeKeys, { ...s.open, [key]: !s.open[key] })),
+  setPartOpen: (key, value) => set((s) => (s.open[key] === value ? {} : withOpen(s.hingeKeys, { ...s.open, [key]: value }))),
+  view: 'exterior',
+  seat: null,
+  camBusy: false,
+  camRequest: null,
+  requestCam: (r) => set({ camRequest: { ...r, id: ++camRequestId } as CamRequest }),
+  lift: false,
+  setLift: (lift) => set({ lift }),
   hovered: null,
   setHovered: (hovered) => set({ hovered }),
   selected: query.get('part'),
@@ -78,7 +106,8 @@ export const useGarage = create<GarageState>()((set) => ({
   scene: initialScene,
   targetScene: initialScene,
   setScene: (targetScene) => set({ targetScene }),
-  commitScene: (scene) => set({ scene, lightsOn: SCENES[scene].night }),
+  // the lift lives in the garage: leaving it lowers the car
+  commitScene: (scene) => set((s) => ({ scene, lightsOn: SCENES[scene].night, lift: scene === 'garage' ? s.lift : false })),
   timeOfDay: query.has('tod') ? Math.min(1, Math.max(0, Number(query.get('tod')) || 0)) : 0.5,
   setTimeOfDay: (timeOfDay) => set({ timeOfDay }),
   lightsOn: query.get('lights') ? query.get('lights') === 'on' : SCENES[initialScene].night,
@@ -102,6 +131,9 @@ export type GarageDebug = ModelInfo & {
   open: string[];
   selected: string | null;
   xray: boolean;
+  view: 'exterior' | 'cabin';
+  lift: boolean;
+  camBusy: boolean;
   scene: SceneKey;
   targetScene: SceneKey;
   timeOfDay: number;
@@ -131,6 +163,9 @@ if (typeof window !== 'undefined') {
       open: Object.keys(s.open).filter((k) => s.open[k]),
       selected: s.selected,
       xray: s.xray,
+      view: s.view,
+      lift: s.lift,
+      camBusy: s.camBusy,
       scene: s.scene,
       targetScene: s.targetScene,
       timeOfDay: s.timeOfDay,

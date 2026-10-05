@@ -5,10 +5,20 @@ import { useEnvironment, useProgress } from '@react-three/drei';
 import { CREDITS } from '@/data/credits';
 import contract from '@/data/parts.m1.json';
 import { SCENES, SCENE_ORDER, hdriUrl } from '@/scene/scenes';
-import { PLACEHOLDER_URL, useGarage } from '@/scene/store';
+import { PLACEHOLDER_URL, useGarage, type PresetKey } from '@/scene/store';
 import styles from './Hud.module.css';
 
 const num = new Intl.NumberFormat('en-US');
+
+const PRESETS: [PresetKey, string][] = [
+  ['hero', 'Hero'],
+  ['front', 'Front'],
+  ['rear', 'Rear'],
+  ['side', 'Side'],
+  ['engine', 'Engine'],
+  ['interior', 'Interior'],
+  ['underside', 'Under'],
+];
 
 export default function Hud() {
   const { progress } = useProgress();
@@ -30,6 +40,12 @@ export default function Hud() {
   const xray = useGarage((s) => s.xray);
   const setXray = useGarage((s) => s.setXray);
   const scene = SCENES[sceneKey];
+  const view = useGarage((s) => s.view);
+  const camBusy = useGarage((s) => s.camBusy);
+  const requestCam = useGarage((s) => s.requestCam);
+  const lift = useGarage((s) => s.lift);
+  const setLift = useGarage((s) => s.setLift);
+  const inGarage = shownKey === 'garage';
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -37,6 +53,10 @@ export default function Hud() {
       if (e.key === 'h' || e.key === 'H') toggleHinges();
       if (e.key === 'l' || e.key === 'L') setLightsOn(!useGarage.getState().lightsOn);
       if (e.key === 'x' || e.key === 'X') setXray(!useGarage.getState().xray);
+      if (e.key === 'g' || e.key === 'G') {
+        const st = useGarage.getState();
+        if (!st.camBusy) st.requestCam(st.view === 'cabin' ? { action: 'getOut' } : { action: 'getIn', seat: 'driver' });
+      }
       const n = Number(e.key);
       if (n >= 1 && n <= SCENE_ORDER.length) setScene(SCENE_ORDER[n - 1]);
     };
@@ -85,6 +105,27 @@ export default function Hud() {
         </button>
       </div>
 
+      <div className={styles.camera}>
+        <button
+          type="button"
+          className={styles.primary}
+          disabled={!model || camBusy}
+          onClick={() => requestCam(view === 'cabin' ? { action: 'getOut' } : { action: 'getIn', seat: 'driver' })}
+        >
+          {view === 'cabin' ? 'Get out' : 'Get in'}
+        </button>
+        <button type="button" disabled={!model || camBusy || !inGarage || view === 'cabin'} onClick={() => setLift(!lift)} title="Two post lift, Garage only">
+          {lift ? 'Lower lift' : 'Lift'}
+        </button>
+      </div>
+      <div className={styles.presets} aria-label="Camera">
+        {PRESETS.map(([k, label]) => (
+          <button key={k} type="button" disabled={!model || camBusy} onClick={() => requestCam({ action: 'preset', preset: k })}>
+            {label}
+          </button>
+        ))}
+      </div>
+
       <div className={styles.scenes} role="radiogroup" aria-label="Scene">
         {SCENE_ORDER.map((k, i) => (
           <button
@@ -127,7 +168,7 @@ export default function Hud() {
         </label>
       </div>
 
-      <p className={styles.hint}>Click a part for its card · click doors to open · drag to orbit · H all doors · L lights · X x ray · 1 to 5 scenes</p>
+      <p className={styles.hint}>Click a part for its card · click doors to open · drag to orbit · G get in · H all doors · L lights · X x ray · 1 to 5 scenes</p>
       {url === PLACEHOLDER_URL && <p className={styles.badge}>placeholder blockout</p>}
 
       <details className={styles.credits}>
