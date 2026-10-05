@@ -128,7 +128,7 @@ def place_on_source(objs):
         glass = objs.get(f"GLASS_6703_back_door_glass_{side}")
         if glass is None:
             continue
-        loc, nrm = surface_hit([glass], (sg * 0.09, 4.0, 1.345), (0, -1, 0))
+        loc, nrm = surface_hit([glass], (sg * 0.09, 4.0, 1.42), (0, -1, 0))
         if loc is None:
             continue
         arm = D.build_wiper("rear", side)

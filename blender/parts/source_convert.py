@@ -35,6 +35,7 @@ CLADDING_PAINT = "vehicle_generic_smallspecmap__PAINT_3_"
 
 DELETE_OBJECTS = {
     "flakka.2006.13", "flakka_12",  # VXR side steps and lower door cladding; clean lower skins are rebuilt
+    "TextPlus001",  # the modder's signature under the GXR badge
     "gnh", "Phoneee", "sticker", "Plane.0012", "asciii", "asciidd", "Box001", "flashcube", "TASK_FLASH",
     "flakka.2006.25", "flakka_sh3artoyota", "Plane001", "GEO_Mirror",
 }
@@ -188,8 +189,10 @@ def classify(src, smat, c, n):
         return None  # running board, replaced by a rocker strip
     if src == GREY and ax > 0.95 and 0.64 < z < 0.74 and -1.0 < y < 1.3:
         return None  # VXR lower door mouldings
-    if src in (GREY, CHROME, PAINT) and inbox(c, R.REAR_GARNISH):
-        return None  # VXR tailgate garnish recess, covered by a flush patch
+    if src in (GREY, CHROME) and inbox(c, R.REAR_GARNISH):
+        return None  # VXR tailgate garnish panel and its lettering; a flush paint patch goes over the skin
+    if exterior and src != PAINT and ax > 0.95 and 0.73 < z < 0.79 and -1.05 < y < 1.1:
+        return None  # top strip of the VXR lower mouldings
 
     # lamps
     if exterior and inbox(c, R.HEADLAMP, sg):
@@ -530,7 +533,7 @@ def strip_surface(rows):
     return co, polys
 
 
-LOWER_SKIN_PROFILE = [(0.672, 1.000), (0.60, 0.998), (0.52, 0.985), (0.42, 0.955), (0.40, 0.900)]  # (z, |x|)
+LOWER_SKIN_PROFILE = [(0.742, 1.004), (0.68, 1.000), (0.60, 0.990), (0.52, 0.980), (0.42, 0.955), (0.40, 0.900)]  # (z, |x|)
 ROCKER = (0.86, 0.905, 0.29, 0.43)  # |x| range and z range
 
 
@@ -565,11 +568,4 @@ def gxr_additions(out, log):
             x0, x1, z0, z1 = ROCKER
             co, polys = M.box_arrays((sg * 0.5 * (x0 + x1), 0.0, 0.5 * (z0 + z1)), (x1 - x0, 2.05, z1 - z0), bevel=0.008)
             append_mesh(shell, co, polys, "plastic_black_matte")
-        bd = out.get(f"DOOR_6703_back_door_{side}")
-        if bd is not None:
-            sg = 1.0 if side == "L" else -1.0
-            x0, x1, y0, y1, z0, z1 = R.REAR_GARNISH
-            # flush patch over the garnish recess; the skin sits at about y 2.46 here
-            co, polys = M.box_arrays((sg * 0.5 * (0.004 + 0.43), 2.448, 0.5 * (z0 + z1)), (0.43 - 0.004, 0.028, z1 - z0 + 0.004), bevel=0.003)
-            append_mesh(bd, co, polys, "paint_white")
-    log("gxr additions: lower door skins, rocker strips, tailgate patches")
+    log("gxr additions: lower door skins and rocker strips")
